@@ -1,0 +1,17 @@
+[user]
+	name = Akash Agrawal
+	email = akagr@outlook.com
+[push]
+	default = simple
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+  hist = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s" --decorate --date=short --graph --all
+[color]
+	ui = true
+[core]
+	editor = vim
+	autocrlf = input
+	safecrlf = true

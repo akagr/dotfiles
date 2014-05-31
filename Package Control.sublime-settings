@@ -1,0 +1,23 @@
+{
+	"installed_packages":
+	[
+		"All Autocomplete",
+		"Better CoffeeScript",
+		"BracketHighlighter",
+		"Color Highlighter",
+		"EJS",
+		"Emmet",
+		"Git",
+		"Haml",
+		"Jade",
+		"JavaScript & NodeJS Snippets",
+		"Mustang Extended Color Scheme",
+		"Sass",
+		"SideBarEnhancements",
+		"Stylus",
+		"SublimeLinter",
+		"SublimeLinter-jshint",
+		"Theme - Soda",
+		"VAlign"
+	]
+}
