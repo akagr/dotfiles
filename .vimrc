@@ -63,8 +63,9 @@ set hlsearch incsearch showmatch
 " Regex
 set magic
 
-" Trailing Whitespace
-match ErrorMsg '\s\+$'
+" Show trailing whitespaces
+set list!
+set listchars=trail:.,tab:--
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Functions
