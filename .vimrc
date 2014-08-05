@@ -101,6 +101,7 @@ let g:mapleader = ","
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_user_command = 'find %s -type f'
 
 " Hit enter in the file browser to open the selected
 " file with :vsplit to the right of the browser.
