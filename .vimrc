@@ -123,6 +123,9 @@ let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_same_filetype_lists = {}
 let g:neocomplcache_same_filetype_lists._ = '_'
 
+" Expand carriage return on methods
+let delimitMate_expand_cr=1
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key Bindings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -135,6 +138,7 @@ inoremap <C-j> <down>
 inoremap <C-k> <up>
 inoremap <C-l> <right>
 nnoremap <leader>s :w<cr>
+imap <expr> <CR> pumvisible() ? neocomplcache#close_popup() : '<Plug>delimitMateCR'
 nnoremap <leader>w :bd<cr>
 noremap <space> /
 noremap <silent> <leader>, :noh<cr>
