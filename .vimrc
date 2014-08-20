@@ -145,6 +145,7 @@ nnoremap <leader>s :w<cr>
 nnoremap <leader>w :bp\|bd #<cr>
 nnoremap <leader>c :bd<cr>
 nnoremap <leader>r :source ~/.vimrc<cr>
+nnoremap <leader>q :q<cr>
 noremap <silent> <leader>, :noh<cr>
 
 imap <expr> <CR> pumvisible() ? neocomplcache#close_popup() : '<Plug>delimitMateCR'
