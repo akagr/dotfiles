@@ -1,56 +1,51 @@
-" Akash Agrawal akashagrawal.me
+" Akash Agrawal akashagrawal.me akagr[dot]outlook[dot]com
+
 set nocompatible
-set encoding=utf-8
-set clipboard=unnamedplus
-set mouse=a
-set autoread
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vundle config
-" git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+" External Bundles
+" git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 " add this to bashrc or bash_profile: export TERM="screen-256color"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype off
+set rtp+=~/.vim/bundle/neobundle.vim/
+call neobundle#begin(expand('~/.vim/bundle/'))
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+NeoBundleFetch 'Shougo/neobundle.vim'
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vundles
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Bundle 'gmarik/vundle'
+NeoBundle 'Raimondi/delimitMate'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'Shougo/neocomplcache.vim'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'digitaltoad/vim-jade'
 
-Bundle 'Raimondi/delimitMate'
-Bundle 'tpope/vim-fugitive'
-Bundle 'kien/ctrlp.vim'
-Bundle 'godlygeek/tabular'
-Bundle 'mileszs/ack.vim'
-Bundle 'Shougo/neocomplcache.vim'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'digitaltoad/vim-jade'
+call neobundle#end()
+filetype plugin indent on
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Essentials
+set encoding=utf-8
+set clipboard=unnamedplus
+set autoread
 set nobackup nowritebackup noswapfile hidden
-filetype plugin indent on
 set laststatus=2
 set ttyfast
 set backspace=2
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Interface
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set statusline=%F\ %m\ %{fugitive#statusline()}\ %y%=%l,%c\ %P
-
-" Syntax Highlighting
-set background=dark
-colorscheme mustang
-syntax on
-
+set mouse=a
 set wildmenu wildmode=longest:full,full
 set ruler
 set number
+
+" Interface
+colorscheme solarized
+set background=dark
+syntax on
+set statusline=%F\ %m\ %{fugitive#statusline()}\ %y%=%l,%c\ %P
 
 " Indentation
 set expandtab tabstop=2 shiftwidth=2
@@ -100,8 +95,13 @@ let g:mapleader = ","
 
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_user_command = 'find %s -type f'
+let g:ctrlp_working_path_mode = 'r'
+let g:ctrlp_user_command = {
+  \ 'types': {
+  \ 1: ['.git', 'cd %s && git ls-files']
+  \ },
+  \ 'fallback': 'find %s -type f'
+  \ }
 
 " Hit enter in the file browser to open the selected
 " file with :vsplit to the right of the browser.
@@ -130,18 +130,27 @@ let delimitMate_expand_cr=1
 " Key Bindings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 noremap <silent> <C-E> :call ToggleVExplorer()<CR>
+
 noremap j gj
 noremap k gk
+
 inoremap jj <ESC>l
+
 inoremap <C-h> <left>
 inoremap <C-j> <down>
 inoremap <C-k> <up>
 inoremap <C-l> <right>
+
 nnoremap <leader>s :w<cr>
-imap <expr> <CR> pumvisible() ? neocomplcache#close_popup() : '<Plug>delimitMateCR'
-nnoremap <leader>w :bd<cr>
-noremap <space> /
-noremap <silent> <leader>, :noh<cr>
-nnoremap <c-b> :CtrlPBuffer<cr>
+nnoremap <leader>w :bp\|bd #<cr>
+nnoremap <leader>c :bd<cr>
 nnoremap <leader>r :source ~/.vimrc<cr>
+noremap <silent> <leader>, :noh<cr>
+
+imap <expr> <CR> pumvisible() ? neocomplcache#close_popup() : '<Plug>delimitMateCR'
+
+noremap <space> /
+
+nnoremap <c-b> :CtrlPBuffer<cr>
+
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
