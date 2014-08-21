@@ -31,15 +31,13 @@ filetype plugin indent on
 " Essentials
 set encoding=utf-8
 set clipboard=unnamedplus
-set autoread
-set nobackup nowritebackup noswapfile hidden
+set autoread nobackup nowritebackup noswapfile hidden
 set laststatus=2
 set ttyfast
 set backspace=2
 set mouse=a
 set wildmenu wildmode=longest:full,full
-set ruler
-set number
+set ruler number nowrap
 
 " Interface
 colorscheme solarized
@@ -61,6 +59,9 @@ set magic
 " Show trailing whitespaces
 set list!
 set listchars=trail:.,tab:--
+
+" Add dash(-) to list of keywords. Avoids using it as word-separator
+set iskeyword+=-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Functions
