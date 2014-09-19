@@ -19,8 +19,10 @@ NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'Shougo/neocomplcache.vim'
+NeoBundle 'Shougo/neosnippet'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'digitaltoad/vim-jade'
+NeoBundle 'scrooloose/syntastic'
 
 call neobundle#end()
 filetype plugin indent on
@@ -37,13 +39,16 @@ set ttyfast
 set backspace=2
 set mouse=a
 set wildmenu wildmode=longest:full,full
-set ruler number nowrap
+set ruler nowrap relativenumber number
 
 " Interface
 colorscheme solarized
 set background=dark
 syntax on
 set statusline=%F\ %m\ %{fugitive#statusline()}\ %y%=%l,%c\ %P
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
 " Indentation
 set expandtab tabstop=2 shiftwidth=2
@@ -62,6 +67,11 @@ set listchars=trail:.,tab:--
 
 " Add dash(-) to list of keywords. Avoids using it as word-separator
 set iskeyword+=-
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Functions
@@ -118,11 +128,15 @@ let g:neocomplcache_enable_at_startup = 1
 
 " Use smartcase.
 let g:neocomplcache_enable_smart_case = 1
+let g:neocomplcache_auto_completion_start_length = 2
 
 " Set minimum syntax keyword length.
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_same_filetype_lists = {}
 let g:neocomplcache_same_filetype_lists._ = '_'
+
+" Add the snippets directory
+let g:neosnippet#snippets_directory='~/.vim/snippets'
 
 " Expand carriage return on methods
 let delimitMate_expand_cr=1
@@ -130,29 +144,40 @@ let delimitMate_expand_cr=1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key Bindings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Toggle file explorer
 noremap <silent> <C-E> :call ToggleVExplorer()<CR>
-
+" Replaces escape in insert mode
+inoremap jj <ESC>l
+" Search
+noremap <space> /
+" Travel one screen line at a time instead of logical line
 noremap j gj
 noremap k gk
-
-inoremap jj <ESC>l
-
-inoremap <C-h> <left>
-inoremap <C-j> <down>
-inoremap <C-k> <up>
-inoremap <C-l> <right>
-
+" Save file
 nnoremap <leader>s :w<cr>
-nnoremap <leader>w :bp\|bd #<cr>
-nnoremap <leader>c :bd<cr>
-nnoremap <leader>r :source ~/.vimrc<cr>
-nnoremap <leader>q :q<cr>
+" Un-highlight search results
 noremap <silent> <leader>, :noh<cr>
-
+" Insert empty line between braces on return
 imap <expr> <CR> pumvisible() ? neocomplcache#close_popup() : '<Plug>delimitMateCR'
-
-noremap <space> /
-
 nnoremap <c-b> :CtrlPBuffer<cr>
-
+" Tab for cycling auto suggest
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" Neosnippets plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+"""" Leader shortcuts
+" Copy whole buffer
+nnoremap <leader>a mzggyG`z
+" Close buffer without closing window
+nnoremap <leader>w :bp\|bd #<cr>
+" Close buffer and window
+nnoremap <leader>c :bd<cr>
+" Quit window
+nnoremap <leader>q :q<cr>
+" Reload .vimrc
+nnoremap <leader>r :source ~/.vimrc<cr>
+" Toggle text wrapping
+nnoremap <leader><space> :set wrap!<cr>
