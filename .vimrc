@@ -162,7 +162,6 @@ imap <expr> <CR> pumvisible() ? neocomplcache#close_popup() : '<Plug>delimitMate
 nnoremap <c-b> :CtrlPBuffer<cr>
 " Tab for cycling auto suggest
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
 " Neosnippets plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -181,3 +180,8 @@ nnoremap <leader>q :q<cr>
 nnoremap <leader>r :source ~/.vimrc<cr>
 " Toggle text wrapping
 nnoremap <leader><space> :set wrap!<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Autocommands
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au Filetype help nnoremap <CR> <C-]>
