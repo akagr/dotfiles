@@ -5,10 +5,17 @@ options word
     ${0:TARGET}
   }
 
-snippet anonymous-function
+snippet function-anonymous
 alias    afn
 options word
-  function(${1:argument}) {
+  function(${1:#:argument}) {
+    ${0:TARGET}
+  }
+
+snippet function-middleware
+alias    mid
+options word
+  function(req, res, next){
     ${0:TARGET}
   }
 
@@ -46,7 +53,15 @@ options head
 
 snippet setTimeout-function
 options head
-  setTimeout(function() { ${0} }, ${1:10});
+  setTimeout(function() {
+    ${0}
+  }, ${1:10});
+
+snippet setInterval-function
+options word
+  setInterval(function() {
+    ${0}
+  }, ${1:10});
 
 snippet console-log
 alias con
