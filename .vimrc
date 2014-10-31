@@ -42,7 +42,6 @@ set wildmenu wildmode=longest:full,full
 set ruler nowrap relativenumber number
 
 " Interface
-colorscheme solarized
 set background=dark
 syntax on
 set statusline=%F\ %m\ %{fugitive#statusline()}\ %y%=%l,%c\ %P
@@ -51,7 +50,7 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 " Indentation
-set expandtab tabstop=2 shiftwidth=2
+set expandtab tabstop=4 shiftwidth=4
 set smartindent autoindent copyindent
 
 " Search
