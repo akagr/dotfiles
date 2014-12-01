@@ -108,7 +108,7 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'r'
 let g:ctrlp_user_command = {
   \ 'types': {
-  \ 1: ['.git', 'cd %s && git ls-files']
+  \ 1: ['.git', 'cd %s && git ls-files | sort -r']
   \ },
   \ 'fallback': 'find %s -type f'
   \ }
