@@ -42,6 +42,7 @@ set wildmenu wildmode=longest:full,full
 set ruler nowrap relativenumber number
 
 " Interface
+colorscheme base16-default
 set background=dark
 syntax on
 set statusline=%F\ %m\ %{fugitive#statusline()}\ %y%=%l,%c\ %P
