@@ -13,4 +13,6 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+export EDITOR="vim"
+
 source ~/.zprompt
