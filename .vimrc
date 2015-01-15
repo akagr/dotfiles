@@ -32,7 +32,7 @@ filetype plugin indent on
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Essentials
 set encoding=utf-8
-set clipboard=unnamedplus
+set clipboard=unnamed
 set autoread nobackup nowritebackup noswapfile hidden
 set laststatus=2
 set ttyfast
@@ -137,6 +137,9 @@ let g:neocomplcache_same_filetype_lists._ = '_'
 
 " Add the snippets directory
 let g:neosnippet#snippets_directory='~/.vim/snippets'
+let g:neosnippet#disable_runtime_snippets = {
+            \ '_' : 1,
+            \}
 
 " Expand carriage return on methods
 let delimitMate_expand_cr=1
