@@ -8,12 +8,12 @@
     ci = commit
     st = status
     br = branch
-    hist = log --pretty=format:"%C(yellow)%h\\ %Cgreen%d\\ %Creset%s\\ %Cred[%aN]%Creset" --decorate --date=short --graph --all
+    hist = log --pretty=format:"%C(yellow)%h\\ %Cgreen%d\\ %Creset%s\\ %Cred[%aN\\ -\\ %ad]%Creset" --date=short --graph --all
     shoot = push origin --delete
 [color]
     ui = true
 [core]
-    editor = vim
+    editor = nvim
     autocrlf = input
     safecrlf = true
     filemode = false
