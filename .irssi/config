@@ -185,7 +185,7 @@ statusbar = {
   };
 };
 settings = {
-  core = { real_name = "laitkor"; user_name = "laitkor"; nick = "akagr"; };
+  core = { real_name = "akash"; user_name = "akash"; nick = "akagr"; };
   "fe-text" = { actlist_sort = "refnum"; term_force_colors = "yes"; };
 };
 ignores = ( { level = "JOINS PARTS QUITS"; } );
