@@ -4,27 +4,25 @@ set nocompatible
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " External Bundles
-" git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-" add this to bashrc or bash_profile: export TERM="screen-256color"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+" https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype off
-set rtp+=~/.vim/bundle/neobundle.vim/
-call neobundle#begin(expand('~/.vim/bundle/'))
 
-NeoBundleFetch 'Shougo/neobundle.vim'
+call plug#begin('~/.vim/plugged')
 
-NeoBundle 'Raimondi/delimitMate'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'godlygeek/tabular'
-NeoBundle 'mileszs/ack.vim'
-NeoBundle 'Shougo/neocomplcache.vim'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'digitaltoad/vim-jade'
-NeoBundle 'scrooloose/syntastic'
+Plug 'Raimondi/delimitMate'
+Plug 'tpope/vim-fugitive'
+Plug 'kien/ctrlp.vim'
+Plug 'godlygeek/tabular'
+Plug 'mileszs/ack.vim'
+Plug 'Shougo/neocomplcache.vim'
+Plug 'Shougo/neosnippet'
+Plug 'scrooloose/syntastic'
+Plug 'chilicuil/vim-sprunge'
+Plug 'tpope/vim-surround'
 
-call neobundle#end()
+call plug#end()
 filetype plugin indent on
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

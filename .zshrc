@@ -14,5 +14,6 @@ compinit
 # End of lines added by compinstall
 
 export EDITOR="vim"
+export CLICOLOR=1
 
 source ~/.zprompt
