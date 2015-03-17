@@ -65,6 +65,7 @@ set listchars=trail:.,tab:--
 
 " Add dash(-) to list of keywords. Avoids using it as word-separator
 set iskeyword+=-
+set iskeyword+="."
 
 " For snippet_complete marker.
 if has('conceal')
@@ -181,6 +182,12 @@ nnoremap <leader>q :q<cr>
 nnoremap <leader>r :source ~/.vimrc<cr>
 " Toggle text wrapping
 nnoremap <leader><space> :set wrap!<cr>
+" Tabularize on =
+nnoremap <leader>t= :Tabularize /=<cr>
+vnoremap <leader>t= :Tabularize /=<cr>
+" Tabularize on :
+nnoremap <leader>t: :Tabularize /:<cr>
+vnoremap <leader>t: :Tabularize /:<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Autocommands
