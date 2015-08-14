@@ -18,9 +18,12 @@ Plug 'godlygeek/tabular'
 Plug 'mileszs/ack.vim'
 Plug 'Shougo/neocomplcache.vim'
 Plug 'Shougo/neosnippet'
-Plug 'scrooloose/syntastic'
 Plug 'chilicuil/vim-sprunge'
 Plug 'tpope/vim-surround'
+Plug 'dag/vim2hs'
+Plug 'scrooloose/nerdtree'
+Plug 'mattn/emmet-vim'
+Plug 'benekastah/neomake'
 
 call plug#end()
 filetype plugin indent on
@@ -30,6 +33,7 @@ filetype plugin indent on
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Essentials
 set encoding=utf-8
+set regexpengine=1
 set clipboard=unnamed
 set autoread nobackup nowritebackup noswapfile hidden
 set laststatus=2
@@ -45,7 +49,6 @@ set background=dark
 syntax on
 set statusline=%F\ %m\ %{fugitive#statusline()}\ %y%=%l,%c\ %P
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 " Indentation
@@ -71,28 +74,6 @@ set iskeyword+="."
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Functions
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! ToggleVExplorer()
-  if exists("t:expl_buf_num")
-    let expl_win_num = bufwinnr(t:expl_buf_num)
-    if expl_win_num != -1
-      let cur_win_nr = winnr()
-      exec expl_win_num . 'wincmd w'
-      close
-      exec cur_win_nr . 'wincmd w'
-      unlet t:expl_buf_num
-    else
-      unlet t:expl_buf_num
-    endif
-  else
-    exec '1wincmd w'
-    Vexplore
-    let t:expl_buf_num = bufnr("%")
-  endif
-endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Variables
@@ -147,9 +128,10 @@ let delimitMate_expand_cr=1
 " Key Bindings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Toggle file explorer
-noremap <silent> <C-E> :call ToggleVExplorer()<CR>
+noremap <silent> <C-E> :NERDTreeToggle<CR>
 " Replaces escape in insert mode
 inoremap jj <ESC>l
+tnoremap jj <C-\><C-n>
 " Search
 noremap <space> /
 " Travel one screen line at a time instead of logical line
@@ -179,7 +161,7 @@ nnoremap <leader>c :bd<cr>
 " Quit window
 nnoremap <leader>q :q<cr>
 " Reload .vimrc
-nnoremap <leader>r :source ~/.vimrc<cr>
+nnoremap <leader>r :source ~/.nvimrc<cr>
 " Toggle text wrapping
 nnoremap <leader><space> :set wrap!<cr>
 " Tabularize on =
@@ -188,8 +170,11 @@ vnoremap <leader>t= :Tabularize /=<cr>
 " Tabularize on :
 nnoremap <leader>t: :Tabularize /:<cr>
 vnoremap <leader>t: :Tabularize /:<cr>
+" Toggle folds
+nnoremap <leader>f za
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Autocommands
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au Filetype help nnoremap <CR> <C-]>
+autocmd! BufWritePost * Neomake
