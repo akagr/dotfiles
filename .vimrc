@@ -24,6 +24,7 @@ Plug 'dag/vim2hs'
 Plug 'scrooloose/nerdtree'
 Plug 'mattn/emmet-vim'
 Plug 'benekastah/neomake'
+Plug 'heavenshell/vim-jsdoc'
 
 call plug#end()
 filetype plugin indent on
@@ -49,6 +50,7 @@ set background=dark
 syntax on
 set statusline=%F\ %m\ %{fugitive#statusline()}\ %y%=%l,%c\ %P
 set statusline+=%#warningmsg#
+set statusline+=\ %#ErrorMsg#%{neomake#statusline#LoclistStatus()}
 set statusline+=%*
 
 " Indentation
@@ -124,6 +126,12 @@ let g:neosnippet#disable_runtime_snippets = {
 " Expand carriage return on methods
 let delimitMate_expand_cr=1
 
+" Force specific linters for files
+let g:neomake_javascript_enabled_makers = ['eslint']
+
+" Allow jsdoc for arrow notation
+let g:jsdoc_allow_shorthand=1
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key Bindings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -150,6 +158,8 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
+" Add jsdoc for function
+nmap <silent> <C-l> <Plug>(jsdoc)
 
 """" Leader shortcuts
 " Copy whole buffer
