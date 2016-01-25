@@ -11,20 +11,19 @@ filetype off
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'Raimondi/delimitMate'
-Plug 'tpope/vim-fugitive'
-Plug 'kien/ctrlp.vim'
+Plug 'benekastah/neomake'
+Plug 'dag/vim2hs'
 Plug 'godlygeek/tabular'
+Plug 'heavenshell/vim-jsdoc'
+Plug 'kien/ctrlp.vim'
+Plug 'mattn/emmet-vim'
 Plug 'mileszs/ack.vim'
+Plug 'Raimondi/delimitMate'
+Plug 'scrooloose/nerdtree'
 Plug 'Shougo/neocomplcache.vim'
 Plug 'Shougo/neosnippet'
-Plug 'chilicuil/vim-sprunge'
-Plug 'tpope/vim-surround'
-Plug 'dag/vim2hs'
-Plug 'scrooloose/nerdtree'
-Plug 'mattn/emmet-vim'
-Plug 'benekastah/neomake'
-Plug 'heavenshell/vim-jsdoc'
+Plug 'tpope/vim-fugitive'
+Plug 'leafgarland/typescript-vim'
 
 call plug#end()
 filetype plugin indent on
@@ -40,13 +39,13 @@ set autoread nobackup nowritebackup noswapfile hidden
 set laststatus=2
 set ttyfast
 set backspace=2
-set mouse=a
 set wildmenu wildmode=longest:full,full
 set ruler nowrap relativenumber number
+set mouse=""
 
 " Interface
-colorscheme base16-default
 set background=dark
+colorscheme base16-default
 syntax on
 set statusline=%F\ %m\ %{fugitive#statusline()}\ %y%=%l,%c\ %P
 set statusline+=%#warningmsg#
@@ -70,6 +69,7 @@ set listchars=trail:.,tab:--
 
 " Add dash(-) to list of keywords. Avoids using it as word-separator
 set iskeyword+=-
+set iskeyword+=$
 set iskeyword+="."
 
 " For snippet_complete marker.
@@ -128,6 +128,7 @@ let delimitMate_expand_cr=1
 
 " Force specific linters for files
 let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_typescript_enabled_makers = ['tslint']
 
 " Allow jsdoc for arrow notation
 let g:jsdoc_allow_shorthand=1
