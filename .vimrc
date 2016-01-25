@@ -45,7 +45,7 @@ set mouse=""
 
 " Interface
 set background=dark
-colorscheme base16-default
+colorscheme solarized
 syntax on
 set statusline=%F\ %m\ %{fugitive#statusline()}\ %y%=%l,%c\ %P
 set statusline+=%#warningmsg#
