@@ -1,0 +1,32 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "editor.scrollBeyondLasLine": false,
+    "editor.fontFamily": "Monaco, Menlo, 'Courier New', monospace",
+    "editor.fontSize": 13,
+    "editor.trimAutoWhitespace": true,
+    "files.trimTrailingWhitespace": true,
+    "editor.cursorStyle": "block",
+    "files.autoSave": "off",
+    "files.exclude": {
+        "**/*.png": true,
+        "**/*.jpg": true,
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.DS_Store": true,
+        "**/node_modules": true,
+        "**/platforms": true,
+        "**/dist": true
+    },
+    "vim.insertModeKeyBindings": [
+       {
+           "before": ["j", "j"],
+           "after": ["<escape>"]
+       }
+  ],
+  "vim.otherModesKeyBindings": [
+      {
+          "before": [",", "s"],
+          "after": [":", "w"]
+      }
+  ]
+}

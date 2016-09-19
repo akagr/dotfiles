@@ -5,7 +5,8 @@ SAVEHIST=1000
 setopt appendhistory autocd extendedglob notify
 unsetopt beep nomatch
 bindkey -e
-bindkey '\e.' insert-last-word
+
+bindkey -M viins 'jj' vi-cmd-mode
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/akash/.zshrc'
@@ -21,3 +22,12 @@ source ~/.zprompt
 
 export NVM_DIR="/Users/akash/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+
+###-tns-completion-start-###
+if [ -f /Users/akash/.tnsrc ]; then 
+    source /Users/akash/.tnsrc 
+fi
+###-tns-completion-end-###
+export PATH="/usr/local/sbin:$PATH"

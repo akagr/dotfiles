@@ -8,6 +8,7 @@
     ci = commit
     st = status
     br = branch
+    dif = diff
     hist = log --pretty=format:"%C(yellow)%h\\ %Cgreen%d\\ %Creset%s\\ %Cred[%aN\\ -\\ %ad]%Creset" --date=short --graph --all
     graph = log --pretty=format:"%C(blue)%d%Creset" --graph --simplify-by-decoration --all --dense
     shoot = push origin --delete
