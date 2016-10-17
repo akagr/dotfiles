@@ -3,10 +3,13 @@
     "editor.scrollBeyondLasLine": false,
     "editor.fontFamily": "Monaco, Menlo, 'Courier New', monospace",
     "editor.fontSize": 13,
+    "editor.lineNumbers": "relative",
     "editor.trimAutoWhitespace": true,
-    "files.trimTrailingWhitespace": true,
     "editor.cursorStyle": "block",
-    "files.autoSave": "off",
+
+    "files.trimTrailingWhitespace": true,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 2000,
     "files.exclude": {
         "**/*.png": true,
         "**/*.jpg": true,
@@ -17,16 +20,21 @@
         "**/platforms": true,
         "**/dist": true
     },
+
+    "git.autofetch": true,
+
+    "vim.useCtrlKeys": true,
+    "vim.useSystemClipboard": true,
     "vim.insertModeKeyBindings": [
-       {
-           "before": ["j", "j"],
-           "after": ["<escape>"]
-       }
-  ],
-  "vim.otherModesKeyBindings": [
-      {
-          "before": [",", "s"],
-          "after": [":", "w"]
-      }
-  ]
+         {
+             "before": ["j", "j"],
+             "after": ["<escape>"]
+         }
+    ],
+    "vim.otherModesKeyBindings": [
+        {
+            "before": [",", "s"],
+            "after": [":", "w"]
+        }
+    ]
 }
