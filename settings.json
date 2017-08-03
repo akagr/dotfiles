@@ -1,6 +1,5 @@
 // Place your settings in this file to overwrite the default settings
 {
-    "editor.scrollBeyondLasLine": false,
     "editor.fontFamily": "Monaco, Menlo, 'Courier New', monospace",
     "editor.fontSize": 13,
     "editor.lineNumbers": "relative",
@@ -36,5 +35,6 @@
             "before": [",", "s"],
             "after": [":", "w"]
         }
-    ]
+    ],
+    "workbench.colorTheme": "Solarized Dark"
 }

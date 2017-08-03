@@ -16,7 +16,7 @@
     ui = true
 [core]
     editor = nvim
-    autocrlf = input
+	autocrlf = false
     safecrlf = true
     filemode = false
 [credential]

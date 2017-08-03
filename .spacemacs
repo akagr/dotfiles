@@ -31,7 +31,11 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     csv
+     haskell
+     swift
      html
+     colors
      typescript
      javascript
      ;; ----------------------------------------------------------------
@@ -42,10 +46,11 @@ values."
      helm
      auto-completion
      better-defaults
+     common-lisp
      emacs-lisp
      git
      markdown
-     ;; org
+     org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -57,7 +62,10 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages
+   '(
+     editorconfig
+     )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -113,7 +121,7 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner nil
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
@@ -246,11 +254,11 @@ values."
    ;; If non nil show the color guide hint for transient state keys. (default t)
    dotspacemacs-show-transient-state-color-guide t
    ;; If non nil unicode symbols are displayed in the mode line. (default t)
-   dotspacemacs-mode-line-unicode-symbols t
+   dotspacemacs-mode-line-unicode-symbols nil
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
-   dotspacemacs-smooth-scrolling t
+   dotspacemacs-smooth-scrolling nil
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
@@ -295,6 +303,9 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ;; Key Bindings
+  ;; Org Mode Key Bindings
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode 'md' 'org-todo)
   )
 
 (defun dotspacemacs/user-config ()
@@ -304,16 +315,44 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (setq inferior-lisp-program "/usr/local/bin/clisp")
+
+  ;; Enable editorconfig
+  (editorconfig-mode 1)
+
   ;; Enable autocomplete by default
   (global-company-mode)
+
+  ;; Use simple separators in powerline
+  (setq powerline-default-separator nil)
+
   ;; Use jj to escape insert mode
-  (setq-default evil-escape-delay 1)
-  (setq-default evil-escape-key-sequence "jj")
-  (setq evil-escape-excluded-major-modes '(dired-mode neotree-mode))
-  (setq evil-escape-inhibit-functions '(evil-visual-state-p))
+  (setq-default
+   evil-escape-delay 1
+   evil-escape-key-sequence "jj"
+   evil-escape-excluded-major-modes '(dired-mode neotree-mode)
+   evil-escape-inhibit-functions '(evil-visual-state-p)
+   )
+
   ;; Sane line navigation
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
+  ;; Indentation
+  (defun my-setup-indent (n)
+    ;; web development
+    (setq coffee-tab-width n) ; coffeescript
+    (setq react-tab-width n) ; coffeescript
+    (setq javascript-indent-level n) ; javascript-mode
+    (setq js-indent-level n) ; js-mode
+    (setq js2-basic-offset n) ; js2-mode
+    (setq web-mode-markup-indent-offset n) ; web-mode, html tag in html file
+    (setq web-mode-css-indent-offset n) ; web-mode, css in html file
+    (setq web-mode-code-indent-offset n) ; web-mode, js code in html file
+    (setq css-indent-offset n) ; css-mode
+    )
+
+  (my-setup-indent 2)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -329,7 +368,7 @@ you should place your code here."
  '(global-auto-complete-mode t)
  '(package-selected-packages
    (quote
-    (web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data smeargle orgit org mmm-mode markdown-toc markdown-mode magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md evil-magit magit magit-popup git-commit with-editor solarized-theme mwim key-chord helm-company helm-c-yasnippet flycheck-pos-tip pos-tip company-tern dash-functional tern company-statistics company auto-yasnippet ac-ispell auto-complete tide typescript-mode flycheck web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
+    (editorconfig rainbow-mode rainbow-identifiers color-identifiers-mode winum unfill fuzzy csv-mode org-projectile pcache org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode swift-mode slime-company hide-comnt slime common-lisp-snippets web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data smeargle orgit org mmm-mode markdown-toc markdown-mode magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md evil-magit magit magit-popup git-commit with-editor solarized-theme mwim key-chord helm-company helm-c-yasnippet flycheck-pos-tip pos-tip company-tern dash-functional tern company-statistics company auto-yasnippet ac-ispell auto-complete tide typescript-mode flycheck web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
