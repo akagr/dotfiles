@@ -11,17 +11,18 @@ filetype off
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'benekastah/neomake'
-Plug 'neovimhaskell/haskell-vim'
-Plug 'eagletmt/ghcmod-vim'
-Plug 'godlygeek/tabular'
-Plug 'heavenshell/vim-jsdoc'
-Plug 'kien/ctrlp.vim'
+Plug 'mhartington/nvim-typescript'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'leafgarland/typescript-vim'
+Plug 'heavenshell/vim-jsdoc'
+Plug 'w0rp/ale'
+Plug 'neovimhaskell/haskell-vim'
+Plug 'godlygeek/tabular'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mattn/emmet-vim'
+Plug 'Shougo/deoplete.nvim'
 Plug 'Raimondi/delimitMate'
 Plug 'scrooloose/nerdtree'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
@@ -50,7 +51,6 @@ colorscheme solarized
 syntax on
 set statusline=%F\ %m\ %{fugitive#statusline()}\ %y%=%l,%c\ %P
 set statusline+=%#warningmsg#
-set statusline+=\ %#ErrorMsg#%{neomake#statusline#LoclistStatus()}
 set statusline+=%*
 
 " Indentation
@@ -87,6 +87,13 @@ command! Q :q
 let mapleader = ","
 let g:mapleader = ","
 
+" Ale linters
+let g:ale_linters = {
+  \ 'typescript': ['tslint', 'tsserver'],
+  \ }
+
+" Editorconfig
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'r'
@@ -113,6 +120,7 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#auto_complete_start_length = 2
 let g:deoplete#sources#tss#javascript_support = 1
+let g:deoplete#file#enable_buffer_path = 1
 
 " Add the snippets directory
 let g:neosnippet#snippets_directory='~/.vim/snippets'
@@ -123,57 +131,11 @@ let g:neosnippet#disable_runtime_snippets = {
 " Expand carriage return on methods
 let delimitMate_expand_cr=1
 
-" Force specific linters for files
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_typescript_enabled_makers = ['tsc', 'tslint']
-
 let s:enabled_options = [
     \ 'target', 'emitDecoratorMetadata', 'experimentalDecorators', 'module',
     \ 'noImplicitAny', 'rootDir', 'noEmit', 'allowSyntheticDefaultImports',
     \ 'noImplicitReturn', 'allowUnreachableCode', 'allowUnusedLabels'
     \ ]
-
-function! neomake#makers#ft#typescript#tsc()
-    let l:tsconfig = findfile('tsconfig.json', '.;')
-    if len(l:tsconfig)
-        let true = 1
-        let false = 0
-        let null = 0
-        " ugly shortcut
-        let l:jsonText = join(readfile(l:tsconfig, 'b'), '')
-        let l:json = eval(l:jsonText)
-        let l:option = get(l:json, 'compilerOptions', {})
-        let l:option['noEmit'] = 1
-        let l:args = []
-        if !len(get(l:option, 'rootDir', ''))
-            let l:option['rootDir'] = fnamemodify(l:tsconfig, ':h')
-        endif
-        for [key, value] in items(l:option)
-            if index(s:enabled_options, key) == -1
-                continue
-            endif
-            if value == 1
-                call insert(l:args, '--'.key)
-            elseif type(value) == type('')
-                call insert(l:args, value)
-                call insert(l:args, '--'.key)
-            endif
-        endfor
-    else
-        let l:args = [
-            \ '-m', 'commonjs', '--noEmit', '--rootDir', '.'
-        \ ]
-    endif
-
-    return {
-        \ 'args': l:args,
-        \ 'errorformat':
-            \ '%E%f %#(%l\,%c): error %m,' .
-            \ '%E%f %#(%l\,%c): %m,' .
-            \ '%Eerror %m,' .
-            \ '%C%\s%\+%m'
-        \ }
-endfunction
 
 " Allow jsdoc for arrow notation
 let g:jsdoc_allow_shorthand=1
@@ -234,4 +196,3 @@ nnoremap <leader>f za
 " Autocommands
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au Filetype help nnoremap <CR> <C-]>
-autocmd! BufWritePost * Neomake
