@@ -26,6 +26,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 filetype plugin indent on
@@ -42,12 +43,12 @@ set laststatus=2
 set ttyfast
 set backspace=2
 set wildmenu wildmode=longest:full,full
-set ruler nowrap relativenumber number
+set ruler nowrap number
 set mouse=""
 
 " Interface
 set background=dark
-colorscheme solarized
+colorscheme nord
 syntax on
 set statusline=%F\ %m\ %{fugitive#statusline()}\ %y%=%l,%c\ %P
 set statusline+=%#warningmsg#
@@ -87,10 +88,17 @@ command! Q :q
 let mapleader = ","
 let g:mapleader = ","
 
-" Ale linters
+" Ale Configuration
+let g:ale_fixers = {
+  \ 'typescript': ['prettier'],
+  \ }
 let g:ale_linters = {
+  \ 'javascript': ['eslint'],
   \ 'typescript': ['tslint', 'tsserver'],
   \ }
+let g:ale_fix_on_save = 1
+let g:ale_javascript_prettier_use_local_config = 1
+let g:ale_typescript_prettier_use_local_config = 1
 
 " Editorconfig
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
@@ -191,8 +199,11 @@ nnoremap <leader>t: :Tabularize /:<cr>
 vnoremap <leader>t: :Tabularize /:<cr>
 " Toggle folds
 nnoremap <leader>f za
+" Open git status
+nnoremap <leader>gs :Gstatus<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Autocommands
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Open links in help file using enter key
 au Filetype help nnoremap <CR> <C-]>
