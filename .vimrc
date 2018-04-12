@@ -4,31 +4,42 @@ set nocompatible
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " External Bundles
-" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-" https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+" ./installer.sh ~/.vim/dein
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype off
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 
-call plug#begin('~/.vim/plugged')
+if dein#load_state('~/.vim/dein')
+  call dein#begin('~/.vim/dein')
 
-Plug 'mhartington/nvim-typescript'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'heavenshell/vim-jsdoc'
-Plug 'w0rp/ale'
-Plug 'neovimhaskell/haskell-vim'
-Plug 'godlygeek/tabular'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'mattn/emmet-vim'
-Plug 'Shougo/deoplete.nvim'
-Plug 'Raimondi/delimitMate'
-Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+  " Required
+  call dein#add('~/.vim/dein/repos/github.com/Shougo/dein.vim')
 
-call plug#end()
+  " Add plugins here
+  call dein#add('Shougo/vimproc.vim', { 'build': 'make' })
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('mhartington/nvim-typescript')
+  call dein#add('editorconfig/editorconfig-vim')
+  call dein#add('leafgarland/typescript-vim')
+  call dein#add('heavenshell/vim-jsdoc')
+  call dein#add('w0rp/ale')
+  call dein#add('neovimhaskell/haskell-vim')
+  call dein#add('godlygeek/tabular')
+  call dein#add('ctrlpvim/ctrlp.vim')
+  call dein#add('mattn/emmet-vim')
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('Raimondi/delimitMate')
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('tpope/vim-surround')
+
+  call dein#end()
+  call dein#save_state()
+endif
+
 filetype plugin indent on
+syntax enable
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
@@ -48,7 +59,6 @@ set mouse=""
 " Interface
 set background=dark
 colorscheme solarized
-syntax on
 set statusline=%F\ %m\ %{fugitive#statusline()}\ %y%=%l,%c\ %P
 set statusline+=%#warningmsg#
 set statusline+=%*
