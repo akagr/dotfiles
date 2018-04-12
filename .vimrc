@@ -33,6 +33,7 @@ if dein#load_state('~/.vim/dein')
   call dein#add('scrooloose/nerdtree')
   call dein#add('tpope/vim-fugitive')
   call dein#add('tpope/vim-surround')
+  call dein#add('tpope/vim-commentary')
   call dein#add('arcticicestudio/nord-vim')
 
   call dein#end()
@@ -112,6 +113,8 @@ let g:ale_typescript_prettier_use_local_config = 1
 
 " Editorconfig
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+" CtrlP
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'r'
