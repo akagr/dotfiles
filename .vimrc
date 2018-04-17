@@ -35,6 +35,9 @@ if dein#load_state('~/.vim/dein')
   call dein#add('tpope/vim-surround')
   call dein#add('tpope/vim-commentary')
   call dein#add('arcticicestudio/nord-vim')
+  " To enable airline fonts, clone https://github.com/powerline/fonts
+  " and run `./install.sh`.
+  call dein#add('vim-airline/vim-airline')
 
   call dein#end()
   call dein#save_state()
@@ -98,6 +101,9 @@ let ruby_no_expensive = 1
 command! Q :q
 let mapleader = ","
 let g:mapleader = ","
+
+" Add powerline fonts
+let g:airline_powerline_fonts = 1
 
 " Ale Configuration
 let g:ale_fixers = {
