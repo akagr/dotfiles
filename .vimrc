@@ -19,12 +19,14 @@ if dein#load_state('~/.vim/dein')
   " Add plugins here
   call dein#add('Shougo/vimproc.vim', { 'build': 'make' })
   call dein#add('Shougo/deoplete.nvim')
+  call dein#add('autozimu/LanguageClient-neovim', { 'rev': 'next', 'build': 'bash install.sh'})
   call dein#add('mhartington/nvim-typescript')
   call dein#add('editorconfig/editorconfig-vim')
   call dein#add('leafgarland/typescript-vim')
   call dein#add('heavenshell/vim-jsdoc')
   call dein#add('w0rp/ale')
   call dein#add('neovimhaskell/haskell-vim')
+  call dein#add('rust-lang/rust.vim')
   call dein#add('godlygeek/tabular')
   call dein#add('ctrlpvim/ctrlp.vim')
   call dein#add('mattn/emmet-vim')
@@ -108,14 +110,25 @@ let g:airline_powerline_fonts = 1
 " Ale Configuration
 let g:ale_fixers = {
   \ 'typescript': ['prettier'],
+  \ 'rust': ['rustfmt']
   \ }
 let g:ale_linters = {
   \ 'javascript': ['eslint'],
   \ 'typescript': ['tslint', 'tsserver'],
+  \ 'rust': ['rls']
   \ }
 let g:ale_fix_on_save = 1
 let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_typescript_prettier_use_local_config = 1
+" Ale's default options are only available on rust's nightly compiler.
+" Remvoing those
+let g:ale_rust_rustc_options = ''
+let g:ale_rust_rls_toolchain = 'stable'
+
+" Language server variables
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'stable', 'rls']
+    \ }
 
 " Editorconfig
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
