@@ -36,6 +36,7 @@ if dein#load_state('~/.vim/dein')
   call dein#add('tpope/vim-fugitive')
   call dein#add('tpope/vim-surround')
   call dein#add('tpope/vim-commentary')
+  call dein#add('ryanoasis/vim-devicons')
   call dein#add('arcticicestudio/nord-vim')
   " To enable airline fonts, clone https://github.com/powerline/fonts
   " and run `./install.sh`.
