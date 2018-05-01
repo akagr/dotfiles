@@ -4,47 +4,39 @@ set nocompatible
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " External Bundles
-" curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-" ./installer.sh ~/.vim/dein
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+" https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype off
-set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+call plug#begin('~/.vim/plugged')
 
-if dein#load_state('~/.vim/dein')
-  call dein#begin('~/.vim/dein')
+" Add plugins here
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'Shougo/deoplete.nvim'
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh'}
+Plug 'mhartington/nvim-typescript'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'heavenshell/vim-jsdoc'
+Plug 'w0rp/ale'
+Plug 'neovimhaskell/haskell-vim'
+Plug 'rust-lang/rust.vim'
+Plug 'godlygeek/tabular'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'mattn/emmet-vim'
+Plug 'Shougo/deoplete.nvim'
+Plug 'Raimondi/delimitMate'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'ryanoasis/vim-devicons'
+Plug 'arcticicestudio/nord-vim'
+" To enable airline fonts, clone https://github.com/powerline/fonts
+" and run `./install.sh`.
+Plug 'vim-airline/vim-airline'
 
-  " Required
-  call dein#add('~/.vim/dein/repos/github.com/Shougo/dein.vim')
-
-  " Add plugins here
-  call dein#add('Shougo/vimproc.vim', { 'build': 'make' })
-  call dein#add('Shougo/deoplete.nvim')
-  call dein#add('autozimu/LanguageClient-neovim', { 'rev': 'next', 'build': 'bash install.sh'})
-  call dein#add('mhartington/nvim-typescript')
-  call dein#add('editorconfig/editorconfig-vim')
-  call dein#add('leafgarland/typescript-vim')
-  call dein#add('heavenshell/vim-jsdoc')
-  call dein#add('w0rp/ale')
-  call dein#add('neovimhaskell/haskell-vim')
-  call dein#add('rust-lang/rust.vim')
-  call dein#add('godlygeek/tabular')
-  call dein#add('ctrlpvim/ctrlp.vim')
-  call dein#add('mattn/emmet-vim')
-  call dein#add('Shougo/deoplete.nvim')
-  call dein#add('Raimondi/delimitMate')
-  call dein#add('scrooloose/nerdtree')
-  call dein#add('tpope/vim-fugitive')
-  call dein#add('tpope/vim-surround')
-  call dein#add('tpope/vim-commentary')
-  call dein#add('ryanoasis/vim-devicons')
-  call dein#add('arcticicestudio/nord-vim')
-  " To enable airline fonts, clone https://github.com/powerline/fonts
-  " and run `./install.sh`.
-  call dein#add('vim-airline/vim-airline')
-
-  call dein#end()
-  call dein#save_state()
-endif
+call plug#end()
 
 filetype plugin indent on
 syntax enable
