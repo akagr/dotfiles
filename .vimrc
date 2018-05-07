@@ -149,6 +149,9 @@ let g:netrw_altv = 1
 let g:netrw_liststyle=3
 let g:netrw_winsize=20
 
+" NERDTree config
+let g:NERDTreeWinSize=60
+
 " Deoplete settings
 let g:deoplete#enable_at_startup = 1
 
