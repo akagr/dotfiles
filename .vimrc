@@ -88,6 +88,9 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
+" Don't open tyepscript preview automatically
+set completeopt-=preview
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Variables
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
