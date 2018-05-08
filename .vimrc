@@ -208,6 +208,10 @@ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 " Add jsdoc for function
 nmap <silent> <C-l> <Plug>(jsdoc)
+" Go to typescript definition
+nnoremap <leader>td :TSDef<cr>
+" Go to next error
+nnoremap <leader>an :ALENext<cr>
 
 """" Leader shortcuts
 " Copy whole buffer
