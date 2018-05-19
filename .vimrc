@@ -22,7 +22,6 @@ Plug 'w0rp/ale'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'rust-lang/rust.vim'
 Plug 'godlygeek/tabular'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mattn/emmet-vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Raimondi/delimitMate'
@@ -32,6 +31,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'ryanoasis/vim-devicons'
 Plug 'arcticicestudio/nord-vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 " To enable airline fonts, clone https://github.com/powerline/fonts
 " and run `./install.sh`.
 Plug 'vim-airline/vim-airline'
@@ -129,17 +130,6 @@ let g:LanguageClient_serverCommands = {
 " Editorconfig
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
-" CtrlP
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'r'
-let g:ctrlp_user_command = {
-  \ 'types': {
-  \ 1: ['.git', 'cd %s && git ls-files | sort -r']
-  \ },
-  \ 'fallback': 'find %s -type f'
-  \ }
-
 " Hit enter in the file browser to open the selected
 " file with :vsplit to the right of the browser.
 let g:netrw_browse_split = 4
@@ -199,7 +189,8 @@ nnoremap <leader>s :w<cr>
 noremap <silent> <leader>, :noh<cr>
 " Insert empty line between braces on return
 imap <expr> <CR> pumvisible() ? deoplete#close_popup() : '<Plug>delimitMateCR'
-nnoremap <c-b> :CtrlPBuffer<cr>
+nnoremap <c-p> :Files<cr>
+nnoremap <c-b> :Buffers<cr>
 " Tab for cycling auto suggest
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " Neosnippets plugin key-mappings.
