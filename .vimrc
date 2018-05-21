@@ -170,6 +170,16 @@ let s:enabled_options = [
 let g:jsdoc_allow_shorthand=1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Commands
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Rg stands for ripgrep
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(),
+  \   <bang>0)
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key Bindings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Toggle file explorer
@@ -191,6 +201,7 @@ noremap <silent> <leader>, :noh<cr>
 imap <expr> <CR> pumvisible() ? deoplete#close_popup() : '<Plug>delimitMateCR'
 nnoremap <c-p> :Files<cr>
 nnoremap <c-b> :Buffers<cr>
+nnoremap <c-f> :Rg<space>
 " Tab for cycling auto suggest
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " Neosnippets plugin key-mappings.
