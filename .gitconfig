@@ -12,6 +12,9 @@
     dif = diff
     hist = log --pretty=format:"%C(yellow)%h\\ %Cgreen%d\\ %Creset%s\\ %Cred[%aN\\ -\\ %ad]%Creset" --date=short --graph --all
     graph = log --pretty=format:"%C(blue)%d%Creset" --graph --simplify-by-decoration --all --dense
+    current = "!git rev-parse --abbrev-ref HEAD"
+    pub = "!git push -u origin $(git current)"
+    publish = "!git pub"
     shoot = push origin --delete
 [color]
     ui = true
