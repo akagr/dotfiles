@@ -20,6 +20,18 @@ export CLICOLOR=1
 
 source ~/.zprompt
 
+alias servedir="python -m SimpleHTTPServer"
+alias gti="git"
+alias res="tmux attach -t 0"
+jira () {
+    git branch -a |\
+    grep $1 |\
+    head -n 1 |\
+    sed 's|* ||' |\
+    sed 's|remote/origin/||' |\
+    xargs -I {} git checkout {}
+}
+
 export NVM_DIR="/Users/akash/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
