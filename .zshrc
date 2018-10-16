@@ -23,13 +23,27 @@ source ~/.zprompt
 alias servedir="python -m SimpleHTTPServer"
 alias gti="git"
 alias res="tmux attach -t 0"
-jira () {
+
+# switches to git branch containing provided string in its name
+gitsw () {
     git branch -a |\
     grep $1 |\
     head -n 1 |\
     sed 's|* ||' |\
     sed 's|remote/origin/||' |\
     xargs -I {} git checkout {}
+}
+
+# Opens jira issue. Usage:
+# > jira 4452
+jira () {
+    open "https://jira.synchronoss.net:8443/jira/browse/SIP-${1}"
+}
+
+# Joins two images horizontally and adds date
+collage_date () {
+    CURR_DATE="$(date "+%d-%m-%Y"|sed -e ' s/\"/\\\"/g' )"
+    convert $1 $2 +append -pointsize 36 -fill black -draw "text 10,30 \"$CURR_DATE\"" "$CURR_DATE.jpg"
 }
 
 export NVM_DIR="/Users/akash/.nvm"
