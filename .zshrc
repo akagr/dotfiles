@@ -23,9 +23,10 @@ source ~/.zprompt
 alias servedir="python -m SimpleHTTPServer"
 alias gti="git"
 alias res="tmux attach -t 0"
+alias swift='PATH="/usr/bin:$PATH" swift'
 
 # switches to git branch containing provided string in its name
-gitsw () {
+ticket () {
     git branch -a |\
     grep $1 |\
     head -n 1 |\
