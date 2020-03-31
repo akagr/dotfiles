@@ -35,6 +35,11 @@ ticket () {
     xargs -I {} git checkout {}
 }
 
+# list out contents of input directory sorted by size
+explore-dir () {
+    du -sh $1/* | sort -h
+}
+
 # Opens jira issue. Usage:
 # > jira 4452
 jira () {
@@ -43,8 +48,8 @@ jira () {
 
 # Joins two images horizontally and adds date
 collage_date () {
-    CURR_DATE="$(date "+%d-%m-%Y"|sed -e ' s/\"/\\\"/g' )"
-    convert $1 $2 +append -pointsize 36 -fill black -draw "text 10,30 \"$CURR_DATE\"" "$CURR_DATE.jpg"
+    CURR_DATE="$3"
+    convert $1 $2 +append -pointsize 36 -fill black -draw "text 10,30 \"$3\"" "$3.jpg"
 }
 
 export NVM_DIR="/Users/akash/.nvm"

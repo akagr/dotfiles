@@ -12,20 +12,22 @@ call plug#begin('~/.vim/plugged')
 
 " Add plugins here
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'mhartington/nvim-typescript', { 'commit': '70e36b80113c2d84663b0f86885320022943dd51' }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'isRuslan/vim-es6'
+Plug 'posva/vim-vue'
 Plug 'heavenshell/vim-jsdoc'
 Plug 'w0rp/ale'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'rust-lang/rust.vim'
+Plug 'keith/swift.vim'
 Plug 'godlygeek/tabular'
 Plug 'shime/vim-livedown'
 Plug 'mattn/emmet-vim'
-Plug 'Shougo/deoplete.nvim'
+Plug 'ap/vim-css-color'
 Plug 'Raimondi/delimitMate'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
