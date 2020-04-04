@@ -50,7 +50,7 @@ syntax enable
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Essentials
-set encoding=utf-8
+set encoding=UTF-8
 set regexpengine=1
 set clipboard=unnamed
 set autoread nobackup nowritebackup noswapfile hidden
@@ -111,10 +111,12 @@ let g:airline_powerline_fonts = 1
 " Ale Configuration
 let g:ale_fixers = {
   \ 'typescript': ['prettier'],
+  \ 'ruby': [],
   \ 'rust': ['rustfmt']
   \ }
 let g:ale_linters = {
   \ 'javascript': ['eslint'],
+  \ 'ruby': ['standardrb', 'rubocop'],
   \ 'typescript': ['tslint', 'tsserver'],
   \ 'rust': ['rls']
   \ }
