@@ -27,6 +27,7 @@ Plug 'keith/swift.vim'
 Plug 'godlygeek/tabular'
 Plug 'shime/vim-livedown'
 Plug 'mattn/emmet-vim'
+Plug 'elixir-editors/vim-elixir'
 Plug 'ap/vim-css-color'
 Plug 'Raimondi/delimitMate'
 Plug 'scrooloose/nerdtree'
@@ -152,10 +153,11 @@ let g:NERDTreeWinSize=60
 let g:deoplete#enable_at_startup = 1
 
 " Use smartcase.
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#auto_complete_start_length = 2
 let g:deoplete#sources#tss#javascript_support = 1
-let g:deoplete#file#enable_buffer_path = 1
+call deoplete#custom#var('enable_buffer_path', v:true)
+call deoplete#custom#option({
+\ 'smart_case': v:true,
+\ })
 
 " Add the snippets directory
 let g:neosnippet#snippets_directory='~/.vim/snippets'
