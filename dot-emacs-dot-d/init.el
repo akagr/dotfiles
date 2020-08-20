@@ -5,8 +5,6 @@
 ;;------------------- Package Config -----------------------
 (require 'package)
 
-(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 (setq package-enable-at-startup nil)
@@ -39,9 +37,47 @@
   :config
   (load-theme 'nord t))
 
+(use-package hydra
+  :ensure t)
+
+(use-package counsel
+  :ensure t
+  :requires (hydra)
+  :config
+  (ivy-mode 1)
+  (setq ivy-re-builders-alist
+	'((t . ivy--regex-fuzzy)))
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  :bind
+  ("M-x" . counsel-M-x)
+  ("C-s" . swiper-isearch))
+
+(use-package projectile
+  :ensure t
+  :init
+  (setq projectile-completion-system 'ivy)
+  :config
+  (define-key projectile-mode-map (kbd "M-p") 'projectile-command-map)
+  (projectile-mode +1))
+
+(use-package lsp-mode
+  :ensure t
+  :hook
+  (ruby-mode . lsp-deferred)
+  :commands lsp)
+
+(use-package company
+  :ensure t
+  :config
+  (global-company-mode 1))
+
 ;;------------------- Better Defaults ------------------------
 
-(set-face-attribute 'default nil :font "FiraCode Nerd Font" :height 130 :weight 'normal)
+(set-face-attribute 'default nil
+		    :family "FiraCode Nerd Font"
+		    :height 130
+		    :weight 'normal)
 
 (setq-default
  ;; Don't use the compiled code if its the older package.
@@ -54,6 +90,8 @@
  auto-save-default nil
 
  display-line-numbers t)
+
+(setq vc-follow-symlinks t) ; always follow symlinks
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 (defalias 'list-buffers 'ibuffer) ; always use ibuffer
