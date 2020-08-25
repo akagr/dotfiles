@@ -1,3 +1,12 @@
 .vim/bundle
 .vim/.netrwhist
 .vim/autoload
+dot-emacs-dot-d/elpa
+dot-emacs-dot-d/.cache
+dot-emacs-dot-d/.lsp-*
+dot-emacs-dot-d/ido.last
+dot-emacs-dot-d/projectile*
+dot-emacs-dot-d/recentf
+dot-emacs-dot-d/transient
+*#
+*~

@@ -21,7 +21,7 @@
 ;;------------------- Packages ------------------------------
 (use-package evil
   :ensure t
-  :init
+  :demand t
   :config
   (evil-mode)
   (evil-set-leader 'normal (kbd ","))
@@ -29,8 +29,16 @@
 
 (use-package magit
   :ensure t
+  :demand t
   :bind
   ("C-x g" . magit-status))
+
+(use-package evil-magit
+  :ensure t
+  :demand t
+  :after magit evil
+  :config
+  (evil-define-key 'normal 'global (kbd "<leader>gs") 'magit-status))
 
 (use-package hydra
   :ensure t)
