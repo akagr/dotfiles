@@ -21,12 +21,12 @@
     ui = true
 [core]
     editor = nvim
-	autocrlf = false
+    autocrlf = false
     safecrlf = true
     filemode = false
 [credential]
     helper = cache --timeout=36000
 [filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
+    clean = git hawser clean %f
+    smudge = git hawser smudge %f
+    required = true
