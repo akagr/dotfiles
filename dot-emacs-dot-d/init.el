@@ -1,6 +1,6 @@
 ;; Do not use `init.el` for `custom-*` code - use `custom-file.el`.
-(add-to-list 'load-path "~/.emacs.d/personal")
-(setq custom-file "~/.emacs.d/personal/custom-file.el")
+(add-to-list 'load-path "~/.emacs.d/modules")
+(setq custom-file "~/.emacs.d/modules/custom-file.el")
 (load-file custom-file)
 
 ;;------------------- Package Config -----------------------
@@ -43,9 +43,12 @@
 (use-package hydra
   :ensure t)
 
+(use-package flx
+  :ensure t)
+
 (use-package counsel
   :ensure t
-  :requires (hydra)
+  :after hydra flx
   :config
   (ivy-mode 1)
   (setq ivy-re-builders-alist
