@@ -94,7 +94,7 @@
 
 (use-package neotree
   :ensure t
-  :after all-the-icons
+  :after evil all-the-icons
   :init
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
   :config
@@ -117,20 +117,20 @@
  ;; Do not create lockfiles.
  create-lockfiles nil
  ;; Do not autosave.
- auto-save-default nil
-
- display-line-numbers t)
+ auto-save-default nil)
 
 (setq vc-follow-symlinks nil) ; always follow symlinks
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 (defalias 'list-buffers 'ibuffer) ; always use ibuffer
 
- ;; Disable windows chrome
+;; Disable windows chrome
 (progn
  (scroll-bar-mode -1)
  (tool-bar-mode -1)
  (menu-bar-mode -1))
+
+(global-display-line-numbers-mode)
 
 ;; Make the command key behave as 'meta'
 (when (eq system-type 'darwin)
