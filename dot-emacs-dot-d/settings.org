@@ -235,6 +235,17 @@ Defined which elements of the org files are fixed pitch, so they're not scaled:
  '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))))))
 #+END_SRC
 
+Replace default block delimiters with ligatures
+
+#+BEGIN_SRC emacs-lisp :results silent
+(setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
+ ("#+END_SRC" . "†")
+ ("#+begin_src" . "†")
+ ("#+end_src" . "†")))
+(setq prettify-symbols-unprettify-at-point t)
+(add-hook 'org-mode-hook 'prettify-symbols-mode)
+#+END_SRC
+
 Replace list bullets with prettier dots.
 
 #+BEGIN_SRC emacs-lisp :results silent
@@ -244,7 +255,7 @@ Replace list bullets with prettier dots.
 (font-lock-add-keywords 'org-mode
  '(("^ *\\([+]\\) "
  (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
- #+END_SRC
+#+END_SRC
 
 * Evil Mode
 
