@@ -97,9 +97,9 @@ Bootstrap package repos and package manager.
 (require 'use-package)
 #+END_SRC
 
-** Support Plugins
+** Support Packages
 
-Various plugins that are used by numerous other plugins.
+Various packages that are used by numerous other packages.
 + `hydra` is used for interactive key bindings (like pressing ? in a magit buffer).
 + `flx` is used for fuzzy matching and completion.
 + `which-key` allows using keybindings interactively. For example, if `<leader>gs` is mapped to `magit-status`, and I press only `<leader>g`, it'll show all the keys and commands that are valid follows.
@@ -117,7 +117,7 @@ Various plugins that are used by numerous other plugins.
 
 Set default frame height.
 #+BEGIN_SRC emacs-lisp :results silent
-(add-to-list 'default-frame-alist '(width . 130))
+(add-to-list 'default-frame-alist '(width . 200))
 (add-to-list 'default-frame-alist '(height . 48))
 #+END_SRC
 
@@ -141,7 +141,6 @@ Set default frame height.
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (load-theme 'doom-one t)
-  (doom-themes-visual-bell-config)
   (doom-themes-org-config))
 #+END_SRC
 
@@ -152,12 +151,10 @@ Load theme after creating a new frame. This is required to work with server/clie
 	    (with-selected-frame frame
 	      (load-theme 'doom-one t))))
 #+END_SRC
-#+BEGIN_SRC emacs-lisp :results silent
-
-#+END_SRC
 
 ** Org Mode
 
+Use org indent mode. This allows visual soft indentation of files without me having to maintain that. Also turn on visual line mode to wrap lines.
 #+BEGIN_SRC emacs-lisp :results silent
 (with-eval-after-load 'org
   (setq org-startup-indented t)
@@ -167,7 +164,6 @@ Load theme after creating a new frame. This is required to work with server/clie
 ** Evil Mode
 
 Being a long time (neo)vim user, I use evil mode exclusively for editing. When they say it's impossible to get out of vim, it has a deeper meaning.
-
 I've also configured a few quick keybindings to get to my emacs config, as well as an org file I use as scratch/notes.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package evil
@@ -183,7 +179,7 @@ I've also configured a few quick keybindings to get to my emacs config, as well 
   (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes)))
 #+END_SRC
 
-Commentary plugin allows me to retain my muscle memory of (un)commenting code.
+Commentary package allows me to retain my muscle memory of (un)commenting code.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package evil-commentary
   :after evil
@@ -193,7 +189,7 @@ Commentary plugin allows me to retain my muscle memory of (un)commenting code.
 
 ** Better UX for Menus - Ivy and Bros.
 
-Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It provides the backend which many plugins end up using. Alternatives would be helm and ido, which I've not yet tried.
+Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It provides the backend which many packages end up using. Alternatives would be helm and ido, which I've not yet tried.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package counsel
   :after hydra flx
@@ -221,8 +217,10 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
 
 ** VCS
 
-The primary git interface I use, and also one of the main reasons I use emacs.
+The primary git interface I use, and also one of the main reasons I use emacs. `libgit` provides native bindings which makes magit faster.
 #+BEGIN_SRC emacs-lisp :results silent
+(use-package libgit)
+
 (use-package magit
   :after counsel evil
   :demand t
@@ -230,8 +228,6 @@ The primary git interface I use, and also one of the main reasons I use emacs.
   ("C-x g" . magit-status)
   :config
   (evil-define-key 'normal 'global (kbd "<leader>gs") 'magit-status))
-
-(use-package libgit)
 
 (use-package magit-libgit
   :after (magit libgit))
@@ -243,7 +239,7 @@ The primary git interface I use, and also one of the main reasons I use emacs.
 
 ** Project Management
 
-Projectile plays pretty well with the other plugins, including magit and dired sidebar.
+Projectile plays pretty well with the other packages, including magit and dired sidebar.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package projectile
   :after evil
