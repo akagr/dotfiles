@@ -6,97 +6,97 @@
 
 Increase available resources to emacs. It's not 1990s.
 #+BEGIN_SRC emacs-lisp :results silent
-(setq gc-cons-threshold 100000000)
-(setq read-process-output-max (* 4 1024 1024)) ;; 4mb
+  (setq gc-cons-threshold 100000000)
+  (setq read-process-output-max (* 4 1024 1024)) ;; 4mb
 #+END_SRC
 
 Provide a file where emacs stores its custom config. This will allow me to check it in git.
 #+BEGIN_SRC emacs-lisp :results silent
-(add-to-list 'load-path "~/.emacs.d/modules")
-(setq custom-file "~/.emacs.d/modules/custom-file.el")
-(load-file custom-file)
+  (add-to-list 'load-path "~/.emacs.d/modules")
+  (setq custom-file "~/.emacs.d/modules/custom-file.el")
+  (load-file custom-file)
 #+END_SRC
 
 
 Turn off auto backup files, startup message and other more sensible defaults.
 #+BEGIN_SRC emacs-lisp :results silent
-(setq
- auto-save-default nil
- create-lockfiles nil
- make-backup-files nil
- inhibit-startup-message t
- load-prefer-newer t
- ring-bell-function 'ignore
- sentence-end-double-space nil
- truncate-lines 1
- vc-follow-symlinks nil)
+  (setq
+   auto-save-default nil
+   create-lockfiles nil
+   make-backup-files nil
+   inhibit-startup-message t
+   load-prefer-newer t
+   ring-bell-function 'ignore
+   sentence-end-double-space nil
+   truncate-lines 1
+   vc-follow-symlinks nil)
 #+END_SRC
 
 Don't use tabs for indentation.
 #+BEGIN_SRC emacs-lisp :results silent
-(setq-default indent-tabs-mode nil)
+  (setq-default indent-tabs-mode nil)
 #+END_SRC
 
 Use y or n instead of yes or no. Additionally, use ibuffers to be consistent with buffer management and not having to worry about wrong key chords.
 #+BEGIN_SRC emacs-lisp :results silent
-(defalias 'yes-or-no-p 'y-or-n-p)
-(defalias 'list-buffers 'ibuffer)
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (defalias 'list-buffers 'ibuffer)
 #+END_SRC
 
 Turn off all the chrome that emacs puts by default.
 #+BEGIN_SRC emacs-lisp :results silent
-(progn
- (scroll-bar-mode -1)
- (tool-bar-mode -1)
- (menu-bar-mode -1))
+  (progn
+    (scroll-bar-mode -1)
+    (tool-bar-mode -1)
+    (menu-bar-mode -1))
 #+END_SRC
 
 A few modes are turned on by default
 #+BEGIN_SRC emacs-lisp :results silent
-(global-so-long-mode) ;; handles really long lines well
-(electric-pair-mode) ;; auto matching brackets, parentheses etc.
-(show-paren-mode) ;; show matching opening/closing parentheses
-(column-number-mode) ;; show column number in mode line
-(global-display-line-numbers-mode) ;; show line numbers in all buffers
+  (global-so-long-mode) ;; handles really long lines well
+  (electric-pair-mode) ;; auto matching brackets, parentheses etc.
+  (show-paren-mode) ;; show matching opening/closing parentheses
+  (column-number-mode) ;; show column number in mode line
+  (global-display-line-numbers-mode) ;; show line numbers in all buffers
 #+END_SRC
 
 Make the command key behave as 'meta' on macOS.
 #+BEGIN_SRC emacs-lisp :results silent
-(when (eq system-type 'darwin)
-  (setq mac-option-key-is-meta nil
-      mac-command-key-is-meta t
-      mac-command-modifier 'meta
-      mac-option-modifier 'none))
+  (when (eq system-type 'darwin)
+    (setq mac-option-key-is-meta nil
+          mac-command-key-is-meta t
+          mac-command-modifier 'meta
+          mac-option-modifier 'none))
 #+END_SRC
 
 Delete whitespace on save
 #+BEGIN_SRC emacs-lisp :results silent
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp :results silent
-(add-hook 'after-change-major-mode-hook
-          (lambda ()
-            (modify-syntax-entry ?_ "w")))
+  (add-hook 'after-change-major-mode-hook
+            (lambda ()
+              (modify-syntax-entry ?_ "w")))
 #+END_SRC
 
 * Package Management
 
 Bootstrap package repos and package manager.
 #+BEGIN_SRC emacs-lisp :results silent
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+  (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
-(setq package-enable-at-startup nil)
-(package-initialize)
+  (setq package-enable-at-startup nil)
+  (package-initialize)
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(setq use-package-always-ensure t)
-(require 'use-package)
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+  (setq use-package-always-ensure t)
+  (require 'use-package)
 #+END_SRC
 
 * Support Packages
@@ -106,51 +106,51 @@ Various packages that are used by numerous other packages.
 + `flx` is used for fuzzy matching and completion.
 + `which-key` allows using keybindings interactively. For example, if `<leader>gs` is mapped to `magit-status`, and I press only `<leader>g`, it'll show all the keys and commands that are valid follows.
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package hydra)
-(use-package flx)
-(use-package which-key
-  :config
-  (which-key-mode)
-  (which-key-setup-side-window-bottom)
-  :custom (which-key-idle-delay 1.0))
+  (use-package hydra)
+  (use-package flx)
+  (use-package which-key
+    :config
+    (which-key-mode)
+    (which-key-setup-side-window-bottom)
+    :custom (which-key-idle-delay 1.0))
 #+END_SRC
 
 * Appearance
 
 Set default frame height.
 #+BEGIN_SRC emacs-lisp :results silent
-(add-to-list 'default-frame-alist '(width . 200))
-(add-to-list 'default-frame-alist '(height . 48))
+  (add-to-list 'default-frame-alist '(width . 200))
+  (add-to-list 'default-frame-alist '(height . 48))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package fira-code-mode
-  :demand t
-  :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
-  :hook prog-mode
-  :config
-  (set-face-attribute 'default nil
-                      :family "FiraCode Nerd Font"
-                      :height 130
-                      :weight 'normal))
+  (use-package fira-code-mode
+    :demand t
+    :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
+    :hook prog-mode
+    :config
+    (set-face-attribute 'default nil
+                        :family "FiraCode Nerd Font"
+                        :height 130
+                        :weight 'normal))
 
-(use-package rainbow-delimiters
-  :hook ((prog-mode . rainbow-delimiters-mode)))
+  (use-package rainbow-delimiters
+    :hook ((prog-mode . rainbow-delimiters-mode)))
 
-(use-package doom-themes
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-one t))
+  (use-package doom-themes
+    :config
+    ;; Global settings (defaults)
+    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+          doom-themes-enable-italic t) ; if nil, italics is universally disabled
+    (load-theme 'doom-one t))
 #+END_SRC
 
 Load theme after creating a new frame. This is required to work with server/client model. Otherwise, emacs will load theme only once when starting server and all subsequent frames won't get the theme.
 #+BEGIN_SRC emacs-lisp :results silent
-(add-hook 'after-make-frame-functions
-	  (lambda (frame)
-	    (with-selected-frame frame
-	      (load-theme 'doom-one t))))
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (with-selected-frame frame
+                (load-theme 'doom-one t))))
 #+END_SRC
 
 * Org Mode
@@ -160,101 +160,102 @@ Load theme after creating a new frame. This is required to work with server/clie
 - Turn on variable pitch mode to use different scale for headings
 
 #+BEGIN_SRC emacs-lisp :results silent
-(with-eval-after-load 'org
-  (setq org-startup-indented t)
-  (add-hook 'org-mode-hook #'visual-line-mode)
-  (add-hook 'org-mode-hook #'variable-pitch-mode))
-
-(setq org-hide-emphasis-markers t
- org-fontify-done-headline t
- org-hide-leading-stars t
- org-pretty-entities t
- org-odd-levels-only t)
+  (with-eval-after-load 'org
+    (setq org-startup-indented t
+          org-hide-emphasis-markers t
+          org-fontify-done-headline t
+          org-hide-leading-stars t
+          org-pretty-entities t
+          org-src-tab-acts-natively t
+          org-odd-levels-only t)
+    (add-hook 'org-mode-hook #'visual-line-mode)
+    (add-hook 'org-mode-hook #'variable-pitch-mode))
 #+END_SRC
 
 Org bullets package prettifies the headline markers:
 
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package org-bullets
- :custom
- (org-bullets-bullet-list '("◉" "☯" "○" "☯" "✸" "☯" "✿" "☯" "✜" "☯" "◆" "☯" "▶"))
- (org-ellipsis " ▶")
- :hook (org-mode . org-bullets-mode))
+  (use-package org-bullets
+    :custom
+    (org-bullets-bullet-list '("◉" "☯" "○" "☯" "✸" "☯" "✿" "☯" "✜" "☯" "◆" "☯" "▶"))
+    (org-ellipsis " ▶")
+    :hook (org-mode . org-bullets-mode))
 #+END_SRC
 
 Configure font. The variable-pitch is used for fonts which are scaled. Eg: Headlines and content. Fixed pitch is for things with fixed size, like code, tables etc.
 
 #+BEGIN_SRC emacs-lisp :results silent
-(add-hook 'after-make-frame-functions
-(lambda (frame)
-(with-selected-frame frame
-(progn
-(let* ((variable-tuple
-        (cond ((x-list-fonts "FiraCode Nerd Font") '(:font "FiraCode Nerd Font"))
-              (nil (warn "Cannot find Firacode. Install FiraCode Nerd Font."))))
-       (base-font-color   (face-foreground 'default nil 'default))
-       (headline         `(:inherit default :weight bold :foreground ,base-font-color)))
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (with-selected-frame frame
+                (progn
+                  (let* ((variable-tuple
+                          (cond ((x-list-fonts "FiraCode Nerd Font") '(:font "FiraCode Nerd Font"))
+                                (nil (warn "Cannot find Firacode. Install FiraCode Nerd Font."))))
+                         (base-font-color   (face-foreground 'default nil 'default))
+                         (headline         `(:inherit default :weight bold :foreground ,base-font-color)))
 
-  (custom-theme-set-faces
-   'user
-   `(org-level-8 ((t (,@headline ,@variable-tuple))))
-   `(org-level-7 ((t (,@headline ,@variable-tuple))))
-   `(org-level-6 ((t (,@headline ,@variable-tuple))))
-   `(org-level-5 ((t (,@headline ,@variable-tuple))))
-   `(org-level-4 ((t (,@headline ,@variable-tuple))))
-   `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.1))))
-   `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.25))))
-   `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.5))))
-   `(org-document-title ((t (,@headline ,@variable-tuple :height 1.75 :underline nil)))))))
+                    (custom-theme-set-faces
+                     'user
+                     `(org-level-8 ((t (,@headline ,@variable-tuple))))
+                     `(org-level-7 ((t (,@headline ,@variable-tuple))))
+                     `(org-level-6 ((t (,@headline ,@variable-tuple))))
+                     `(org-level-5 ((t (,@headline ,@variable-tuple))))
+                     `(org-level-4 ((t (,@headline ,@variable-tuple))))
+                     `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.1))))
+                     `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.25))))
+                     `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.5))))
+                     `(org-document-title ((t (,@headline ,@variable-tuple :height 1.75 :underline nil)))))))
 
-(custom-theme-set-faces
- 'user
- '(variable-pitch ((t (:family "FiraCode Nerd Font" :height 140 :weight normal))))
- '(fixed-pitch ((t ( :family "FiraCode Nerd Font" :height 130))))))))
+                (custom-theme-set-faces
+                 'user
+                 '(variable-pitch ((t (:family "FiraCode Nerd Font" :height 140 :weight normal))))
+                 '(fixed-pitch ((t ( :family "FiraCode Nerd Font" :height 130))))))))
 #+END_SRC
 
 Defined which elements of the org files are fixed pitch, so they're not scaled:
 
 #+BEGIN_SRC emacs-lisp :results silent
-(add-hook 'after-make-frame-functions
-(lambda (frame)
-(with-selected-frame frame
-(custom-theme-set-faces
- 'user
- '(org-block ((t (:inherit fixed-pitch))))
- '(org-code ((t (:inherit (shadow fixed-pitch)))))
- '(org-document-info ((t (:foreground "dark orange"))))
- '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
- '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
- '(org-link ((t (:foreground "royal blue" :underline t))))
- '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
- '(org-property-value ((t (:inherit fixed-pitch))) t)
- '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
- '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
- '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1))))
- '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))))))
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (with-selected-frame frame
+                (custom-theme-set-faces
+                 'user
+                 '(org-block ((t (:inherit fixed-pitch))))
+                 '(org-code ((t (:inherit (shadow fixed-pitch)))))
+                 '(org-document-info ((t (:foreground "dark orange"))))
+                 '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+                 '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+                 '(org-link ((t (:foreground "royal blue" :underline t))))
+                 '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+                 '(org-property-value ((t (:inherit fixed-pitch))) t)
+                 '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+                 '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+                 '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1))))
+                 '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))))))
 #+END_SRC
 
 Replace default block delimiters with ligatures
 
 #+BEGIN_SRC emacs-lisp :results silent
-(setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
- ("#+END_SRC" . "†")
- ("#+begin_src" . "†")
- ("#+end_src" . "†")))
-(setq prettify-symbols-unprettify-at-point t)
-(add-hook 'org-mode-hook 'prettify-symbols-mode)
+  (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
+                                         ("#+END_SRC" . "†")
+                                         ("#+begin_src" . "†")
+                                         ("#+end_src" . "†")))
+  (setq prettify-symbols-unprettify-at-point t)
+  (add-hook 'org-mode-hook 'prettify-symbols-mode)
 #+END_SRC
 
 Replace list bullets with prettier dots.
 
 #+BEGIN_SRC emacs-lisp :results silent
-(font-lock-add-keywords 'org-mode
- '(("^ *\\([-]\\) "
- (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-(font-lock-add-keywords 'org-mode
- '(("^ *\\([+]\\) "
- (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([+]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
 #+END_SRC
 
 * Evil Mode
@@ -262,203 +263,204 @@ Replace list bullets with prettier dots.
 Being a long time (neo)vim user, I use evil mode exclusively for editing. When they say it's impossible to get out of vim, it has a deeper meaning.
 I've also configured a few quick keybindings to get to my emacs config, as well as an org file I use as scratch/notes.
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package evil
-  :demand t
-  :init
-  (setq evil-respect-visual-line-mode t)
-  :config
-  (evil-mode)
-  (evil-set-leader 'normal (kbd ","))
-  (evil-define-key 'normal 'global (kbd "<leader>bd") 'kill-this-buffer)
-  (evil-define-key 'normal 'global (kbd "<leader>oe") (lambda() (interactive)(find-file "~/.emacs.d/settings.org")))
-  (evil-define-key 'normal 'global (kbd "<leader>oo") (lambda() (interactive)(find-file "~/Dropbox/akash.org")))
-  (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes)))
+  (use-package evil
+    :demand t
+    :init
+    (setq evil-respect-visual-line-mode t)
+    :config
+    (evil-mode)
+    (evil-set-leader 'normal (kbd ","))
+    (evil-define-key 'normal 'global (kbd "<leader>bd") 'kill-this-buffer)
+    (evil-define-key 'normal 'global (kbd "<leader>oe") (lambda() (interactive)(find-file "~/.emacs.d/settings.org")))
+    (evil-define-key 'normal 'global (kbd "<leader>oo") (lambda() (interactive)(find-file "~/Dropbox/akash.org")))
+    (evil-define-key 'normal 'global (kbd "<leader>ib") (lambda() (interactive)(org-indent-block)))
+    (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes)))
 #+END_SRC
 
 Commentary package allows me to retain my muscle memory of (un)commenting code.
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package evil-commentary
-  :after evil
-  :config
-  (evil-commentary-mode))
+  (use-package evil-commentary
+    :after evil
+    :config
+    (evil-commentary-mode))
 #+END_SRC
 
 * Better UX for Menus - Ivy and Bros.
 
 Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It provides the backend which many packages end up using. Alternatives would be helm and ido, which I've not yet tried.
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package counsel
-  :after hydra flx
-  :config
-  (ivy-mode 1)
-  (setq ivy-re-builders-alist
-	'((swiper . ivy--regex-plus)
-	  (t . ivy--regex-fuzzy)))
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
-  (evil-define-key 'normal 'global (kbd "C-b") 'ivy-switch-buffer)
-  :bind
-  ("M-x" . counsel-M-x)
-  ("C-s" . swiper-isearch))
+  (use-package counsel
+    :after hydra flx
+    :config
+    (ivy-mode 1)
+    (setq ivy-re-builders-alist
+          '((swiper . ivy--regex-plus)
+            (t . ivy--regex-fuzzy)))
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-count-format "(%d/%d) ")
+    (evil-define-key 'normal 'global (kbd "C-b") 'ivy-switch-buffer)
+    :bind
+    ("M-x" . counsel-M-x)
+    ("C-s" . swiper-isearch))
 
-(use-package ivy-rich
-  :custom
-  (ivy-virtual-abbreviate 'full)
-  (ivy-rich-switch-buffer-align-virtual-buffer nil)
-  (ivy-rich-path-style 'full)
-  :config
-  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
-  (ivy-rich-mode))
+  (use-package ivy-rich
+    :custom
+    (ivy-virtual-abbreviate 'full)
+    (ivy-rich-switch-buffer-align-virtual-buffer nil)
+    (ivy-rich-path-style 'full)
+    :config
+    (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+    (ivy-rich-mode))
 #+END_SRC
 
 * VCS
 
 The primary git interface I use, and also one of the main reasons I use emacs. `libgit` provides native bindings which makes magit faster.
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package libgit)
+  (use-package libgit)
 
-(use-package magit
-  :after counsel evil
-  :demand t
-  :bind
-  ("C-x g" . magit-status)
-  :config
-  (evil-define-key 'normal 'global (kbd "<leader>gs") 'magit-status))
+  (use-package magit
+    :after counsel evil
+    :demand t
+    :bind
+    ("C-x g" . magit-status)
+    :config
+    (evil-define-key 'normal 'global (kbd "<leader>gs") 'magit-status))
 
-(use-package magit-libgit
-  :after (magit libgit))
+  (use-package magit-libgit
+    :after (magit libgit))
 
-(use-package evil-magit
-  :demand t
-  :after magit evil)
+  (use-package evil-magit
+    :demand t
+    :after magit evil)
 #+END_SRC
 
 * Project Management
 
 Projectile plays pretty well with the other packages, including magit and dired sidebar.
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package projectile
-  :after evil
-  :init
-  (setq projectile-completion-system 'ivy)
-  :config
-  (define-key projectile-mode-map (kbd "M-p") 'projectile-command-map)
-  (evil-define-key 'normal 'global (kbd "<leader>p") 'projectile-command-map)
-  (evil-define-key 'normal 'global (kbd "C-p") 'projectile-find-file)
-  (projectile-mode +1))
+  (use-package projectile
+    :after evil
+    :init
+    (setq projectile-completion-system 'ivy)
+    :config
+    (define-key projectile-mode-map (kbd "M-p") 'projectile-command-map)
+    (evil-define-key 'normal 'global (kbd "<leader>p") 'projectile-command-map)
+    (evil-define-key 'normal 'global (kbd "C-p") 'projectile-find-file)
+    (projectile-mode +1))
 
-(use-package counsel-projectile
-  :after projectile)
+  (use-package counsel-projectile
+    :after projectile)
 #+END_SRC
 
 * Programming Languages
 *** Elixir
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package elixir-mode)
+  (use-package elixir-mode)
 #+END_SRC
 
 *** Yaml
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package yaml-mode)
+  (use-package yaml-mode)
 #+END_SRC
 
 * Code completion and Error Checking
 
 Using company for auto-completion backend. Most modern languages implement LSP (Language Server Protocol), allowing for rich auto-completion.
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package company
-  :init
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 1)
-  :config
-  (global-company-mode 1))
+  (use-package company
+    :init
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 1)
+    :config
+    (global-company-mode 1))
 
-(use-package lsp-mode
-  :commands lsp
-  :diminish lsp-mode
-  :hook
-  (ruby-mode . lsp-deferred)
-  (elixir-mode . lsp-deferred)
-  :init
-  (add-to-list 'exec-path "/Users/akash/Downloads/elixir-ls")
-  (setq lsp-completion-provider :capf))
+  (use-package lsp-mode
+    :commands lsp
+    :diminish lsp-mode
+    :hook
+    (ruby-mode . lsp-deferred)
+    (elixir-mode . lsp-deferred)
+    :init
+    (add-to-list 'exec-path "/Users/akash/Downloads/elixir-ls")
+    (setq lsp-completion-provider :capf))
 
-(use-package lsp-ui
-  :custom
-  (lsp-ui-doc-delay 0.75)
-  (lsp-ui-doc-max-height 200)
-  :after lsp-mode)
+  (use-package lsp-ui
+    :custom
+    (lsp-ui-doc-delay 0.75)
+    (lsp-ui-doc-max-height 200)
+    :after lsp-mode)
 
-(use-package company-lsp
-  :custom (company-lsp-enable-snippet t)
-  :after (company lsp-mode))
+  (use-package company-lsp
+    :custom (company-lsp-enable-snippet t)
+    :after (company lsp-mode))
 
-(use-package flycheck
-  :after org
-  :hook
-  (org-src-mode . disable-flycheck-for-elisp)
-  :custom
-  (flycheck-emacs-lisp-initialize-packages t)
-  (flycheck-display-errors-delay 0.1)
-  :config
-  (global-flycheck-mode)
-  (flycheck-set-indication-mode 'left-margin)
+  (use-package flycheck
+    :after org
+    :hook
+    (org-src-mode . disable-flycheck-for-elisp)
+    :custom
+    (flycheck-emacs-lisp-initialize-packages t)
+    (flycheck-display-errors-delay 0.1)
+    :config
+    (global-flycheck-mode)
+    (flycheck-set-indication-mode 'left-margin)
 
-  (defun disable-flycheck-for-elisp ()
-    (setq-local flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+    (defun disable-flycheck-for-elisp ()
+      (setq-local flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
-  (add-to-list 'flycheck-checkers 'proselint))
+    (add-to-list 'flycheck-checkers 'proselint))
 
-(use-package flycheck-inline
-  :config (global-flycheck-inline-mode))
+  (use-package flycheck-inline
+    :config (global-flycheck-inline-mode))
 #+END_SRC
 
 * Sidebar
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package dired-sidebar
-  :commands (dired-sidebar-toggle-sidebar)
-  :after evil
-  :demand t
-  :init
-  (add-hook 'dired-sidebar-mode-hook
-            (lambda ()
-              (unless (file-remote-p default-directory)
-                (auto-revert-mode))))
+  (use-package dired-sidebar
+    :commands (dired-sidebar-toggle-sidebar)
+    :after evil
+    :demand t
+    :init
+    (add-hook 'dired-sidebar-mode-hook
+              (lambda ()
+                (unless (file-remote-p default-directory)
+                  (auto-revert-mode))))
 
-  :config
-  (evil-define-key 'normal 'global (kbd "<leader>n") 'dired-sidebar-toggle-sidebar)
-  (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
-  (push 'rotate-windows dired-sidebar-toggle-hidden-commands)
-  (setq dired-sidebar-theme 'icons)
-  (setq dired-sidebar-subtree-line-prefix "-")
-  (setq dired-sidebar-use-term-integration t)
-  (setq dired-sidebar-use-custom-font t))
+    :config
+    (evil-define-key 'normal 'global (kbd "<leader>n") 'dired-sidebar-toggle-sidebar)
+    (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
+    (push 'rotate-windows dired-sidebar-toggle-hidden-commands)
+    (setq dired-sidebar-theme 'icons)
+    (setq dired-sidebar-subtree-line-prefix "-")
+    (setq dired-sidebar-use-term-integration t)
+    (setq dired-sidebar-use-custom-font t))
 #+END_SRC
 
 *** Sidebar Icons
 Run `M-x all-the-icons-install-fonts` to install the icons.
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package all-the-icons)
+  (use-package all-the-icons)
 
-(use-package all-the-icons-dired
-  :after all-the-icons
-  :config
-  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+  (use-package all-the-icons-dired
+    :after all-the-icons
+    :config
+    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 #+END_SRC
 
 * General Searching
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package ripgrep)
+  (use-package ripgrep)
 
-(use-package deadgrep
-  :bind (("C-c h" . #'deadgrep)))
+  (use-package deadgrep
+    :bind (("C-c h" . #'deadgrep)))
 #+END_SRC
 
 * Custom Functions
 
 Copy current file path relative to project root.
 #+BEGIN_SRC emacs-lisp :results silent
-(defun copy-file-path ()
-  (interactive)
-  (kill-new (file-relative-name buffer-file-name (projectile-project-root))))
+  (defun copy-file-path ()
+    (interactive)
+    (kill-new (file-relative-name buffer-file-name (projectile-project-root))))
 #+END_SRC
