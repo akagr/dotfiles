@@ -1,6 +1,8 @@
-* Akash's Emacs config
+#+TITLE: My Emacs Config
+#+AUTHOR: Akash Agrawal
+#+EMAIL: akagr@outlook.com
 
-** Bootstrapping and Defaults
+* Bootstrapping and Defaults
 
 Increase available resources to emacs. It's not 1990s.
 #+BEGIN_SRC emacs-lisp :results silent
@@ -78,7 +80,7 @@ Delete whitespace on save
             (modify-syntax-entry ?_ "w")))
 #+END_SRC
 
-** Package Management
+* Package Management
 
 Bootstrap package repos and package manager.
 #+BEGIN_SRC emacs-lisp :results silent
@@ -97,7 +99,7 @@ Bootstrap package repos and package manager.
 (require 'use-package)
 #+END_SRC
 
-** Support Packages
+* Support Packages
 
 Various packages that are used by numerous other packages.
 + `hydra` is used for interactive key bindings (like pressing ? in a magit buffer).
@@ -113,7 +115,7 @@ Various packages that are used by numerous other packages.
   :custom (which-key-idle-delay 1.0))
 #+END_SRC
 
-** Appearance
+* Appearance
 
 Set default frame height.
 #+BEGIN_SRC emacs-lisp :results silent
@@ -140,8 +142,7 @@ Set default frame height.
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-one t)
-  (doom-themes-org-config))
+  (load-theme 'doom-one t))
 #+END_SRC
 
 Load theme after creating a new frame. This is required to work with server/client model. Otherwise, emacs will load theme only once when starting server and all subsequent frames won't get the theme.
@@ -152,16 +153,100 @@ Load theme after creating a new frame. This is required to work with server/clie
 	      (load-theme 'doom-one t))))
 #+END_SRC
 
-** Org Mode
+* Org Mode
 
-Use org indent mode. This allows visual soft indentation of files without me having to maintain that. Also turn on visual line mode to wrap lines.
+- Use org indent mode. This allows visual soft indentation of files without me having to maintain that.
+- Turn on visual line mode to wrap lines.
+- Turn on variable pitch mode to use different scale for headings
+
 #+BEGIN_SRC emacs-lisp :results silent
 (with-eval-after-load 'org
   (setq org-startup-indented t)
-  (add-hook 'org-mode-hook #'visual-line-mode))
+  (add-hook 'org-mode-hook #'visual-line-mode)
+  (add-hook 'org-mode-hook #'variable-pitch-mode))
+
+(setq org-hide-emphasis-markers t
+ org-fontify-done-headline t
+ org-hide-leading-stars t
+ org-pretty-entities t
+ org-odd-levels-only t)
 #+END_SRC
 
-** Evil Mode
+Org bullets package prettifies the headline markers:
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package org-bullets
+ :custom
+ (org-bullets-bullet-list '("◉" "☯" "○" "☯" "✸" "☯" "✿" "☯" "✜" "☯" "◆" "☯" "▶"))
+ (org-ellipsis " ▶")
+ :hook (org-mode . org-bullets-mode))
+#+END_SRC
+
+Configure font. The variable-pitch is used for fonts which are scaled. Eg: Headlines and content. Fixed pitch is for things with fixed size, like code, tables etc.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(add-hook 'after-make-frame-functions
+(lambda (frame)
+(with-selected-frame frame
+(progn
+(let* ((variable-tuple
+        (cond ((x-list-fonts "FiraCode Nerd Font") '(:font "FiraCode Nerd Font"))
+              (nil (warn "Cannot find Firacode. Install FiraCode Nerd Font."))))
+       (base-font-color   (face-foreground 'default nil 'default))
+       (headline         `(:inherit default :weight bold :foreground ,base-font-color)))
+
+  (custom-theme-set-faces
+   'user
+   `(org-level-8 ((t (,@headline ,@variable-tuple))))
+   `(org-level-7 ((t (,@headline ,@variable-tuple))))
+   `(org-level-6 ((t (,@headline ,@variable-tuple))))
+   `(org-level-5 ((t (,@headline ,@variable-tuple))))
+   `(org-level-4 ((t (,@headline ,@variable-tuple))))
+   `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.1))))
+   `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.25))))
+   `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.5))))
+   `(org-document-title ((t (,@headline ,@variable-tuple :height 1.75 :underline nil)))))))
+
+(custom-theme-set-faces
+ 'user
+ '(variable-pitch ((t (:family "FiraCode Nerd Font" :height 140 :weight normal))))
+ '(fixed-pitch ((t ( :family "FiraCode Nerd Font" :height 130))))))))
+#+END_SRC
+
+Defined which elements of the org files are fixed pitch, so they're not scaled:
+
+#+BEGIN_SRC emacs-lisp :results silent
+(add-hook 'after-make-frame-functions
+(lambda (frame)
+(with-selected-frame frame
+(custom-theme-set-faces
+ 'user
+ '(org-block ((t (:inherit fixed-pitch))))
+ '(org-code ((t (:inherit (shadow fixed-pitch)))))
+ '(org-document-info ((t (:foreground "dark orange"))))
+ '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
+ '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
+ '(org-link ((t (:foreground "royal blue" :underline t))))
+ '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+ '(org-property-value ((t (:inherit fixed-pitch))) t)
+ '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+ '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
+ '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1))))
+ '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))))))
+#+END_SRC
+
+Replace list bullets with prettier dots.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(font-lock-add-keywords 'org-mode
+ '(("^ *\\([-]\\) "
+ (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+(font-lock-add-keywords 'org-mode
+ '(("^ *\\([+]\\) "
+ (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
+ #+END_SRC
+
+* Evil Mode
 
 Being a long time (neo)vim user, I use evil mode exclusively for editing. When they say it's impossible to get out of vim, it has a deeper meaning.
 I've also configured a few quick keybindings to get to my emacs config, as well as an org file I use as scratch/notes.
@@ -187,7 +272,7 @@ Commentary package allows me to retain my muscle memory of (un)commenting code.
   (evil-commentary-mode))
 #+END_SRC
 
-** Better UX for Menus - Ivy and Bros.
+* Better UX for Menus - Ivy and Bros.
 
 Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It provides the backend which many packages end up using. Alternatives would be helm and ido, which I've not yet tried.
 #+BEGIN_SRC emacs-lisp :results silent
@@ -215,7 +300,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
   (ivy-rich-mode))
 #+END_SRC
 
-** VCS
+* VCS
 
 The primary git interface I use, and also one of the main reasons I use emacs. `libgit` provides native bindings which makes magit faster.
 #+BEGIN_SRC emacs-lisp :results silent
@@ -237,7 +322,7 @@ The primary git interface I use, and also one of the main reasons I use emacs. `
   :after magit evil)
 #+END_SRC
 
-** Project Management
+* Project Management
 
 Projectile plays pretty well with the other packages, including magit and dired sidebar.
 #+BEGIN_SRC emacs-lisp :results silent
@@ -255,7 +340,7 @@ Projectile plays pretty well with the other packages, including magit and dired 
   :after projectile)
 #+END_SRC
 
-** Programming Languages
+* Programming Languages
 *** Elixir
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package elixir-mode)
@@ -266,7 +351,7 @@ Projectile plays pretty well with the other packages, including magit and dired 
 (use-package yaml-mode)
 #+END_SRC
 
-** Code completion and Error Checking
+* Code completion and Error Checking
 
 Using company for auto-completion backend. Most modern languages implement LSP (Language Server Protocol), allowing for rich auto-completion.
 #+BEGIN_SRC emacs-lisp :results silent
@@ -317,7 +402,7 @@ Using company for auto-completion backend. Most modern languages implement LSP (
   :config (global-flycheck-inline-mode))
 #+END_SRC
 
-** Sidebar
+* Sidebar
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package dired-sidebar
   :commands (dired-sidebar-toggle-sidebar)
@@ -350,7 +435,7 @@ Run `M-x all-the-icons-install-fonts` to install the icons.
   (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 #+END_SRC
 
-** General Searching
+* General Searching
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package ripgrep)
 
@@ -358,7 +443,7 @@ Run `M-x all-the-icons-install-fonts` to install the icons.
   :bind (("C-c h" . #'deadgrep)))
 #+END_SRC
 
-** Custom Functions
+* Custom Functions
 
 Copy current file path relative to project root.
 #+BEGIN_SRC emacs-lisp :results silent
