@@ -195,10 +195,14 @@
   :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
   :hook prog-mode)
 
-(use-package nord-theme
+(use-package zenburn-theme
   :demand t
+  :init
+  (setq zenburn-use-variable-pitch t
+    zenburn-scale-org-headlines t
+    zenburn-scale-outline-headlines t)
   :config
-  (load-theme 'nord t))
+  (load-theme 'zenburn t))
 
 ;; Set font
 (set-face-attribute 'default nil
@@ -210,7 +214,7 @@
 (add-hook 'after-make-frame-functions
 	  (lambda (frame)
 	    (with-selected-frame frame
-	      (load-theme 'nord t))))
+	      (load-theme 'zenburn t))))
 
 ;;------------------- Better Defaults ------------------------
 
