@@ -153,12 +153,41 @@ Load theme after creating a new frame. This is required to work with server/clie
                 (load-theme 'doom-one t))))
 #+END_SRC
 
+* Evil Mode
+
+Being a long time (neo)vim user, I use evil mode exclusively for editing. When they say it's impossible to get out of vim, it has a deeper meaning.
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package evil
+    :demand t
+    :init
+    (setq evil-respect-visual-line-mode t)
+    :config
+    (evil-mode)
+    (evil-set-leader 'normal (kbd ","))
+    (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes)))
+#+END_SRC
+
+I've also configured a few quick keybindings to open often visited files (like config).
+#+BEGIN_SRC emacs-lisp :results silent
+  (evil-define-key 'normal 'global (kbd "<leader>bd") 'kill-this-buffer)
+  (evil-define-key 'normal 'global (kbd "<leader>oe") (lambda() (interactive)(find-file "~/.emacs.d/settings.org")))
+  (evil-define-key 'normal 'global (kbd "<leader>oo") (lambda() (interactive)(find-file "~/Dropbox/akash.org")))
+
+#+END_SRC
+
+Commentary package allows me to retain my muscle memory of (un)commenting code.
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package evil-commentary
+    :after evil
+    :config
+    (evil-commentary-mode))
+#+END_SRC
+
 * Org Mode
 
 - Use org indent mode. This allows visual soft indentation of files without me having to maintain that.
 - Turn on visual line mode to wrap lines.
 - Turn on variable pitch mode to use different scale for headings
-
 #+BEGIN_SRC emacs-lisp :results silent
   (with-eval-after-load 'org
     (setq org-startup-indented t
@@ -173,7 +202,6 @@ Load theme after creating a new frame. This is required to work with server/clie
 #+END_SRC
 
 Org bullets package prettifies the headline markers:
-
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package org-bullets
     :custom
@@ -183,7 +211,6 @@ Org bullets package prettifies the headline markers:
 #+END_SRC
 
 Configure font. The variable-pitch is used for fonts which are scaled. Eg: Headlines and content. Fixed pitch is for things with fixed size, like code, tables etc.
-
 #+BEGIN_SRC emacs-lisp :results silent
   (add-hook 'after-make-frame-functions
             (lambda (frame)
@@ -214,7 +241,6 @@ Configure font. The variable-pitch is used for fonts which are scaled. Eg: Headl
 #+END_SRC
 
 Defined which elements of the org files are fixed pitch, so they're not scaled:
-
 #+BEGIN_SRC emacs-lisp :results silent
   (add-hook 'after-make-frame-functions
             (lambda (frame)
@@ -236,7 +262,6 @@ Defined which elements of the org files are fixed pitch, so they're not scaled:
 #+END_SRC
 
 Replace default block delimiters with ligatures
-
 #+BEGIN_SRC emacs-lisp :results silent
   (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
                                          ("#+END_SRC" . "†")
@@ -247,7 +272,6 @@ Replace default block delimiters with ligatures
 #+END_SRC
 
 Replace list bullets with prettier dots.
-
 #+BEGIN_SRC emacs-lisp :results silent
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
@@ -258,31 +282,9 @@ Replace list bullets with prettier dots.
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
 #+END_SRC
 
-* Evil Mode
-
-Being a long time (neo)vim user, I use evil mode exclusively for editing. When they say it's impossible to get out of vim, it has a deeper meaning.
-I've also configured a few quick keybindings to get to my emacs config, as well as an org file I use as scratch/notes.
+Finally, a quick keybinding to indent blocks quickly
 #+BEGIN_SRC emacs-lisp :results silent
-  (use-package evil
-    :demand t
-    :init
-    (setq evil-respect-visual-line-mode t)
-    :config
-    (evil-mode)
-    (evil-set-leader 'normal (kbd ","))
-    (evil-define-key 'normal 'global (kbd "<leader>bd") 'kill-this-buffer)
-    (evil-define-key 'normal 'global (kbd "<leader>oe") (lambda() (interactive)(find-file "~/.emacs.d/settings.org")))
-    (evil-define-key 'normal 'global (kbd "<leader>oo") (lambda() (interactive)(find-file "~/Dropbox/akash.org")))
-    (evil-define-key 'normal 'global (kbd "<leader>ib") (lambda() (interactive)(org-indent-block)))
-    (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes)))
-#+END_SRC
-
-Commentary package allows me to retain my muscle memory of (un)commenting code.
-#+BEGIN_SRC emacs-lisp :results silent
-  (use-package evil-commentary
-    :after evil
-    :config
-    (evil-commentary-mode))
+  (evil-define-key 'normal 'global (kbd "<leader>ib") (lambda() (interactive)(org-indent-block)))
 #+END_SRC
 
 * Better UX for Menus - Ivy and Bros.
