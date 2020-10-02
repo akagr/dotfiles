@@ -1,13 +1,87 @@
-#+BEGIN_SRC emacs-lisp
+* Akash's Emacs config
+
+** Bootstrapping and Defaults
+
+Increase available resources to emacs. It's not 1990s.
+#+BEGIN_SRC emacs-lisp :results silent
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 4 1024 1024)) ;; 4mb
+#+END_SRC
 
-;; Do not use `init.el` for `custom-*` code - use `custom-file.el`.
+Provide a file where emacs stores its custom config. This will allow me to check it in git.
+#+BEGIN_SRC emacs-lisp :results silent
 (add-to-list 'load-path "~/.emacs.d/modules")
 (setq custom-file "~/.emacs.d/modules/custom-file.el")
 (load-file custom-file)
+#+END_SRC
 
-;;------------------- Package Config -----------------------
+
+Turn off auto backup files, startup message and other more sensible defaults.
+#+BEGIN_SRC emacs-lisp :results silent
+(setq
+ auto-save-default nil
+ create-lockfiles nil
+ make-backup-files nil
+ inhibit-startup-message t
+ load-prefer-newer t
+ ring-bell-function 'ignore
+ sentence-end-double-space nil
+ truncate-lines 1
+ vc-follow-symlinks nil)
+#+END_SRC
+
+Don't use tabs for indentation.
+#+BEGIN_SRC emacs-lisp :results silent
+(setq-default indent-tabs-mode nil)
+#+END_SRC
+
+Use y or n instead of yes or no. Additionally, use ibuffers to be consistent with buffer management and not having to worry about wrong key chords.
+#+BEGIN_SRC emacs-lisp :results silent
+(defalias 'yes-or-no-p 'y-or-n-p)
+(defalias 'list-buffers 'ibuffer)
+#+END_SRC
+
+Turn off all the chrome that emacs puts by default.
+#+BEGIN_SRC emacs-lisp :results silent
+(progn
+ (scroll-bar-mode -1)
+ (tool-bar-mode -1)
+ (menu-bar-mode -1))
+#+END_SRC
+
+A few modes are turned on by default
+#+BEGIN_SRC emacs-lisp :results silent
+(global-so-long-mode) ;; handles really long lines well
+(electric-pair-mode) ;; auto matching brackets, parentheses etc.
+(show-paren-mode) ;; show matching opening/closing parentheses
+(column-number-mode) ;; show column number in mode line
+(global-display-line-numbers-mode) ;; show line numbers in all buffers
+#+END_SRC
+
+Make the command key behave as 'meta' on macOS.
+#+BEGIN_SRC emacs-lisp :results silent
+(when (eq system-type 'darwin)
+  (setq mac-option-key-is-meta nil
+      mac-command-key-is-meta t
+      mac-command-modifier 'meta
+      mac-option-modifier 'none))
+#+END_SRC
+
+Delete whitespace on save
+#+BEGIN_SRC emacs-lisp :results silent
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+(add-hook 'after-change-major-mode-hook
+          (lambda ()
+            (modify-syntax-entry ?_ "w")))
+#+END_SRC
+
+** Package Management
+
+Bootstrap package repos and package manager.
+#+BEGIN_SRC emacs-lisp :results silent
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
@@ -16,15 +90,86 @@
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-
-;; Bootstrap use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 (setq use-package-always-ensure t)
 (require 'use-package)
+#+END_SRC
 
-;;------------------- Packages ------------------------------
+** Support Plugins
+
+Various plugins that are used by numerous other plugins.
++ `hydra` is used for interactive key bindings (like pressing ? in a magit buffer).
++ `flx` is used for fuzzy matching and completion.
++ `which-key` allows using keybindings interactively. For example, if `<leader>gs` is mapped to `magit-status`, and I press only `<leader>g`, it'll show all the keys and commands that are valid follows.
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package hydra)
+(use-package flx)
+(use-package which-key
+  :config
+  (which-key-mode)
+  (which-key-setup-side-window-bottom)
+  :custom (which-key-idle-delay 1.0))
+#+END_SRC
+
+** Appearance
+
+Set default frame height.
+#+BEGIN_SRC emacs-lisp :results silent
+(add-to-list 'default-frame-alist '(width . 130))
+(add-to-list 'default-frame-alist '(height . 48))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package fira-code-mode
+  :demand t
+  :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
+  :hook prog-mode
+  :config
+  (set-face-attribute 'default nil
+                      :family "FiraCode Nerd Font"
+                      :height 130
+                      :weight 'normal))
+
+(use-package rainbow-delimiters
+  :hook ((prog-mode . rainbow-delimiters-mode)))
+
+(use-package doom-themes
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-org-config))
+#+END_SRC
+
+Load theme after creating a new frame. This is required to work with server/client model. Otherwise, emacs will load theme only once when starting server and all subsequent frames won't get the theme.
+#+BEGIN_SRC emacs-lisp :results silent
+(add-hook 'after-make-frame-functions
+	  (lambda (frame)
+	    (with-selected-frame frame
+	      (load-theme 'doom-one t))))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp :results silent
+
+#+END_SRC
+
+** Org Mode
+
+#+BEGIN_SRC emacs-lisp :results silent
+(with-eval-after-load 'org
+  (setq org-startup-indented t)
+  (add-hook 'org-mode-hook #'visual-line-mode))
+#+END_SRC
+
+** Evil Mode
+
+Being a long time (neo)vim user, I use evil mode exclusively for editing. When they say it's impossible to get out of vim, it has a deeper meaning.
+
+I've also configured a few quick keybindings to get to my emacs config, as well as an org file I use as scratch/notes.
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package evil
   :demand t
   :init
@@ -36,16 +181,20 @@
   (evil-define-key 'normal 'global (kbd "<leader>oe") (lambda() (interactive)(find-file "~/.emacs.d/settings.org")))
   (evil-define-key 'normal 'global (kbd "<leader>oo") (lambda() (interactive)(find-file "~/Dropbox/akash.org")))
   (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes)))
+#+END_SRC
 
+Commentary plugin allows me to retain my muscle memory of (un)commenting code.
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package evil-commentary
   :after evil
   :config
   (evil-commentary-mode))
+#+END_SRC
 
-(use-package hydra)
+** Better UX for Menus - Ivy and Bros.
 
-(use-package flx)
-
+Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It provides the backend which many plugins end up using. Alternatives would be helm and ido, which I've not yet tried.
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package counsel
   :after hydra flx
   :config
@@ -68,7 +217,12 @@
   :config
   (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
   (ivy-rich-mode))
+#+END_SRC
 
+** VCS
+
+The primary git interface I use, and also one of the main reasons I use emacs.
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package magit
   :after counsel evil
   :demand t
@@ -85,7 +239,12 @@
 (use-package evil-magit
   :demand t
   :after magit evil)
+#+END_SRC
 
+** Project Management
+
+Projectile plays pretty well with the other plugins, including magit and dired sidebar.
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package projectile
   :after evil
   :init
@@ -98,7 +257,23 @@
 
 (use-package counsel-projectile
   :after projectile)
+#+END_SRC
 
+** Programming Languages
+*** Elixir
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package elixir-mode)
+#+END_SRC
+
+*** Yaml
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package yaml-mode)
+#+END_SRC
+
+** Code completion and Error Checking
+
+Using company for auto-completion backend. Most modern languages implement LSP (Language Server Protocol), allowing for rich auto-completion.
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package company
   :init
   (setq company-idle-delay 0)
@@ -144,9 +319,10 @@
 
 (use-package flycheck-inline
   :config (global-flycheck-inline-mode))
+#+END_SRC
 
-(use-package elixir-mode)
-
+** Sidebar
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package dired-sidebar
   :commands (dired-sidebar-toggle-sidebar)
   :after evil
@@ -165,104 +341,31 @@
   (setq dired-sidebar-subtree-line-prefix "-")
   (setq dired-sidebar-use-term-integration t)
   (setq dired-sidebar-use-custom-font t))
+#+END_SRC
 
-;; Run M-x all-the-icons-install-fonts to install the icons
+*** Sidebar Icons
+Run `M-x all-the-icons-install-fonts` to install the icons.
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package all-the-icons)
 
 (use-package all-the-icons-dired
   :after all-the-icons
   :config
   (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+#+END_SRC
 
-(use-package yaml-mode)
-
+** General Searching
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package ripgrep)
 
 (use-package deadgrep
   :bind (("C-c h" . #'deadgrep)))
+#+END_SRC
 
-(use-package rainbow-delimiters
-  :hook ((prog-mode . rainbow-delimiters-mode)))
+** Custom Functions
 
-(use-package which-key
-  :config
-  (which-key-mode)
-  (which-key-setup-side-window-bottom)
-  :custom (which-key-idle-delay 1.0))
-
-; Install theme and font
-(use-package fira-code-mode
-  :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
-  :hook prog-mode)
-
-(use-package zenburn-theme
-  :demand t
-  :init
-  (setq zenburn-use-variable-pitch t
-    zenburn-scale-org-headlines t
-    zenburn-scale-outline-headlines t)
-  :config
-  (load-theme 'zenburn t))
-
-;; Set font
-(set-face-attribute 'default nil
-		    :family "FiraCode Nerd Font"
-		    :height 130
-		    :weight 'normal)
-
-;; Load theme after loading frame - Works with server client
-(add-hook 'after-make-frame-functions
-	  (lambda (frame)
-	    (with-selected-frame frame
-	      (load-theme 'zenburn t))))
-
-;;------------------- Better Defaults ------------------------
-
-(setq
- auto-save-default nil
- create-lockfiles nil
- make-backup-files nil
- inhibit-startup-message t
- load-prefer-newer t
- ring-bell-function 'ignore
- sentence-end-double-space nil
- truncate-lines 1
- vc-follow-symlinks nil)
-
-(setq-default indent-tabs-mode nil)
-
-(defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
-(defalias 'list-buffers 'ibuffer) ; always use ibuffer
-
-;; Disable windows chrome
-(progn
- (scroll-bar-mode -1)
- (tool-bar-mode -1)
- (menu-bar-mode -1))
-
-(global-so-long-mode)
-(electric-pair-mode)
-(show-paren-mode)
-(column-number-mode)
-(global-display-line-numbers-mode)
-
-;; Make the command key behave as 'meta'
-(when (eq system-type 'darwin)
-  (setq mac-option-key-is-meta nil
-      mac-command-key-is-meta t
-      mac-command-modifier 'meta
-      mac-option-modifier 'none))
-
-(add-to-list 'default-frame-alist '(width . 130))
-(add-to-list 'default-frame-alist '(height . 48))
-
-;; Delete whitespace on save
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-(add-hook 'after-change-major-mode-hook
-          (lambda ()
-            (modify-syntax-entry ?_ "w")))
-
+Copy current file path relative to project root.
+#+BEGIN_SRC emacs-lisp :results silent
 (defun copy-file-path ()
   (interactive)
   (kill-new (file-relative-name buffer-file-name (projectile-project-root))))
