@@ -376,9 +376,22 @@ Projectile plays pretty well with the other packages, including magit and dired 
 #+END_SRC
 
 * Programming Languages
+*** Ruby
+#+begin_src emacs-lisp :results silent
+  (use-package ruby-end)
+#+end_src
+
 *** Elixir
 #+BEGIN_SRC emacs-lisp :results silent
-  (use-package elixir-mode)
+  (use-package elixir-mode
+    :after ruby-end
+    :config
+    (add-to-list 'elixir-mode-hook
+                 (defun auto-activate-ruby-end-mode-for-elixir-mode ()
+                   (set (make-variable-buffer-local 'ruby-end-expand-keywords-before-re)
+                        "\\(?:^\\|\\s-+\\)\\(?:do\\)")
+                   (set (make-variable-buffer-local 'ruby-end-check-statement-modifiers) nil)
+                   (ruby-end-mode +1))))
 #+END_SRC
 
 *** Yaml
