@@ -186,9 +186,10 @@ Commentary package allows me to retain my muscle memory of (un)commenting code.
 Set up org default files and directories:
 #+begin_src emacs-lisp :results silent
   (with-eval-after-load 'org
-    (setq org-directory "~/Dropbox/org")
-    (setq org-default-notes-file (concat org-directory "/notes.org"))
-    (setq org-agenda-files '("~/Dropbox/org/")))
+    (setq org-directory "~/Dropbox/org"
+          org-default-notes-file (concat org-directory "/notes.org")
+          org-agenda-files '("~/Dropbox/org/")
+          org-archive-location (concat org-directory "/archive/%s::")))
 #+end_src
 
 Define some evil keybindings for org mode.
@@ -228,6 +229,15 @@ Org bullets package prettifies the headline markers:
     (org-bullets-bullet-list '("◉" "☯" "○" "☯" "✸" "☯" "✿" "☯" "✜" "☯" "◆" "☯" "▶"))
     (org-ellipsis " ▶")
     :hook (org-mode . org-bullets-mode))
+
+  (use-package evil-org
+    :config
+    (add-hook 'org-mode-hook 'evil-org-mode)
+    (add-hook 'evil-org-mode-hook
+              (lambda ()
+                (evil-org-set-key-theme)))
+    (require 'evil-org-agenda)
+    (evil-org-agenda-set-keys))
 #+END_SRC
 
 Configure font. The variable-pitch is used for fonts which are scaled. Eg: Headlines and content. Fixed pitch is for things with fixed size, like code, tables etc.
