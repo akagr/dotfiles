@@ -1,4 +1,4 @@
-#+TITLE: My Emacs Config
+#+TITLE: Emacs Config
 #+AUTHOR: Akash Agrawal
 #+EMAIL: akagr@outlook.com
 
@@ -142,7 +142,7 @@ Set default frame height.
     ;; Global settings (defaults)
     (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
           doom-themes-enable-italic t) ; if nil, italics is universally disabled
-    (load-theme 'doom-gruvbox t))
+    (load-theme 'doom-nova t))
 #+END_SRC
 
 Load theme after creating a new frame. This is required to work with server/client model. Otherwise, emacs will load theme only once when starting server and all subsequent frames won't get the theme.
@@ -150,7 +150,7 @@ Load theme after creating a new frame. This is required to work with server/clie
   (add-hook 'after-make-frame-functions
             (lambda (frame)
               (with-selected-frame frame
-                (load-theme 'doom-gruvbox t))))
+                (load-theme 'doom-nova t))))
 #+END_SRC
 
 * Evil Mode
@@ -386,11 +386,17 @@ Projectile plays pretty well with the other packages, including magit and dired 
 #+END_SRC
 
 * Programming Languages
+*** Common Config
+#+begin_src emacs-lisp :results silent
+  (use-package editorconfig
+    :ensure t
+    :config
+    (editorconfig-mode 1))
+#+end_src
 *** Ruby
 #+begin_src emacs-lisp :results silent
   (use-package ruby-end)
 #+end_src
-
 *** Elixir
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package elixir-mode
