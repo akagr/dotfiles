@@ -181,6 +181,15 @@ Commentary package allows me to retain my muscle memory of (un)commenting code.
     (evil-commentary-mode))
 #+END_SRC
 
+Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
+#+begin_src emacs-lisp :results silent
+
+  (use-package evil-surround
+    :after evil
+    :config
+    (global-evil-surround-mode 1))
+#+end_src
+
 * Org Mode
 
 Set up org default files and directories:
