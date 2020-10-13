@@ -407,6 +407,10 @@ Projectile plays pretty well with the other packages, including magit and dired 
 #+begin_src emacs-lisp :results silent
   (use-package ruby-end)
 #+end_src
+*** Typescript
+#+begin_src emacs-lisp :results silent
+  (use-package typescript-mode)
+#+end_src
 *** Elixir
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package elixir-mode
