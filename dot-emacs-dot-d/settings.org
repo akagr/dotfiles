@@ -28,13 +28,13 @@ Turn off auto backup files, startup message and other more sensible defaults.
    load-prefer-newer t
    ring-bell-function 'ignore
    sentence-end-double-space nil
-   truncate-lines 1
    vc-follow-symlinks nil)
 #+END_SRC
 
-Don't use tabs for indentation.
+Don't use tabs for indentation. Also truncate lines instead of wrapping them.
 #+BEGIN_SRC emacs-lisp :results silent
-  (setq-default indent-tabs-mode nil)
+  (setq-default indent-tabs-mode nil
+                truncate-lines t)
 #+END_SRC
 
 Use y or n instead of yes or no. Additionally, use ibuffers to be consistent with buffer management and not having to worry about wrong key chords.
@@ -212,7 +212,8 @@ Define some evil keybindings for org mode.
           org-hide-leading-stars t
           org-pretty-entities t
           org-src-tab-acts-natively t
-          org-odd-levels-only t)
+          org-odd-levels-only t
+          truncate-lines nil)
     (add-hook 'org-mode-hook #'visual-line-mode)
     (add-hook 'org-mode-hook #'variable-pitch-mode))
 #+END_SRC
