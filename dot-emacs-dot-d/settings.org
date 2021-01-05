@@ -1,9 +1,21 @@
 #+TITLE: Emacs Config
 #+AUTHOR: Akash Agrawal
 #+EMAIL: akagr@outlook.com
+* Quick keybindings for memory
 
-* Bootstrapping and Defaults
+|------------+---------------------------------------------|
+| Keybinding | Explanation                                 |
+|------------+---------------------------------------------|
+| C-c C-c    | Execute code block                          |
+| C-c C-o    | Open source block result                    |
+| C-c C-,    | Insert structure template (Eg: Code blocks) |
+|------------+---------------------------------------------|
 
+* External Dependencies
+
+- Download ~elixir-ls~ from https://github.com/JakeBecker/elixir-ls and adjust the path of language server in eglot config.
+
+* Bootstrapping and Default
 Increase available resources to emacs. It's not 1990s.
 #+BEGIN_SRC emacs-lisp :results silent
   (setq gc-cons-threshold 100000000)
@@ -444,25 +456,12 @@ Using company for auto-completion backend. Most modern languages implement LSP (
     :config
     (global-company-mode 1))
 
-  (use-package lsp-mode
-    :commands lsp
-    :diminish lsp-mode
-    :hook
-    (ruby-mode . lsp-deferred)
-    (elixir-mode . lsp-deferred)
-    :init
-    (add-to-list 'exec-path "/Users/akash/Downloads/elixir-ls")
-    (setq lsp-completion-provider :capf))
-
-  (use-package lsp-ui
-    :custom
-    (lsp-ui-doc-delay 0.75)
-    (lsp-ui-doc-max-height 200)
-    :after lsp-mode)
-
-  (use-package company-lsp
-    :custom (company-lsp-enable-snippet t)
-    :after (company lsp-mode))
+  (use-package eglot
+    :after elixir-mode
+    :config
+    (add-hook 'elixir-mode-hook 'eglot-ensure)
+    (add-hook 'ruby-mode-hook 'eglot-ensure)
+    (add-to-list 'eglot-server-programs '(elixir-mode "/Users/akash/Downloads/elixir-ls/language_server.sh")))
 
   (use-package flycheck
     :after org
