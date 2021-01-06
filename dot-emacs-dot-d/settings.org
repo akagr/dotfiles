@@ -461,7 +461,9 @@ Using company for auto-completion backend. Most modern languages implement LSP (
     :config
     (add-hook 'elixir-mode-hook 'eglot-ensure)
     (add-hook 'ruby-mode-hook 'eglot-ensure)
-    (add-to-list 'eglot-server-programs '(elixir-mode "/Users/akash/Downloads/elixir-ls/language_server.sh")))
+    (add-to-list 'eglot-server-programs '(elixir-mode "/Users/akash/Downloads/elixir-ls/language_server.sh"))
+
+    (define-key eglot-mode-map [C-mouse-1] 'xref-find-definitions))
 
   (use-package flycheck
     :after org
