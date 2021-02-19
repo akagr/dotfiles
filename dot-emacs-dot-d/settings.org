@@ -9,6 +9,7 @@
 | C-c C-c    | Execute code block                          |
 | C-c C-o    | Open source block result                    |
 | C-c C-,    | Insert structure template (Eg: Code blocks) |
+| C-c '      | Edit the current source code block          |
 |------------+---------------------------------------------|
 
 * External Dependencies
@@ -181,7 +182,7 @@ Being a long time (neo)vim user, I use evil mode exclusively for editing. When t
 
 I've also configured a few quick keybindings to open often visited files (like config).
 #+BEGIN_SRC emacs-lisp :results silent
-  (evil-define-key 'normal 'global (kbd "<leader>bd") 'kill-this-buffer)
+  (evil-define-key 'normal 'global (kbd "<leader>bd") 'close-and-kill-this-pane)
   (evil-define-key 'normal 'global (kbd "<leader>oe") (lambda() (interactive)(find-file "~/.emacs.d/settings.org")))
 #+END_SRC
 
@@ -534,3 +535,13 @@ Copy current file path relative to project root.
     (interactive)
     (kill-new (file-relative-name buffer-file-name (projectile-project-root))))
 #+END_SRC
+
+Kill this buffer and window, as long as it's not the only window open.
+#+begin_src emacs-lisp :results silent
+  (defun close-and-kill-this-pane ()
+    "If there are multiple windows, then close this one and kill its buffer"
+    (interactive)
+    (kill-this-buffer)
+    (if (not (one-window-p))
+        (delete-window)))
+#+end_src
