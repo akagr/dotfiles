@@ -170,10 +170,9 @@ Load theme after creating a new frame. This is required to work with server/clie
 
 Add undo package to allow branching undos.
 #+begin_src emacs-lisp :results silent
-  (use-package undo-tree
-    :demand t
+  (use-package undo-fu
     :config
-    (global-undo-tree-mode))
+    (global-undo-tree-mode -1))
 #+end_src
 
 Being a long time (neo)vim user, I use evil mode exclusively for editing. When they say it's impossible to get out of vim, it has a deeper meaning.
@@ -182,11 +181,11 @@ Being a long time (neo)vim user, I use evil mode exclusively for editing. When t
     :demand t
     :init
     (setq evil-respect-visual-line-mode t)
+    (setq evil-undo-system 'undo-fu)
     :config
     (evil-mode)
     (evil-set-leader 'normal (kbd ","))
-    (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes))
-    (setq evil-undo-system 'undo-tree))
+    (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes)))
 #+END_SRC
 
 I've also configured a few quick keybindings to open often visited files (like config).
@@ -212,7 +211,6 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
     :config
     (global-evil-surround-mode 1))
 #+end_src
-
 
 * Org Mode
 
