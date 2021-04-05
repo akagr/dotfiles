@@ -425,6 +425,7 @@ Projectile plays pretty well with the other packages, including magit and dired 
     :config
     (editorconfig-mode 1))
 #+end_src
+
 *** Ruby
 #+begin_src emacs-lisp :results silent
   (use-package ruby-end)
@@ -448,6 +449,50 @@ Projectile plays pretty well with the other packages, including magit and dired 
       (add-hook 'elixir-mode-hook
                 (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
 #+END_SRC
+
+*** Web
+#+begin_src emacs-lisp :results silent
+  (use-package web-mode
+    :mode
+    (
+     ".twig$"
+     ".html?$"
+     ".leex$"
+     ".hbs$"
+     ".vue$"
+     ".blade.php$"
+     )
+    :config
+    (setq
+     web-mode-markup-indent-offset 2
+     web-mode-css-indent-offset 2
+     web-mode-code-indent-offset 2
+     web-mode-enable-auto-closing t
+     web-mode-enable-auto-opening t
+     web-mode-enable-auto-pairing t
+     web-mode-enable-auto-indentation t)
+    )
+
+  (use-package polymode
+    :mode ("\.ex$" . poly-elixir-web-mode)
+    :config
+    (define-hostmode poly-elixir-hostmode :mode 'elixir-mode)
+    (define-innermode poly-liveview-expr-elixir-innermode
+      :mode 'web-mode
+      :head-matcher (rx line-start (* space) "~L" (= 3 (char "\"'")) line-end)
+      :tail-matcher (rx line-start (* space) (= 3 (char "\"'")) line-end)
+      :head-mode 'host
+      :tail-mode 'host
+      :allow-nested nil
+      :keep-in-mode 'host
+      :fallback-mode 'host)
+    (define-polymode poly-elixir-web-mode
+      :hostmode 'poly-elixir-hostmode
+      :innermodes '(poly-liveview-expr-elixir-innermode))
+    )
+
+  (setq web-mode-engines-alist '(("elixir" . "\\.ex\\'")))
+#+end_src
 
 *** Yaml
 #+BEGIN_SRC emacs-lisp :results silent
@@ -473,7 +518,7 @@ Using company for auto-completion backend. Most modern languages implement LSP (
     (add-hook 'ruby-mode-hook 'eglot-ensure)
     (add-to-list 'eglot-server-programs '(elixir-mode "/Users/akash/Downloads/elixir-ls/language_server.sh"))
 
-    (define-key eglot-mode-map [C-mouse-1] 'xref-find-definitions))
+    (define-key eglot-mode-map (kbd "M-.") 'xref-find-definitions))
 
   (use-package flycheck
     :after org
