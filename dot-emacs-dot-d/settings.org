@@ -436,18 +436,18 @@ Projectile plays pretty well with the other packages, including magit and dired 
 #+end_src
 *** Elixir
 #+BEGIN_SRC emacs-lisp :results silent
-    (use-package elixir-mode
-      :after ruby-end
-      :config
-      (add-to-list 'elixir-mode-hook
-                   (defun auto-activate-ruby-end-mode-for-elixir-mode ()
-                     (set (make-variable-buffer-local 'ruby-end-expand-keywords-before-re)
-                          "\\(?:^\\|\\s-+\\)\\(?:do\\)")
-                     (set (make-variable-buffer-local 'ruby-end-check-statement-modifiers) nil)
-                     (ruby-end-mode +1)))
-      ;; Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
-      (add-hook 'elixir-mode-hook
-                (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
+  (use-package elixir-mode
+    :after ruby-end
+    :config
+    (add-to-list 'elixir-mode-hook
+                 (defun auto-activate-ruby-end-mode-for-elixir-mode ()
+                   (set (make-variable-buffer-local 'ruby-end-expand-keywords-before-re)
+                        "\\(?:^\\|\\s-+\\)\\(?:do\\)")
+                   (set (make-variable-buffer-local 'ruby-end-check-statement-modifiers) nil)
+                   (ruby-end-mode +1)))
+    ;; Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
+    (add-hook 'elixir-mode-hook
+              (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
 #+END_SRC
 
 *** Web
@@ -493,6 +493,19 @@ Projectile plays pretty well with the other packages, including magit and dired 
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package yaml-mode)
 #+END_SRC
+
+* Snippet Support
+Add snippet support. Actual snippets live outside of this file. Custom snippets can be saved in ~~/.emacs.d/snippets~ directory.
+#+begin_src emacs-lisp :results silent
+  (use-package yasnippet
+    :after company
+    :hook (prog-mode . yas-minor-mode)
+    :config
+    (yas-reload-all))
+
+  (use-package yasnippet-snippets
+    :after (yasnippet))
+#+end_src
 
 * Code completion and Error Checking
 
