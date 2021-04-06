@@ -453,15 +453,10 @@ Projectile plays pretty well with the other packages, including magit and dired 
 *** Web
 #+begin_src emacs-lisp :results silent
   (use-package web-mode
-    :mode
-    (
-     ".twig$"
-     ".html?$"
-     ".leex$"
-     ".hbs$"
-     ".vue$"
-     ".blade.php$"
-     )
+    :mode "\\.p?html?\\'"
+    :mode "\\.eex\\'"
+    :mode "\\.leex\\'"
+
     :config
     (setq
      web-mode-markup-indent-offset 2
@@ -474,7 +469,7 @@ Projectile plays pretty well with the other packages, including magit and dired 
     )
 
   (use-package polymode
-    :mode ("\.ex$" . poly-elixir-web-mode)
+    :mode ("\\.ex\\'" . poly-elixir-web-mode)
     :config
     (define-hostmode poly-elixir-hostmode :mode 'elixir-mode)
     (define-innermode poly-liveview-expr-elixir-innermode
