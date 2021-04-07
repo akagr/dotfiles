@@ -150,7 +150,7 @@ Simplify leader bindings with general.el.
     (general-create-definer aa/leader-key-def
       :keymaps '(normal insert visual emacs)
       :prefix ","
-      :global-prefix "C-,")
+      :global-prefix "C-,"))
 #+end_src
 * Common Keybindings
 #+BEGIN_SRC emacs-lisp :results silent
