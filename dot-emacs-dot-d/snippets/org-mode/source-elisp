@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Elisp Source Block
+# key: srcel
+# --
+
+#+BEGIN_SRC emacs-lisp :results silent
+$0
+#+END_SRC

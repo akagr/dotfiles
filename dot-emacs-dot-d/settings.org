@@ -11,6 +11,7 @@
 | C-c C-o    | Open source block result                    |
 | C-c C-,    | Insert structure template (Eg: Code blocks) |
 | C-c '      | Edit the current source code block          |
+| srcel<TAB> | Insert elisp code block                     |
 |------------+---------------------------------------------|
 
 * External Dependencies
@@ -140,6 +141,28 @@ Various packages that are used by numerous other packages.
     :custom (which-key-idle-delay 0.3))
 #+END_SRC
 
+Simplify leader bindings with general.el.
+#+begin_src emacs-lisp :results silent
+  (use-package general
+    :config
+    (general-evil-setup t)
+
+    (general-create-definer aa/leader-key-def
+      :keymaps '(normal insert visual emacs)
+      :prefix ","
+      :global-prefix "C-,")
+#+end_src
+* Common Keybindings
+#+BEGIN_SRC emacs-lisp :results silent
+  (aa/leader-key-def
+    "c" '(:ignore t :which-key "config")
+    "co" '((lambda () (interactive) (find-file "~/.emacs.d/settings.org")) :which-key "open emacs config")
+    "cc" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload emacs config")
+
+    "t" '(:ignore t :which-key "toggle")
+    "tt" '(counsel-load-theme :which-key "theme")
+    "tw" '(toggle-truncate-lines :which-key "wrap lines"))
+#+END_SRC
 * Appearance
 
 Set default frame height.
@@ -224,15 +247,7 @@ Being a long time (neo)vim user, I use evil mode exclusively for editing. When t
     (setq evil-undo-system 'undo-fu)
     :config
     (evil-mode)
-    (evil-set-leader 'normal (kbd ","))
     (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes)))
-#+END_SRC
-
-I've also configured a few quick keybindings to open often visited files (like config).
-#+BEGIN_SRC emacs-lisp :results silent
-  (evil-define-key 'normal 'global (kbd "<leader>bd") 'close-and-kill-this-pane)
-  (evil-define-key 'normal 'global (kbd "<leader>bc") 'kill-this-buffer)
-  (evil-define-key 'normal 'global (kbd "<leader>oe") (lambda() (interactive)(find-file "~/.emacs.d/settings.org")))
 #+END_SRC
 
 Commentary package allows me to retain my muscle memory of (un)commenting code.
@@ -265,11 +280,13 @@ Set up org default files and directories:
 
 Define some evil keybindings for org mode.
 #+begin_src emacs-lisp :results silent
-  (with-eval-after-load 'org
-    (evil-define-key 'normal 'global (kbd "<leader>oo") 'org-capture)
-    (evil-define-key 'normal 'global (kbd "<leader>oc") (lambda() (interactive)(find-file org-default-notes-file)))
-    (evil-define-key 'normal 'global (kbd "<leader>ol") 'org-store-link)
-    (evil-define-key 'normal 'global (kbd "<leader>oa") 'org-agenda))
+  (aa/leader-key-def
+    "r"  '(:ignore t :which-key "org Mode")
+    "ra" '(org-agenda :which-key "agenda")
+    "rc" '(org-capture :which-key "capture")
+    "ri" '((lambda () (interactive) (org-indent-block)) :which-key "indent block")
+    "rl" '(org-store-link :which-key "store Link")
+    "ro" '((lambda () (interactive) (find-file org-default-notes-file)) :which-key "open notes"))
 #+end_src
 
 - Use org indent mode. This allows visual soft indentation of files without me having to maintain that.
@@ -384,11 +401,6 @@ Replace list bullets with prettier dots.
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
 #+END_SRC
 
-Finally, a quick keybinding to indent blocks quickly
-#+BEGIN_SRC emacs-lisp :results silent
-  (evil-define-key 'normal 'global (kbd "<leader>ib") (lambda() (interactive)(org-indent-block)))
-#+END_SRC
-
 * Better UX for Menus - Ivy and Bros.
 
 Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It provides the backend which many packages end up using. Alternatives would be helm and ido, which I've not yet tried.
@@ -404,7 +416,6 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
     (setq ivy-count-format "(%d/%d) ")
     :bind (
            ("M-x" . counsel-M-x)
-           ("C-s" . swiper-isearch)
            :map evil-normal-state-map
            ("C-b" . counsel-ibuffer)))
 
@@ -416,6 +427,12 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
     :config
     (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
     (ivy-rich-mode))
+
+  (aa/leader-key-def
+  "b" '(:ignore t :which-key "buffer")
+  "bb" '(counsel-ibuffer :which-key "list")
+  "bc" '(kill-this-buffer :which-key "kill current")
+  "bd" '(close-and-kill-this-pane :which-key "close current"))
 #+END_SRC
 
 * VCS
@@ -426,11 +443,7 @@ The primary git interface I use, and also one of the main reasons I use emacs. `
 
   (use-package magit
     :after counsel evil
-    :demand t
-    :bind
-    ("C-x g" . magit-status)
-    :config
-    (evil-define-key 'normal 'global (kbd "<leader>gs") 'magit-status))
+    :demand t)
 
   (use-package magit-libgit
     :after (magit libgit))
@@ -438,6 +451,11 @@ The primary git interface I use, and also one of the main reasons I use emacs. `
   (use-package evil-magit
     :demand t
     :after magit evil)
+
+  (aa/leader-key-def
+    "g" '(:ignore t :which-key "git")
+    "gs" '(magit-status :which-key "status")
+    "gb" '(magit-blame :which-key "blame"))
 #+END_SRC
 
 * Project Management
@@ -450,12 +468,13 @@ Projectile plays pretty well with the other packages, including magit and dired 
     (setq projectile-completion-system 'ivy)
     :config
     (define-key projectile-mode-map (kbd "M-p") 'projectile-command-map)
-    (evil-define-key 'normal 'global (kbd "<leader>p") 'projectile-command-map)
-    (evil-define-key 'normal 'global (kbd "C-p") 'projectile-find-file)
     (projectile-mode +1))
 
   (use-package counsel-projectile
     :after projectile)
+
+  (aa/leader-key-def
+    "p" '(projectile-command-map :which-key "projectile"))
 #+END_SRC
 
 * Programming Languages
@@ -541,6 +560,7 @@ Add snippet support. Actual snippets live outside of this file. Custom snippets 
   (use-package yasnippet
     :after company
     :hook (prog-mode . yas-minor-mode)
+    :hook (org-mode . yas-minor-mode)
     :config
     (yas-reload-all))
 
@@ -602,13 +622,15 @@ Using company for auto-completion backend. Most modern languages implement LSP (
                   (auto-revert-mode))))
 
     :config
-    (evil-define-key 'normal 'global (kbd "<leader>n") 'dired-sidebar-toggle-sidebar)
     (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
     (push 'rotate-windows dired-sidebar-toggle-hidden-commands)
     (setq dired-sidebar-theme 'icons)
     (setq dired-sidebar-subtree-line-prefix "-")
     (setq dired-sidebar-use-term-integration t)
     (setq dired-sidebar-use-custom-font t))
+
+  (aa/leader-key-def
+    "n" '(dired-sidebar-toggle-sidebar :which-key "sidebar"))
 #+END_SRC
 
 *** Sidebar Icons
@@ -626,8 +648,10 @@ Run `M-x all-the-icons-install-fonts` to install the icons.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package ripgrep)
 
-  (use-package deadgrep
-    :bind (("C-c h" . #'deadgrep)))
+  (use-package deadgrep)
+
+  (aa/leader-key-def
+    "s" '(deadgrep :which-key "search"))
 #+END_SRC
 
 * Custom Functions

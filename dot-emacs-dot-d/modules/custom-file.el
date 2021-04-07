@@ -15,6 +15,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(fixed-pitch ((t (:family "FiraCode Nerd Font" :height 130))))
+ '(mode-line ((t (:height 1.1))))
+ '(mode-line-inactive ((t (:height 1))))
  '(org-block ((t (:inherit fixed-pitch))))
  '(org-code ((t (:inherit (shadow fixed-pitch)))))
  '(org-document-info ((t (:foreground "dark orange"))))
