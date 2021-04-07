@@ -1,7 +1,40 @@
 #+TITLE: Emacs Config
 #+AUTHOR: Akash Agrawal
 #+EMAIL: akagr@outlook.com
-#+OPTION: toc
+
+* Table of Contents
+:PROPERTIES:
+:TOC:      :include all :ignore this
+:END:
+
+:CONTENTS:
+- [[#quick-keybindings-for-memory][Quick keybindings for memory]]
+- [[#external-dependencies][External Dependencies]]
+- [[#bootstrapping-and-default][Bootstrapping and Default]]
+- [[#package-management][Package Management]]
+- [[#support-packages][Support Packages]]
+- [[#common-keybindings][Common Keybindings]]
+- [[#appearance][Appearance]]
+- [[#evil-mode][Evil Mode]]
+- [[#org-mode][Org Mode]]
+- [[#better-ux-for-menus---ivy-and-bros][Better UX for Menus - Ivy and Bros.]]
+- [[#vcs][VCS]]
+- [[#project-management][Project Management]]
+- [[#programming-languages][Programming Languages]]
+  - [[#common-config][Common Config]]
+  - [[#ruby][Ruby]]
+  - [[#typescript][Typescript]]
+  - [[#elixir][Elixir]]
+  - [[#web][Web]]
+  - [[#yaml][Yaml]]
+- [[#snippet-support][Snippet Support]]
+- [[#code-completion-and-error-checking][Code completion and Error Checking]]
+- [[#sidebar][Sidebar]]
+  - [[#sidebar-icons][Sidebar Icons]]
+- [[#general-searching][General Searching]]
+- [[#custom-functions][Custom Functions]]
+:END:
+
 * Quick keybindings for memory
 
 |------------+---------------------------------------------|
@@ -19,6 +52,7 @@
 - Download ~elixir-ls~ from https://github.com/JakeBecker/elixir-ls and adjust the path of language server in eglot config.
 
 * Bootstrapping and Default
+
 Increase available resources to emacs. It's not 1990s.
 #+BEGIN_SRC emacs-lisp :results silent
   ;; Default is 800 kilobytes. Measures in bytes.
@@ -153,6 +187,7 @@ Simplify leader bindings with general.el.
       :global-prefix "C-,"))
 #+end_src
 * Common Keybindings
+
 #+BEGIN_SRC emacs-lisp :results silent
   (aa/leader-key-def
     "c" '(:ignore t :which-key "config")
@@ -163,6 +198,7 @@ Simplify leader bindings with general.el.
     "tt" '(counsel-load-theme :which-key "theme")
     "tw" '(toggle-truncate-lines :which-key "wrap lines"))
 #+END_SRC
+
 * Appearance
 
 Set default frame height.
@@ -229,6 +265,7 @@ Config for mode line:
     (doom-modeline-buffer-file-name-style 'truncate-except-project)
     (doom-modeline-major-mode-icon nil))
 #+end_src
+
 * Evil Mode
 
 Add undo package to allow branching undos.
@@ -399,6 +436,13 @@ Replace list bullets with prettier dots.
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([+]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
+#+END_SRC
+
+Add toc to org files automatically
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package org-make-toc
+    :config
+    (add-hook 'org-mode-hook #'org-make-toc-mode))
 #+END_SRC
 
 * Better UX for Menus - Ivy and Bros.
