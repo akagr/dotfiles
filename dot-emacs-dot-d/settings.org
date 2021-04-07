@@ -1,6 +1,7 @@
 #+TITLE: Emacs Config
 #+AUTHOR: Akash Agrawal
 #+EMAIL: akagr@outlook.com
+#+OPTION: toc
 * Quick keybindings for memory
 
 |------------+---------------------------------------------|
@@ -19,9 +20,21 @@
 * Bootstrapping and Default
 Increase available resources to emacs. It's not 1990s.
 #+BEGIN_SRC emacs-lisp :results silent
+  ;; Default is 800 kilobytes. Measures in bytes.
   (setq gc-cons-threshold 100000000)
   (setq read-process-output-max (* 4 1024 1024)) ;; 4mb
 #+END_SRC
+
+Profile emacs startup.
+#+begin_src emacs-lisp :results silent
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (message "*** Emacs loaded in %s with %d garbage collections."
+                       (format "%.2f seconds"
+                               (float-time
+                                (time-subtract after-init-time before-init-time)))
+                       gcs-done)))
+#+end_src
 
 Provide a file where emacs stores its custom config. This will allow me to check it in git.
 #+BEGIN_SRC emacs-lisp :results silent
@@ -29,7 +42,6 @@ Provide a file where emacs stores its custom config. This will allow me to check
   (setq custom-file "~/.emacs.d/modules/custom-file.el")
   (load-file custom-file)
 #+END_SRC
-
 
 Turn off auto backup files, startup message and other more sensible defaults.
 #+BEGIN_SRC emacs-lisp :results silent
@@ -125,7 +137,7 @@ Various packages that are used by numerous other packages.
     :config
     (which-key-mode)
     (which-key-setup-side-window-bottom)
-    :custom (which-key-idle-delay 1.0))
+    :custom (which-key-idle-delay 0.3))
 #+END_SRC
 
 * Appearance
@@ -166,6 +178,34 @@ Load theme after creating a new frame. This is required to work with server/clie
                 (load-theme 'doom-material t))))
 #+END_SRC
 
+Config for mode line:
+#+begin_src emacs-lisp :results silent
+  ;; Diminish minor modes from mode line
+  (use-package diminish)
+
+  ;; You must run (all-the-icons-install-fonts) one time after
+  ;; installing this package!
+
+  (use-package minions
+    :hook (doom-modeline-mode . minions-mode))
+
+  (use-package doom-modeline
+    :hook (after-init . doom-modeline-mode)
+    :custom-face
+    (mode-line ((t (:height 1.1))))
+    (mode-line-inactive ((t (:height 1))))
+    :custom
+    (doom-modeline-height 15)
+    (doom-modeline-bar-width 6)
+    (doom-modeline-lsp t)
+    (doom-modeline-github nil)
+    (doom-modeline-mu4e nil)
+    (doom-modeline-irc nil)
+    (doom-modeline-minor-modes t)
+    (doom-modeline-persp-name nil)
+    (doom-modeline-buffer-file-name-style 'truncate-except-project)
+    (doom-modeline-major-mode-icon nil))
+#+end_src
 * Evil Mode
 
 Add undo package to allow branching undos.
@@ -362,10 +402,11 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
             (t . ivy--regex-fuzzy)))
     (setq ivy-use-virtual-buffers t)
     (setq ivy-count-format "(%d/%d) ")
-    (evil-define-key 'normal 'global (kbd "C-b") 'ivy-switch-buffer)
-    :bind
-    ("M-x" . counsel-M-x)
-    ("C-s" . swiper-isearch))
+    :bind (
+           ("M-x" . counsel-M-x)
+           ("C-s" . swiper-isearch)
+           :map evil-normal-state-map
+           ("C-b" . counsel-ibuffer)))
 
   (use-package ivy-rich
     :custom
