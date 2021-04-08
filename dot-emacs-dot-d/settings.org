@@ -4,7 +4,7 @@
 
 * Table of Contents
 :PROPERTIES:
-:TOC:      :include all :ignore this
+:TOC: :include all :ignore this
 :END:
 
 :CONTENTS:
@@ -343,11 +343,6 @@ Define some evil keybindings for org mode.
     (add-hook 'org-mode-hook #'variable-pitch-mode))
 #+END_SRC
 
-Begin scratch buffer in org mode.
-#+BEGIN_SRC emacs-lisp results: silent
-  (setq initial-major-mode 'org-mode)
-#+END_SRC
-
 Org bullets package prettifies the headline markers:
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package org-bullets
@@ -456,12 +451,9 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
     (setq ivy-re-builders-alist
           '((swiper . ivy--regex-plus)
             (t . ivy--regex-fuzzy)))
-    (setq ivy-use-virtual-buffers t)
+    (setq ivy-use-virtual-buffers nil)
     (setq ivy-count-format "(%d/%d) ")
-    :bind (
-           ("M-x" . counsel-M-x)
-           :map evil-normal-state-map
-           ("C-b" . counsel-ibuffer)))
+    :bind (("M-x" . counsel-M-x)))
 
   (use-package ivy-rich
     :custom
@@ -472,9 +464,13 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
     (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
     (ivy-rich-mode))
 
+  (general-define-key
+   :states 'normal
+   "C-b" 'ivy-switch-buffer)
+
   (aa/leader-key-def
   "b" '(:ignore t :which-key "buffer")
-  "bb" '(counsel-ibuffer :which-key "list")
+  "bb" '(ivy-switch-buffer :which-key "list")
   "bc" '(kill-this-buffer :which-key "kill current")
   "bd" '(close-and-kill-this-pane :which-key "close current"))
 #+END_SRC
