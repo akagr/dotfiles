@@ -126,7 +126,7 @@ Make the command key behave as 'meta' on macOS.
     (setq mac-option-key-is-meta nil
           mac-command-key-is-meta t
           mac-command-modifier 'meta
-          mac-option-modifier 'none))
+          mac-option-modifier 'super))
 #+END_SRC
 
 Delete whitespace on save
@@ -280,8 +280,10 @@ Being a long time (neo)vim user, I use evil mode exclusively for editing. When t
   (use-package evil
     :demand t
     :init
-    (setq evil-respect-visual-line-mode t)
-    (setq evil-undo-system 'undo-fu)
+    (setq evil-respect-visual-line-mode t
+          evil-undo-system 'undo-fu
+          evil-want-integration t
+          evil-want-keybinding nil)
     :config
     (evil-mode)
     (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes)))
@@ -303,6 +305,13 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
     :config
     (global-evil-surround-mode 1))
 #+end_src
+
+~evil-collection~ adds evil bindings for packages and modes not covered by ~evil~.
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package evil-collection
+    :init
+    (evil-collection-init '(deadgrep magit ibuffer)))
+#+END_SRC
 
 * Org Mode
 
@@ -487,10 +496,6 @@ The primary git interface I use, and also one of the main reasons I use emacs. `
 
   (use-package magit-libgit
     :after (magit libgit))
-
-  (use-package evil-magit
-    :demand t
-    :after magit evil)
 
   (aa/leader-key-def
     "g" '(:ignore t :which-key "git")
