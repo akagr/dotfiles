@@ -108,7 +108,8 @@ Turn off all the chrome that emacs puts by default.
   (progn
     (scroll-bar-mode -1)
     (tool-bar-mode -1)
-    (menu-bar-mode -1))
+    (menu-bar-mode -1)
+    (tooltip-mode -1))
 #+END_SRC
 
 A few modes are turned on by default
@@ -155,8 +156,8 @@ Bootstrap package repos and package manager.
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
-  (setq use-package-always-ensure t)
   (require 'use-package)
+  (setq use-package-always-ensure t)
 #+END_SRC
 
 * Support Packages
@@ -190,13 +191,17 @@ Simplify leader bindings with general.el.
 
 #+BEGIN_SRC emacs-lisp :results silent
   (aa/leader-key-def
-    "c" '(:ignore t :which-key "config")
-    "co" '((lambda () (interactive) (find-file "~/.emacs.d/settings.org")) :which-key "open emacs config")
-    "cc" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload emacs config")
+    "e"  '(:ignore t :which-key "emacs")
+    "ee" '((lambda () (interactive) (find-file "~/.emacs.d/settings.org")) :which-key "open config")
+    "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
 
-    "t" '(:ignore t :which-key "toggle")
+    "t"  '(:ignore t :which-key "toggle")
     "tt" '(counsel-load-theme :which-key "theme")
-    "tw" '(toggle-truncate-lines :which-key "wrap lines"))
+    "tw" '(toggle-truncate-lines :which-key "wrap lines")
+
+    "c"  '(:ignore t :which-key "code")
+    "cc" '(xref-find-definitions-other-frame :which-key "find definitions")
+    "cr" '(xref-find-references :which-key "find references"))
 #+END_SRC
 
 * Appearance
@@ -254,16 +259,17 @@ Config for mode line:
     (mode-line ((t (:height 1.1))))
     (mode-line-inactive ((t (:height 1))))
     :custom
+    (doom-modeline-icon t)
     (doom-modeline-height 15)
     (doom-modeline-bar-width 6)
     (doom-modeline-lsp t)
     (doom-modeline-github nil)
     (doom-modeline-mu4e nil)
     (doom-modeline-irc nil)
-    (doom-modeline-minor-modes t)
+    (doom-modeline-minor-modes nil)
     (doom-modeline-persp-name nil)
-    (doom-modeline-buffer-file-name-style 'truncate-except-project)
-    (doom-modeline-major-mode-icon nil))
+    (doom-modeline-buffer-file-name-style 'file-name)
+    (doom-modeline-major-mode-icon t))
 #+end_src
 
 * Evil Mode
@@ -310,7 +316,7 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package evil-collection
     :init
-    (evil-collection-init '(deadgrep magit ibuffer)))
+    (evil-collection-init '(deadgrep magit ibuffer xref)))
 #+END_SRC
 
 * Org Mode
@@ -453,8 +459,22 @@ Add toc to org files automatically
 
 Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It provides the backend which many packages end up using. Alternatives would be helm and ido, which I've not yet tried.
 #+BEGIN_SRC emacs-lisp :results silent
-  (use-package counsel
+  (use-package ivy
     :after hydra flx
+    :bind (:map ivy-minibuffer-map
+                ("TAB" . ivy-alt-done)
+                ("C-l" . ivy-alt-done)
+                ("C-j" . ivy-next-line)
+                ("C-k" . ivy-previous-line)
+                :map ivy-switch-buffer-map
+                ("C-j" . ivy-next-line)
+                ("C-k" . ivy-previous-line)
+                ("C-l" . ivy-done)
+                ("C-d" . ivy-switch-buffer-kill)
+                :map ivy-reverse-i-search-map
+                ("C-j" . ivy-next-line)
+                ("C-k" . ivy-previous-line)
+                ("C-d" . ivy-reverse-i-search-kill))
     :config
     (ivy-mode 1)
     (setq ivy-re-builders-alist
