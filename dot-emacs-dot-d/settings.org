@@ -163,11 +163,9 @@ Bootstrap package repos and package manager.
 * Support Packages
 
 Various packages that are used by numerous other packages.
-+ `hydra` is used for interactive key bindings (like pressing ? in a magit buffer).
 + `flx` is used for fuzzy matching and completion.
 + `which-key` allows using keybindings interactively. For example, if `<leader>gs` is mapped to `magit-status`, and I press only `<leader>g`, it'll show all the keys and commands that are valid follows.
 #+BEGIN_SRC emacs-lisp :results silent
-  (use-package hydra)
   (use-package flx)
   (use-package which-key
     :config
@@ -460,7 +458,7 @@ Add toc to org files automatically
 Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It provides the backend which many packages end up using. Alternatives would be helm and ido, which I've not yet tried.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package ivy
-    :after hydra flx
+    :after flx
     :bind (:map ivy-minibuffer-map
                 ("TAB" . ivy-alt-done)
                 ("C-l" . ivy-alt-done)
