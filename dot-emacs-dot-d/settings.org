@@ -198,7 +198,7 @@ Simplify leader bindings with general.el.
     "tw" '(toggle-truncate-lines :which-key "wrap lines")
 
     "c"  '(:ignore t :which-key "code")
-    "cc" '(xref-find-definitions-other-frame :which-key "find definitions")
+    "cc" '(xref-find-definitions :which-key "find definitions")
     "cr" '(xref-find-references :which-key "find references"))
 #+END_SRC
 
@@ -331,7 +331,7 @@ Set up org default files and directories:
 Define some evil keybindings for org mode.
 #+begin_src emacs-lisp :results silent
   (aa/leader-key-def
-    "r"  '(:ignore t :which-key "org Mode")
+    "r"  '(:ignore t :which-key "org mode")
     "ra" '(org-agenda :which-key "agenda")
     "rc" '(org-capture :which-key "capture")
     "ri" '((lambda () (interactive) (org-indent-block)) :which-key "indent block")
@@ -648,9 +648,7 @@ Using company for auto-completion backend. Most modern languages implement LSP (
     :config
     (add-hook 'elixir-mode-hook 'eglot-ensure)
     (add-hook 'ruby-mode-hook 'eglot-ensure)
-    (add-to-list 'eglot-server-programs '(elixir-mode "/Users/akash/Downloads/elixir-ls/language_server.sh"))
-
-    (define-key eglot-mode-map (kbd "M-.") 'xref-find-definitions))
+    (add-to-list 'eglot-server-programs '(elixir-mode "/Users/akash/Downloads/elixir-ls/language_server.sh")))
 
   (use-package flycheck
     :after org
