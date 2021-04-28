@@ -28,6 +28,7 @@
   - [[#web][Web]]
   - [[#yaml][Yaml]]
 - [[#snippet-support][Snippet Support]]
+- [[#terminal][Terminal]]
 - [[#code-completion-and-error-checking][Code completion and Error Checking]]
 - [[#sidebar][Sidebar]]
   - [[#sidebar-icons][Sidebar Icons]]
@@ -630,6 +631,11 @@ Add snippet support. Actual snippets live outside of this file. Custom snippets 
   (use-package yasnippet-snippets
     :after (yasnippet))
 #+end_src
+
+* Terminal
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package vterm)
+#+END_SRC
 
 * Code completion and Error Checking
 
