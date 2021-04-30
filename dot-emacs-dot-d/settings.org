@@ -503,6 +503,10 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
   "bb" '(counsel-switch-buffer :which-key "list")
   "bc" '(kill-this-buffer :which-key "kill current")
   "bd" '(close-and-kill-this-pane :which-key "close current"))
+
+  (general-define-key
+   :states 'normal
+   "/" 'swiper)
 #+END_SRC
 
 * VCS
