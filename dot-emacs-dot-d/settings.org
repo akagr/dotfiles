@@ -1,6 +1,7 @@
 #+TITLE: Emacs Config
 #+AUTHOR: Akash Agrawal
 #+EMAIL: akagr@outlook.com
+#+STARTUP: content
 
 * Table of Contents
 :PROPERTIES:
@@ -197,6 +198,9 @@ Simplify leader bindings with general.el.
     "t"  '(:ignore t :which-key "toggle")
     "tt" '(counsel-load-theme :which-key "theme")
     "tw" '(toggle-truncate-lines :which-key "wrap lines")
+
+    "v"  '(:ignore t :which-key "vterm")
+    "vv"  '(vterm :which-key "open new")
 
     "c"  '(:ignore t :which-key "code")
     "cc" '(xref-find-definitions :which-key "find definitions")
