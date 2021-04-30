@@ -502,7 +502,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
   "b" '(:ignore t :which-key "buffer")
   "bb" '(counsel-switch-buffer :which-key "list")
   "bc" '(kill-this-buffer :which-key "kill current")
-  "bd" '(close-and-kill-this-pane :which-key "close current"))
+  "bd" '(aa/close-and-kill-this-pane :which-key "close current"))
 
   (general-define-key
    :states 'normal
@@ -748,14 +748,16 @@ Run `M-x all-the-icons-install-fonts` to install the icons.
 
 Copy current file path relative to project root.
 #+BEGIN_SRC emacs-lisp :results silent
-  (defun copy-file-path ()
+  (defun aa/copy-file-path ()
     (interactive)
     (kill-new (file-relative-name buffer-file-name (projectile-project-root))))
+
+  (defalias 'cfp 'aa/copy-file-path)
 #+END_SRC
 
 Kill this buffer and window, as long as it's not the only window open.
 #+begin_src emacs-lisp :results silent
-  (defun close-and-kill-this-pane ()
+  (defun aa/close-and-kill-this-pane ()
     "If there are multiple windows, then close this one and kill its buffer"
     (interactive)
     (kill-this-buffer)
