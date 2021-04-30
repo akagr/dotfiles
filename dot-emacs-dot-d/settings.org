@@ -196,6 +196,8 @@ Simplify leader bindings with general.el.
     "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
     "ek" '(kill-emacs :which-key "kill emacs")
 
+    "h"  '(help-command :which-key "help")
+
     "t"  '(:ignore t :which-key "toggle")
     "tt" '(counsel-load-theme :which-key "theme")
     "tw" '(toggle-truncate-lines :which-key "wrap lines")
