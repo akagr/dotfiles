@@ -194,6 +194,7 @@ Simplify leader bindings with general.el.
     "e"  '(:ignore t :which-key "emacs")
     "ee" '((lambda () (interactive) (find-file "~/.emacs.d/settings.org")) :which-key "open config")
     "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
+    "ek" '(kill-emacs :which-key "kill emacs")
 
     "t"  '(:ignore t :which-key "toggle")
     "tt" '(counsel-load-theme :which-key "theme")
@@ -270,7 +271,6 @@ Config for mode line:
     (doom-modeline-mu4e nil)
     (doom-modeline-irc nil)
     (doom-modeline-minor-modes nil)
-    (doom-modeline-persp-name nil)
     (doom-modeline-buffer-file-name-style 'file-name)
     (doom-modeline-major-mode-icon t))
 #+end_src
@@ -462,7 +462,7 @@ Add toc to org files automatically
 
 Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It provides the backend which many packages end up using. Alternatives would be helm and ido, which I've not yet tried.
 #+BEGIN_SRC emacs-lisp :results silent
-  (use-package ivy
+  (use-package counsel
     :after flx
     :bind (:map ivy-minibuffer-map
                 ("TAB" . ivy-alt-done)
@@ -496,13 +496,9 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
     (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
     (ivy-rich-mode))
 
-  (general-define-key
-   :states 'normal
-   "C-b" 'ivy-switch-buffer)
-
   (aa/leader-key-def
   "b" '(:ignore t :which-key "buffer")
-  "bb" '(ivy-switch-buffer :which-key "list")
+  "bb" '(counsel-switch-buffer :which-key "list")
   "bc" '(kill-this-buffer :which-key "kill current")
   "bd" '(close-and-kill-this-pane :which-key "close current"))
 #+END_SRC
@@ -542,7 +538,24 @@ Projectile plays pretty well with the other packages, including magit and dired 
     :after projectile)
 
   (aa/leader-key-def
-    "p" '(projectile-command-map :which-key "projectile"))
+    "p"  '(projectile-command-map :which-key "projectile"))
+#+END_SRC
+
+Perspective allows creation of multiple, independent buffer lists and switch between them.
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package perspective
+    :config
+    (unless (equal persp-mode t)
+      (persp-mode)))
+
+  (general-define-key
+   :states 'normal
+   "C-b" 'persp-counsel-switch-buffer)
+
+  (aa/leader-key-def
+    "bs" '(persp-switch :which-key "switch perspective")
+    "bk" '(persp-kill :which-key "kill perspective")
+    "bn" '(persp-next :which-key "next perspective"))
 #+END_SRC
 
 * Programming Languages
