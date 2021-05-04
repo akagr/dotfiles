@@ -281,9 +281,7 @@ Config for mode line:
 
 Add undo package to allow branching undos.
 #+begin_src emacs-lisp :results silent
-  (use-package undo-fu
-    :config
-    (global-undo-tree-mode -1))
+  (use-package undo-fu)
 #+end_src
 
 Being a long time (neo)vim user, I use evil mode exclusively for editing. When they say it's impossible to get out of vim, it has a deeper meaning.
