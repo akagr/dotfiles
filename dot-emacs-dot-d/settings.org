@@ -170,6 +170,7 @@ Various packages that are used by numerous other packages.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package flx)
   (use-package which-key
+    :diminish
     :config
     (which-key-mode)
     (which-key-setup-side-window-bottom)
@@ -221,6 +222,7 @@ Set default frame height.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package fira-code-mode
     :demand t
+    :diminish
     :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
     :hook prog-mode
     :config
@@ -251,30 +253,13 @@ Load theme after creating a new frame. This is required to work with server/clie
 Config for mode line:
 #+begin_src emacs-lisp :results silent
   ;; Diminish minor modes from mode line
-  (use-package diminish)
-
-  ;; You must run (all-the-icons-install-fonts) one time after
-  ;; installing this package!
-
-  (use-package minions
-    :hook (doom-modeline-mode . minions-mode))
-
-  (use-package doom-modeline
-    :hook (after-init . doom-modeline-mode)
-    :custom-face
-    (mode-line ((t (:height 1.1))))
-    (mode-line-inactive ((t (:height 1))))
-    :custom
-    (doom-modeline-icon t)
-    (doom-modeline-height 15)
-    (doom-modeline-bar-width 6)
-    (doom-modeline-lsp t)
-    (doom-modeline-github nil)
-    (doom-modeline-mu4e nil)
-    (doom-modeline-irc nil)
-    (doom-modeline-minor-modes nil)
-    (doom-modeline-buffer-file-name-style 'file-name)
-    (doom-modeline-major-mode-icon t))
+  (use-package diminish
+    :config
+    (diminish 'org-indent-mode)
+    (diminish 'buffer-face-mode)
+    (diminish 'visual-line-mode)
+    (diminish 'eldoc-mode)
+    (diminish 'auto-revert-mode))
 #+end_src
 
 * Evil Mode
@@ -302,6 +287,7 @@ Commentary package allows me to retain my muscle memory of (un)commenting code.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package evil-commentary
     :after evil
+    :diminish
     :config
     (evil-commentary-mode))
 #+END_SRC
@@ -370,6 +356,7 @@ Org bullets package prettifies the headline markers:
     :hook (org-mode . org-bullets-mode))
 
   (use-package evil-org
+    :diminish
     :config
     (add-hook 'org-mode-hook 'evil-org-mode)
     (add-hook 'evil-org-mode-hook
@@ -464,6 +451,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package counsel
     :after flx
+    :diminish ivy-mode
     :bind (:map ivy-minibuffer-map
                 ("TAB" . ivy-alt-done)
                 ("C-l" . ivy-alt-done)
@@ -488,6 +476,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
     :bind (("M-x" . counsel-M-x)))
 
   (use-package ivy-rich
+    :diminish
     :custom
     (ivy-virtual-abbreviate 'full)
     (ivy-rich-switch-buffer-align-virtual-buffer nil)
@@ -532,6 +521,7 @@ Projectile plays pretty well with the other packages, including magit and dired 
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package projectile
     :after evil
+    :diminish
     :init
     (setq projectile-completion-system 'ivy)
     :config
@@ -566,14 +556,15 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
 *** Common Config
 #+begin_src emacs-lisp :results silent
   (use-package editorconfig
-    :ensure t
+    :diminish
     :config
     (editorconfig-mode 1))
 #+end_src
 
 *** Ruby
 #+begin_src emacs-lisp :results silent
-  (use-package ruby-end)
+  (use-package ruby-end
+    :diminish)
 #+end_src
 *** Typescript
 #+begin_src emacs-lisp :results silent
@@ -644,6 +635,7 @@ Add snippet support. Actual snippets live outside of this file. Custom snippets 
 #+begin_src emacs-lisp :results silent
   (use-package yasnippet
     :after company
+    :diminish yas-minor-mode
     :hook (prog-mode . yas-minor-mode)
     :hook (org-mode . yas-minor-mode)
     :config
@@ -663,6 +655,7 @@ Add snippet support. Actual snippets live outside of this file. Custom snippets 
 Using company for auto-completion backend. Most modern languages implement LSP (Language Server Protocol), allowing for rich auto-completion.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package company
+    :diminish
     :init
     (setq company-idle-delay 0)
     (setq company-global-modes '(not org-mode))
@@ -679,6 +672,7 @@ Using company for auto-completion backend. Most modern languages implement LSP (
 
   (use-package flycheck
     :after org
+    :diminish
     :hook
     (org-src-mode . disable-flycheck-for-elisp)
     :custom
