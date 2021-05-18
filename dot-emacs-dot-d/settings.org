@@ -28,6 +28,7 @@
   - [[#elixir][Elixir]]
   - [[#web][Web]]
   - [[#yaml][Yaml]]
+  - [[#plant-uml][Plant UML]]
 - [[#snippet-support][Snippet Support]]
 - [[#terminal][Terminal]]
 - [[#code-completion-and-error-checking][Code completion and Error Checking]]
@@ -344,7 +345,8 @@ Define some evil keybindings for org mode.
           org-odd-levels-only t
           truncate-lines nil)
     (add-hook 'org-mode-hook #'visual-line-mode)
-    (add-hook 'org-mode-hook #'variable-pitch-mode))
+    (add-hook 'org-mode-hook #'variable-pitch-mode)
+    (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images))
 #+END_SRC
 
 Org bullets package prettifies the headline markers:
@@ -630,6 +632,16 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
   (use-package yaml-mode)
 #+END_SRC
 
+*** Plant UML
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package plantuml-mode
+    :config
+    (setq plantuml-jar-path "/Users/akash/plantuml.jar")
+    (setq org-plantuml-jar-path (expand-file-name "/Users/akash/plantuml.jar"))
+    (setq plantuml-default-exec-mode 'jar)
+    (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+    (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))))
+#+END_SRC
 * Snippet Support
 Add snippet support. Actual snippets live outside of this file. Custom snippets can be saved in ~~/.emacs.d/snippets~ directory.
 #+begin_src emacs-lisp :results silent
