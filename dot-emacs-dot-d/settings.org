@@ -204,9 +204,6 @@ Simplify leader bindings with general.el.
     "tt" '(counsel-load-theme :which-key "theme")
     "tw" '(toggle-truncate-lines :which-key "wrap lines")
 
-    "v"  '(:ignore t :which-key "vterm")
-    "vv"  '(vterm :which-key "open new")
-
     "c"  '(:ignore t :which-key "code")
     "cc" '(xref-find-definitions :which-key "find definitions")
     "cr" '(xref-find-references :which-key "find references"))
@@ -658,8 +655,19 @@ Add snippet support. Actual snippets live outside of this file. Custom snippets 
 #+end_src
 
 * Terminal
+Add ~vterm~, the most complete terminal emulator for emacs, and supporting packages.
+
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package vterm)
+
+  (use-package vterm-toggle
+    :after vterm
+    :config
+    (setq vterm-toggle-hide-method 'reset-window-configration))
+
+  (aa/leader-key-def
+    "v"  '(:ignore t :which-key "vterm")
+    "vv"  '(vterm-toggle :which-key "toggle"))
 #+END_SRC
 
 * Code completion and Error Checking
