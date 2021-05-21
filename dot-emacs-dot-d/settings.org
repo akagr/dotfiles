@@ -165,6 +165,13 @@ Bootstrap package repos and package manager.
 
 * Support Packages
 
+Loading emacs from finder or spotlight causes it to not load many environment variables. This package fixes it.
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package exec-path-from-shell
+    :config
+    (exec-path-from-shell-initialize))
+#+END_SRC
+
 Various packages that are used by numerous other packages.
 + `flx` is used for fuzzy matching and completion.
 + `which-key` allows using keybindings interactively. For example, if `<leader>gs` is mapped to `magit-status`, and I press only `<leader>g`, it'll show all the keys and commands that are valid follows.
@@ -237,7 +244,7 @@ Set default frame height.
     ;; Global settings (defaults)
     (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
           doom-themes-enable-italic t) ; if nil, italics is universally disabled
-    (load-theme 'doom-material t))
+    (load-theme 'doom-nord t))
 #+END_SRC
 
 Load theme after creating a new frame. This is required to work with server/client model. Otherwise, emacs will load theme only once when starting server and all subsequent frames won't get the theme.
@@ -245,7 +252,7 @@ Load theme after creating a new frame. This is required to work with server/clie
   (add-hook 'after-make-frame-functions
             (lambda (frame)
               (with-selected-frame frame
-                (load-theme 'doom-material t))))
+                (load-theme 'doom-nord t))))
 #+END_SRC
 
 Config for mode line:
