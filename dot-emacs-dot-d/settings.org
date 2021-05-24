@@ -29,6 +29,7 @@
   - [[#web][Web]]
   - [[#yaml][Yaml]]
   - [[#plant-uml][Plant UML]]
+  - [[#markdown][Markdown]]
 - [[#snippet-support][Snippet Support]]
 - [[#terminal][Terminal]]
 - [[#code-completion-and-error-checking][Code completion and Error Checking]]
@@ -574,7 +575,9 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
 #+end_src
 *** Typescript
 #+begin_src emacs-lisp :results silent
-  (use-package typescript-mode)
+  (use-package typescript-mode
+    :config
+    (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode)))
 #+end_src
 *** Elixir
 #+BEGIN_SRC emacs-lisp :results silent
@@ -646,6 +649,14 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
     (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))))
 #+END_SRC
+
+*** Markdown
+
+Enable visual line for word wrap and sane navigation.
+#+BEGIN_SRC emacs-lisp :results silent
+  (add-hook 'markdown-mode-hook #'visual-line-mode)
+#+END_SRC
+
 * Snippet Support
 Add snippet support. Actual snippets live outside of this file. Custom snippets can be saved in ~~/.emacs.d/snippets~ directory.
 #+begin_src emacs-lisp :results silent
