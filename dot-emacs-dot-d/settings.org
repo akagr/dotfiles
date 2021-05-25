@@ -484,7 +484,9 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
 
   (use-package prescient
     :commands prescient-persist-mode
-    :init (prescient-persist-mode 1))
+    :init (prescient-persist-mode 1)
+    :config
+    (setq prescient-filter-method '(literal regexp initialism)))
 
   (use-package ivy-prescient
     :after (counsel prescient)
