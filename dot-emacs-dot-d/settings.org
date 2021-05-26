@@ -507,6 +507,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
   (use-package counsel
     :after ivy
     :config
+    (counsel-mode t)
     :bind (("M-x" . counsel-M-x)))
 #+END_SRC
 
@@ -517,7 +518,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
     :commands prescient-persist-mode
     :init (prescient-persist-mode 1)
     :config
-    (setq prescient-filter-method '(literal-prefix)
+    (setq prescient-filter-method '(literal)
           prescient-sort-full-matches-first nil))
 
   (use-package ivy-prescient
@@ -577,7 +578,8 @@ Projectile plays pretty well with the other packages, including magit and dired 
     :after projectile)
 
   (aa/leader-key-def
-    "p"  '(projectile-command-map :which-key "projectile"))
+    "p"  '(projectile-command-map :which-key "projectile")
+    "pf" '(counsel-projectile-find-file :which-key "find file"))
 #+END_SRC
 
 Perspective allows creation of multiple, independent buffer lists and switch between them.
