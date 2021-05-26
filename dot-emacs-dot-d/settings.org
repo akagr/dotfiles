@@ -522,7 +522,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
           prescient-sort-full-matches-first nil))
 
   (use-package ivy-prescient
-    :after (counsel prescient)
+    :after (counsel counsel-projectile prescient)
     :config
     (ivy-prescient-mode t)
     (setq ivy-prescient-sort-commands t))
@@ -534,7 +534,7 @@ A few keybindings to command it all.
 #+BEGIN_SRC emacs-lisp :results silent
   (aa/leader-key-def
   "b" '(:ignore t :which-key "buffer")
-  "bb" '(counsel-switch-buffer :which-key "list")
+  "bb" '(counsel-projectile-switch-to-buffer :which-key "list in project")
   "bc" '(kill-this-buffer :which-key "kill current")
   "bd" '(aa/close-and-kill-this-pane :which-key "close current"))
 
@@ -575,7 +575,12 @@ Projectile plays pretty well with the other packages, including magit and dired 
     (projectile-mode +1))
 
   (use-package counsel-projectile
-    :after projectile)
+    :after projectile
+    :config
+    (setq counsel-projectile-sort-files t
+          counsel-projectile-sort-projects t
+          counsel-projectile-sort-buffers t
+          counsel-projectile-sort-directories t))
 
   (aa/leader-key-def
     "p"  '(projectile-command-map :which-key "projectile")
