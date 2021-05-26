@@ -454,6 +454,7 @@ Add toc to org files automatically
 * Better UX for Menus - Ivy and Bros.
 
 Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It provides the backend which many packages end up using. Alternatives would be helm and ido, which I've not yet tried.
+
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package ivy
     :diminish
@@ -476,12 +477,44 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
     (setq ivy-use-virtual-buffers nil)
     (setq ivy-initial-inputs-alist nil)
     (setq ivy-count-format "(%d/%d) "))
+#+END_SRC
 
+[[https://github.com/Yevgnen/ivy-rich][Ivy Rich]] adds some flair to Ivy minibuffer by providing additional details about candidates - major mode, project etc.
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package ivy-rich
+    :after ivy
+    :diminish
+    :custom
+    (ivy-virtual-abbreviate 'full)
+    (ivy-rich-switch-buffer-align-virtual-buffer nil)
+    (ivy-rich-path-style 'full)
+    :config
+    (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+    (ivy-rich-mode))
+#+END_SRC
+
+[[https://github.com/abo-abo/hydra][Hydra]] allows creating groups of keybindings. I don't use it directly, but packages like Ivy expose additional functionality with it.
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package hydra)
+  (use-package ivy-hydra
+    :after (ivy hydra))
+
+#+END_SRC
+
+[[https://github.com/abo-abo/swiper/blob/master/counsel.el][Counsel]] applies Ivy to a lot of areas in emacs - M-x menu, buffer menu etc.
+
+#+BEGIN_SRC emacs-lisp :results silent
   (use-package counsel
     :after (flx ivy)
     :config
     :bind (("M-x" . counsel-M-x)))
+#+END_SRC
 
+[[https://github.com/raxod502/prescient.el][Prescient.el]] is a package that adds sane sorting and filtering behaviour, and it comes with adapters for popular completion frameworks (including Ivy).
+
+#+BEGIN_SRC emacs-lisp :results silent
   (use-package prescient
     :commands prescient-persist-mode
     :init (prescient-persist-mode 1)
@@ -494,17 +527,11 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
     (ivy-prescient-mode t)
     (setq ivy-prescient-sort-commands t))
 
-  (use-package ivy-rich
-    :after ivy-prescient
-    :diminish
-    :custom
-    (ivy-virtual-abbreviate 'full)
-    (ivy-rich-switch-buffer-align-virtual-buffer nil)
-    (ivy-rich-path-style 'full)
-    :config
-    (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
-    (ivy-rich-mode))
+#+END_SRC
 
+A few keybindings to command it all.
+
+#+BEGIN_SRC emacs-lisp :results silent
   (aa/leader-key-def
   "b" '(:ignore t :which-key "buffer")
   "bb" '(counsel-switch-buffer :which-key "list")
@@ -515,7 +542,6 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
    :states 'normal
    "/" 'swiper)
 #+END_SRC
-
 * VCS
 
 The primary git interface I use, and also one of the main reasons I use emacs. `libgit` provides native bindings which makes magit faster.
