@@ -173,10 +173,8 @@ Loading emacs from finder or spotlight causes it to not load many environment va
 #+END_SRC
 
 Various packages that are used by numerous other packages.
-+ `flx` is used for fuzzy matching and completion.
 + `which-key` allows using keybindings interactively. For example, if `<leader>gs` is mapped to `magit-status`, and I press only `<leader>g`, it'll show all the keys and commands that are valid follows.
 #+BEGIN_SRC emacs-lisp :results silent
-  (use-package flx)
   (use-package which-key
     :diminish
     :config
@@ -507,7 +505,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
 
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package counsel
-    :after (flx ivy)
+    :after ivy
     :config
     :bind (("M-x" . counsel-M-x)))
 #+END_SRC
@@ -519,7 +517,8 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
     :commands prescient-persist-mode
     :init (prescient-persist-mode 1)
     :config
-    (setq prescient-filter-method '(literal regexp initialism)))
+    (setq prescient-filter-method '(literal-prefix)
+          prescient-sort-full-matches-first nil))
 
   (use-package ivy-prescient
     :after (counsel prescient)
