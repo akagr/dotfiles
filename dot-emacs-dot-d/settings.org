@@ -91,6 +91,7 @@ Turn off auto backup files, startup message and other more sensible defaults.
    load-prefer-newer t
    ring-bell-function 'ignore
    sentence-end-double-space nil
+   confirm-kill-processes nil
    vc-follow-symlinks nil)
 #+END_SRC
 
@@ -308,7 +309,7 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package evil-collection
     :init
-    (evil-collection-init '(deadgrep dired-sidebar ibuffer magit vterm xref)))
+    (evil-collection-init '(deadgrep dired dired-sidebar ibuffer magit vterm xref)))
 #+END_SRC
 
 * Org Mode

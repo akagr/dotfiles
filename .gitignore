@@ -11,5 +11,6 @@ dot-emacs-dot-d/transient
 dot-emacs-dot-d/bookmarks
 dot-emacs-dot-d/*.html
 dot-emacs-dot-d/settings.el
+dot-emacs-dot-d/var
 *#
 *~
