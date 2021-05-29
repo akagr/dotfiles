@@ -222,6 +222,7 @@ Set default frame height.
   (add-to-list 'default-frame-alist '(height . 48))
 #+END_SRC
 
+Use ~Fira Code~ font with ligatures. Install the symbol font with ~M-x fira-code-mode-intall-fonts~. This is non-optional, and is required even after installing ~Fira Code~ to the system. Restart emacs after installing symbol fonts.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package fira-code-mode
     :demand t
