@@ -511,6 +511,8 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
     :config
     (counsel-mode t)
     :bind (("M-x" . counsel-M-x)))
+
+  (use-package wgrep)
 #+END_SRC
 
 [[https://github.com/raxod502/prescient.el][Prescient.el]] is a package that adds sane sorting and filtering behaviour, and it comes with adapters for popular completion frameworks (including Ivy).
