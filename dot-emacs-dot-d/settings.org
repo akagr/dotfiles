@@ -18,7 +18,7 @@
 - [[#appearance][Appearance]]
 - [[#evil-mode][Evil Mode]]
 - [[#org-mode][Org Mode]]
-- [[#better-ux-for-menus][Better UX for Menus]]
+- [[#better-ux-for-menus---ivy-and-bros][Better UX for Menus - Ivy and Bros.]]
 - [[#vcs][VCS]]
 - [[#project-management][Project Management]]
 - [[#programming-languages][Programming Languages]]
@@ -242,7 +242,7 @@ Set default frame height.
     ;; Global settings (defaults)
     (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
           doom-themes-enable-italic t) ; if nil, italics is universally disabled
-    (load-theme 'doom-nord t))
+    (load-theme 'doom-zenburn t))
 #+END_SRC
 
 Load theme after creating a new frame. This is required to work with server/client model. Otherwise, emacs will load theme only once when starting server and all subsequent frames won't get the theme.
@@ -250,7 +250,7 @@ Load theme after creating a new frame. This is required to work with server/clie
   (add-hook 'after-make-frame-functions
             (lambda (frame)
               (with-selected-frame frame
-                (load-theme 'doom-nord t))))
+                (load-theme 'doom-zenburn t))))
 #+END_SRC
 
 Config for mode line:
@@ -506,6 +506,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package counsel
     :after ivy
+    :diminish
     :config
     (counsel-mode t)
     :bind (("M-x" . counsel-M-x)))
