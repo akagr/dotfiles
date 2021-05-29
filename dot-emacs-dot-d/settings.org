@@ -18,7 +18,7 @@
 - [[#appearance][Appearance]]
 - [[#evil-mode][Evil Mode]]
 - [[#org-mode][Org Mode]]
-- [[#better-ux-for-menus---ivy-and-bros][Better UX for Menus - Ivy and Bros.]]
+- [[#better-ux-for-menus][Better UX for Menus]]
 - [[#vcs][VCS]]
 - [[#project-management][Project Management]]
 - [[#programming-languages][Programming Languages]]
@@ -33,7 +33,6 @@
 - [[#terminal][Terminal]]
 - [[#code-completion-and-error-checking][Code completion and Error Checking]]
 - [[#sidebar][Sidebar]]
-  - [[#sidebar-icons][Sidebar Icons]]
 - [[#general-searching][General Searching]]
 - [[#custom-functions][Custom Functions]]
 :END:
@@ -550,7 +549,6 @@ The primary git interface I use, and also one of the main reasons I use emacs. `
   (use-package libgit)
 
   (use-package magit
-    :after counsel evil
     :demand t)
 
   (use-package magit-libgit
@@ -718,9 +716,12 @@ Add ~vterm~, the most complete terminal emulator for emacs, and supporting packa
     :config
     (setq vterm-toggle-hide-method 'reset-window-configration))
 
-  (aa/leader-key-def
-    "v"  '(:ignore t :which-key "vterm")
-    "vv"  '(vterm-toggle :which-key "toggle"))
+  (general-define-key
+   :states 'normal
+   "C-t" 'vterm-toggle)
+
+  (evil-collection-define-key 'insert 'vterm-mode-map
+      (kbd "C-t") 'vterm-toggle)
 #+END_SRC
 
 * Code completion and Error Checking
@@ -742,6 +743,10 @@ Using company for auto-completion backend. Most modern languages implement LSP (
     (add-hook 'elixir-mode-hook 'eglot-ensure)
     (add-hook 'ruby-mode-hook 'eglot-ensure)
     (add-to-list 'eglot-server-programs '(elixir-mode "/Users/akash/Downloads/elixir-ls/language_server.sh")))
+
+  ;; Helps with monorepo project where projects might not be the top level
+  (add-hook 'project-find-functions 'aa/find-mix-project nil nil)
+  (add-hook 'project-find-functions 'aa/find-rails-project nil nil)
 
   (use-package flycheck
     :after org
@@ -788,7 +793,6 @@ Using company for auto-completion backend. Most modern languages implement LSP (
     "n" '(dired-sidebar-toggle-sidebar :which-key "sidebar"))
 #+END_SRC
 
-*** Sidebar Icons
 Run `M-x all-the-icons-install-fonts` to install the icons.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package all-the-icons)
@@ -796,7 +800,8 @@ Run `M-x all-the-icons-install-fonts` to install the icons.
   (use-package all-the-icons-dired
     :after all-the-icons
     :config
-    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+    (setq all-the-icons-dired-monochrome nil))
 #+END_SRC
 
 * General Searching
@@ -829,3 +834,18 @@ Kill this buffer and window, as long as it's not the only window open.
     (if (not (one-window-p))
         (delete-window)))
 #+end_src
+
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun aa/find-mix-project (dir)
+    "Try to locate a Elixir project root by 'mix.exs' above DIR."
+    (let ((mix_root (locate-dominating-file dir "mix.exs")))
+      (message "Found Elixir project root in '%s' starting from '%s'" mix_root dir)
+      (if (stringp mix_root) `(transient . ,mix_root) nil)))
+
+  (defun aa/find-rails-project (dir)
+    "Try to locate a Rails project root by 'Gemfile' above DIR."
+    (let ((rails_root (locate-dominating-file dir "Gemfile")))
+      (message "Found Rails project root in '%s' starting from '%s'" rails_root dir)
+      (if (stringp rails_root) `(transient . ,rails_root) nil)))
+#+END_SRC
