@@ -331,7 +331,8 @@ Define some evil keybindings for org mode.
     "rc" '(org-capture :which-key "capture")
     "ri" '((lambda () (interactive) (org-indent-block)) :which-key "indent block")
     "rl" '(org-store-link :which-key "store Link")
-    "ro" '((lambda () (interactive) (find-file org-default-notes-file)) :which-key "open notes"))
+    "ro" '((lambda () (interactive) (find-file org-default-notes-file)) :which-key "open notes")
+    "rp" '(org-present :which-key "present"))
 #+end_src
 
 - Use org indent mode. This allows visual soft indentation of files without me having to maintain that.
@@ -450,6 +451,23 @@ Add toc to org files automatically
     (add-hook 'org-mode-hook #'org-make-toc-mode))
 #+END_SRC
 
+Add ability to present org files
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package org-present
+    :config
+    (add-hook 'org-present-mode-hook
+                 (lambda ()
+                   (display-line-numbers-mode -1)
+                   (org-display-inline-images)
+                   (org-present-hide-cursor)
+                   (org-present-read-only)))
+       (add-hook 'org-present-mode-quit-hook
+                 (lambda ()
+                   (display-line-numbers-mode +1)
+                   (org-remove-inline-images)
+                   (org-present-show-cursor)
+                   (org-present-read-write))))
+#+END_SRC
 * Better UX for Menus - Ivy and Bros.
 
 Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It provides the backend which many packages end up using. Alternatives would be helm and ido, which I've not yet tried.
