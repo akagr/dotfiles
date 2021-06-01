@@ -491,9 +491,18 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
                 ("C-d" . ivy-reverse-i-search-kill))
     :config
     (ivy-mode 1)
-    (setq ivy-use-virtual-buffers nil)
-    (setq ivy-initial-inputs-alist nil)
-    (setq ivy-count-format "(%d/%d) "))
+    (setq ivy-use-virtual-buffers nil
+          ivy-initial-inputs-alist nil
+          ivy-count-format "(%d/%d) ")
+    ;; Don't want to see these buffers in switcher. Rarely,
+    ;; if ever have I switched to them.
+    (add-to-list 'ivy-ignore-buffers "^magit")
+    (add-to-list 'ivy-ignore-buffers "\\*Messages\\*")
+    (add-to-list 'ivy-ignore-buffers "\\*vterm\\*")
+    (add-to-list 'ivy-ignore-buffers "\\*EGLOT")
+    (add-to-list 'ivy-ignore-buffers "\\*eldoc*")
+    (add-to-list 'ivy-ignore-buffers "\\*Warnings*")
+    (add-to-list 'ivy-ignore-buffers "\\*Compile-Log\\*"))
 #+END_SRC
 
 [[https://github.com/Yevgnen/ivy-rich][Ivy Rich]] adds some flair to Ivy minibuffer by providing additional details about candidates - major mode, project etc.
