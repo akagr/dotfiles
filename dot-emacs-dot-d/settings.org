@@ -497,6 +497,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
     ;; Don't want to see these buffers in switcher. Rarely,
     ;; if ever have I switched to them.
     (add-to-list 'ivy-ignore-buffers "^magit")
+    (add-to-list 'ivy-ignore-buffers "^:") ;; This removes the dired-sidebar buffer from list
     (add-to-list 'ivy-ignore-buffers "\\*Messages\\*")
     (add-to-list 'ivy-ignore-buffers "\\*vterm\\*")
     (add-to-list 'ivy-ignore-buffers "\\*EGLOT")
