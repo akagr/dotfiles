@@ -274,6 +274,8 @@ Add undo package to allow branching undos.
 #+end_src
 
 Being a long time (neo)vim user, I use evil mode exclusively for editing. When they say it's impossible to get out of vim, it has a deeper meaning.
+
+I use different colored cursors to depict what mode I'm in. Way easier to work with than looking at minibuffer.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package evil
     :demand t
@@ -284,7 +286,13 @@ Being a long time (neo)vim user, I use evil mode exclusively for editing. When t
           evil-want-keybinding nil)
     :config
     (evil-mode)
-    (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes)))
+    (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes)
+          evil-emacs-state-cursor '("indian red" box)
+          evil-normal-state-cursor '("indian red" box)
+          evil-visual-state-cursor '("royal blue" hollow)
+          evil-insert-state-cursor '("yellow green" bar)
+          evil-replace-state-cursor '("red" bar)
+          evil-operator-state-cursor '("red" hollow)))
 #+END_SRC
 
 Commentary package allows me to retain my muscle memory of (un)commenting code.
