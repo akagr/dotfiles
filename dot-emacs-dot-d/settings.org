@@ -758,10 +758,10 @@ Add ~vterm~, the most complete terminal emulator for emacs, and supporting packa
 
   (general-define-key
    :states 'normal
-   "C-t" 'aa/toggle-vterm)
+   "C-t" 'vterm-toggle)
 
   (evil-collection-define-key 'insert 'vterm-mode-map
-      (kbd "C-t") 'aa/toggle-vterm)
+      (kbd "C-t") 'vterm-toggle)
 #+END_SRC
 
 * Code completion and Error Checking
@@ -888,14 +888,4 @@ Add custom methods to correctly locate elixir and rails projects inside a multi-
     (let ((rails_root (locate-dominating-file dir "Gemfile")))
       (message "Found Rails project root in '%s' starting from '%s'" rails_root dir)
       (if (stringp rails_root) `(transient . ,rails_root) nil)))
-#+END_SRC
-
-Toggle vterm correctly based on its visibility.
-#+BEGIN_SRC emacs-lisp :results silent
-  (defun aa/toggle-vterm ()
-    "Toggle vterm based on buffer visibility"
-    (interactive)
-    (if (get-buffer-window "*vterm*")
-        (vterm-toggle-hide)
-      (vterm-toggle-show)))
 #+END_SRC
