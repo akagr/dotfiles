@@ -862,7 +862,7 @@ Copy current file path relative to project root.
     (interactive)
     (kill-new (file-relative-name buffer-file-name (projectile-project-root))))
 
-  (defalias 'cfp 'aa/copy-file-path)
+  (defalias 'copy-file-path 'aa/copy-file-path)
 #+END_SRC
 
 Kill this buffer and window, as long as it's not the only window open.
