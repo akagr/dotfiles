@@ -289,7 +289,7 @@ I use different colored cursors to depict what mode I'm in. Way easier to work w
     (setq evil-emacs-state-modes (delq 'ibuffer-mode evil-emacs-state-modes)
           evil-emacs-state-cursor '("indian red" box)
           evil-normal-state-cursor '("indian red" box)
-          evil-visual-state-cursor '("royal blue" hollow)
+          evil-visual-state-cursor '("royal blue" box)
           evil-insert-state-cursor '("yellow green" bar)
           evil-replace-state-cursor '("red" bar)
           evil-operator-state-cursor '("red" hollow)))
@@ -317,7 +317,7 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package evil-collection
     :init
-    (evil-collection-init '(deadgrep dired dired-sidebar ibuffer magit vterm xref)))
+    (evil-collection-init '(deadgrep dired dired-sidebar ediff ibuffer magit vterm xref)))
 #+END_SRC
 
 * Org Mode
@@ -598,6 +598,11 @@ The primary git interface I use, and also one of the main reasons I use emacs. `
     "g" '(:ignore t :which-key "git")
     "gs" '(magit-status :which-key "status")
     "gb" '(magit-blame :which-key "blame"))
+#+END_SRC
+
+Set ediff to use the current frame instead of creating a new one.
+#+BEGIN_SRC emacs-lisp :results silent
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 #+END_SRC
 
 * Project Management
