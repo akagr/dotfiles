@@ -689,6 +689,9 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
   (use-package kubel)
   (use-package kubel-evil
     :after kubel)
+
+  (aa/leader-key-def
+    "k" '(kubel :which-key "k8s"))
 #+END_SRC
 *** Web
 #+begin_src emacs-lisp :results silent
