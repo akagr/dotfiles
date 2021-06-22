@@ -26,6 +26,7 @@
   - [[#ruby][Ruby]]
   - [[#typescript][Typescript]]
   - [[#elixir][Elixir]]
+  - [[#kubernetes][Kubernetes]]
   - [[#web][Web]]
   - [[#yaml][Yaml]]
   - [[#markdown][Markdown]]
@@ -683,7 +684,12 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
     (add-hook 'elixir-mode-hook
               (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
 #+END_SRC
-
+*** Kubernetes
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package kubel)
+  (use-package kubel-evil
+    :after kubel)
+#+END_SRC
 *** Web
 #+begin_src emacs-lisp :results silent
   (use-package web-mode
