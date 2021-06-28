@@ -169,6 +169,7 @@ Bootstrap package repos and package manager.
 Loading emacs from finder or spotlight causes it to not load many environment variables. This package fixes it.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package exec-path-from-shell
+    :defer t
     :config
     (exec-path-from-shell-initialize))
 #+END_SRC
@@ -371,11 +372,13 @@ Org bullets package prettifies the headline markers:
 
   (use-package evil-org
     :diminish
-    :config
-    (add-hook 'org-mode-hook 'evil-org-mode)
+    :commands evil-org-mode
+    :init
+    (add-hook 'org-mode-hook #'evil-org-mode)
     (add-hook 'evil-org-mode-hook
               (lambda ()
                 (evil-org-set-key-theme)))
+    :config
     (require 'evil-org-agenda)
     (evil-org-agenda-set-keys))
 #+END_SRC
@@ -455,7 +458,8 @@ Replace list bullets with prettier dots.
 Add toc to org files automatically
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package org-make-toc
-    :config
+    :commands org-make-toc-mode
+    :init
     (add-hook 'org-mode-hook #'org-make-toc-mode))
 #+END_SRC
 
@@ -588,7 +592,8 @@ The primary git interface I use, and also one of the main reasons I use emacs. `
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package libgit)
 
-  (use-package magit)
+  (use-package magit
+    :defer t)
 
   (use-package magit-libgit
     :after (magit libgit))
@@ -664,6 +669,7 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
 *** Typescript
 #+begin_src emacs-lisp :results silent
   (use-package typescript-mode
+    :defer t
     :config
     (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode)))
 #+end_src
@@ -671,6 +677,7 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package elixir-mode
     :after ruby-end
+    :defer t
     :config
     (add-to-list 'elixir-mode-hook
                  (defun auto-activate-ruby-end-mode-for-elixir-mode ()
@@ -684,7 +691,8 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
 #+END_SRC
 *** Kubernetes
 #+BEGIN_SRC emacs-lisp :results silent
-  (use-package kubel)
+  (use-package kubel
+    :defer t)
   (use-package kubel-evil
     :after kubel)
 
