@@ -279,7 +279,6 @@ Being a long time (neo)vim user, I use evil mode exclusively for editing. When t
 I use different colored cursors to depict what mode I'm in. Way easier to work with than looking at minibuffer.
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package evil
-    :demand t
     :init
     (setq evil-respect-visual-line-mode t
           evil-undo-system 'undo-fu
@@ -589,8 +588,7 @@ The primary git interface I use, and also one of the main reasons I use emacs. `
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package libgit)
 
-  (use-package magit
-    :demand t)
+  (use-package magit)
 
   (use-package magit-libgit
     :after (magit libgit))
@@ -828,7 +826,6 @@ Using company for auto-completion backend. Most modern languages implement LSP (
   (use-package dired-sidebar
     :commands (dired-sidebar-toggle-sidebar)
     :after evil
-    :demand t
     :init
     (add-hook 'dired-sidebar-mode-hook
               (lambda ()
