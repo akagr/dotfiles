@@ -101,7 +101,7 @@ Updating some settings so straight.el can play nicely with use-package.
 #+BEGIN_SRC emacs-lisp
   (setq straight-use-package-by-default t
         straight-cache-autoloads t
-        straight-check-for-modifications '(check-on-save find-when-checking)
+        straight-check-for-modifications '(check-on-save)
         straight-vc-git-default-clone-depth 1
         vc-follow-symlinks t)
 #+END_SRC
@@ -810,19 +810,19 @@ Add snippet support. Actual snippets live outside of this file. Custom snippets 
 Add ~vterm~, the most complete terminal emulator for emacs, and supporting packages.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package vterm)
+  (use-package vterm
+    :commands (vterm))
 
   (use-package vterm-toggle
     :after vterm
+    :commands (vterm-toggle)
     :config
-    (setq vterm-toggle-hide-method 'reset-window-configration))
-
+    (setq vterm-toggle-hide-method 'reset-window-configration)
+    (evil-collection-define-key 'insert 'vterm-mode-map
+      (kbd "C-t") 'vterm-toggle))
   (general-define-key
    :states 'normal
    "C-t" 'vterm-toggle)
-
-  (evil-collection-define-key 'insert 'vterm-mode-map
-      (kbd "C-t") 'vterm-toggle)
 #+END_SRC
 
 * Code completion and Error Checking
@@ -906,7 +906,8 @@ Run `M-x all-the-icons-install-fonts` to install the icons.
 #+BEGIN_SRC emacs-lisp
   (use-package ripgrep)
 
-  (use-package deadgrep)
+  (use-package deadgrep
+    :commands deadgrep)
 
   (aa/leader-key-def
     "s" '(deadgrep :which-key "search"))
