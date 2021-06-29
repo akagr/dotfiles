@@ -838,6 +838,10 @@ Using company for auto-completion backend. Most modern languages implement LSP (
     :config
     (global-company-mode 1))
 
+  ;; Work around until project-root works
+  (defun project-root (project)
+      (car (project-roots project)))
+
   (use-package eglot
     :after elixir-mode
     :config
