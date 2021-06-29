@@ -1,42 +1,9 @@
-#+TITLE: Emacs Config
++TITLE: Emacs Config
 #+AUTHOR: Akash Agrawal
 #+EMAIL: akagr@outlook.com
+#+PROPERTY: header-args :results silent :tangle "./init.el"
 #+STARTUP: content
-
-* Table of Contents
-:PROPERTIES:
-:TOC: :include all :ignore this
-:END:
-
-:CONTENTS:
-- [[#quick-keybindings-for-memory][Quick keybindings for memory]]
-- [[#external-dependencies][External Dependencies]]
-- [[#bootstrapping-and-default][Bootstrapping and Default]]
-- [[#package-management][Package Management]]
-- [[#support-packages][Support Packages]]
-- [[#common-keybindings][Common Keybindings]]
-- [[#appearance][Appearance]]
-- [[#evil-mode][Evil Mode]]
-- [[#org-mode][Org Mode]]
-- [[#better-ux-for-menus---ivy-and-bros][Better UX for Menus - Ivy and Bros.]]
-- [[#vcs][VCS]]
-- [[#project-management][Project Management]]
-- [[#programming-languages][Programming Languages]]
-  - [[#common-config][Common Config]]
-  - [[#ruby][Ruby]]
-  - [[#typescript][Typescript]]
-  - [[#elixir][Elixir]]
-  - [[#kubernetes][Kubernetes]]
-  - [[#web][Web]]
-  - [[#yaml][Yaml]]
-  - [[#markdown][Markdown]]
-- [[#snippet-support][Snippet Support]]
-- [[#terminal][Terminal]]
-- [[#code-completion-and-error-checking][Code completion and Error Checking]]
-- [[#sidebar][Sidebar]]
-- [[#general-searching][General Searching]]
-- [[#custom-functions][Custom Functions]]
-:END:
+#+babel: :cache yes
 
 * Quick keybindings for memory
 
@@ -50,14 +17,26 @@
 | srcel<TAB> | Insert elisp code block                     |
 |------------+---------------------------------------------|
 
-* External Dependencies
+* Early Init
+:properties:
+:header-args+: :tangle "./early-init.el"
+:end:
 
-- Download ~elixir-ls~ from https://github.com/JakeBecker/elixir-ls and adjust the path of language server in eglot config.
+*** Defer Compilation
+#+BEGIN_SRC emacs-lisp
+  (defvar comp-deferred-compilation)
+  (setq comp-deferred-compilation t)
+#+END_SRC
 
-* Bootstrapping and Default
+*** Speed Boost
+#+BEGIN_SRC emacs-lisp
+  (setq package-enable-at-startup nil
+        frame-inhibit-implied-resize t)
+#+END_SRC
 
-Following [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how-does-doom-start-up-so-quickly][Doom FAQ]] to reduce startup time.
-#+BEGIN_SRC emacs-lisp :results silent
+*** Reduce GC
+Following [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how-does-doom-start-up-so-quickly][Doom-Emacs FAQ]], we max the garbage collection threshold on startup, and reset it to the original value after.
+#+BEGIN_SRC emacs-lisp
   ;; max memory available for gc on startup
   (defvar aa/gc-cons-threshold 16777216)
   (setq gc-cons-threshold most-positive-fixnum
@@ -79,18 +58,98 @@ Following [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how
 
   (add-hook 'minibuffer-setup-hook #'aa/defer-garbage-collection-h)
   (add-hook 'minibuffer-exit-hook #'aa/restore-garbage-collection-h)
-  (setq garbage-collection-messages t)
+  (setq garbage-collection-messages nil)
 #+END_SRC
 
-Provide a file where emacs stores its custom config. This will allow me to check it in git.
-#+BEGIN_SRC emacs-lisp :results silent
-  (add-to-list 'load-path "~/.emacs.d/modules")
-  (setq custom-file "~/.emacs.d/modules/custom-file.el")
-  (load-file custom-file)
+Temporarily avoid special handling of files
+#+BEGIN_SRC emacs-lisp
+  (defvar aa/-file-name-handler-alist file-name-handler-alist)
+  (setq file-name-handler-alist nil)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq file-name-handler-alist aa/-file-name-handler-alist)))
 #+END_SRC
+
+*** Disable Site Run
+#+BEGIN_SRC emacs-lisp
+  (setq site-run-file nil)
+#+END_SRC
+
+*** Don't compact font caches
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-compacting-font-caches t)
+#+END_SRC
+
+*** Improve I/O
+Optimizations for improving I/O performance. Increase max bytes read from a sub-process in a single op (Emacs 27+)
+#+BEGIN_SRC emacs-lisp
+  (when (boundp 'read-process-output-max)
+    ;; 1MB in bytes, default 4096 bytes
+    (setq read-process-output-max 1048576))
+#+END_SRC
+
+*** Straight.el
+[[https://github.com/raxod502/straight.el][straight.el]] is used to download packages for us from all over the web. It stores them all in their respective git folders in =.emacs.d/straight=, which makes debugging, and contributing fixes back upstream as easy as possible.
+
+Updating some settings so straight.el can play nicely with use-package.
+#+BEGIN_SRC emacs-lisp
+(setq straight-use-package-by-default t
+      straight-cache-autoloads t
+      straight-vc-git-default-clone-depth 1
+      vc-follow-symlinks t)
+#+END_SRC
+
+Enable debugging on error.
+#+BEGIN_SRC emacs-lisp
+  (setq debug-on-error t)
+#+END_SRC
+
+Fetching =straight.el=.
+#+BEGIN_SRC emacs-lisp
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+  (setq vc-follow-symlinks 'ask) ; restore default
+#+END_SRC
+
+Loading an optional package which gives us some convenience functions, like ~straight-x-clean-unused-repo~ to remove any packages we don't have configured anymore.
+#+begin_src emacs-lisp
+  (require 'straight-x)
+#+end_src
+
+Installing =use-package= now.
+#+BEGIN_SRC emacs-lisp
+  (straight-use-package 'use-package)
+#+END_SRC
+
+*** Use the garbage collector magic hack
+#+begin_src emacs-lisp
+  (use-package gcmh
+    :demand t
+    :config (gcmh-mode 1))
+  #+end_src
+*** End early init
+#+BEGIN_SRC emacs-lisp
+  (provide 'early-init)
+#+END_SRC
+
+* External Dependencies
+
+- Download ~elixir-ls~ from https://github.com/JakeBecker/elixir-ls and adjust the path of language server in eglot config.
+
+* Bootstrapping and Default
 
 Turn off auto backup files, startup message and other more sensible defaults.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (setq
    auto-save-default nil
    create-lockfiles nil
@@ -99,24 +158,23 @@ Turn off auto backup files, startup message and other more sensible defaults.
    load-prefer-newer t
    ring-bell-function 'ignore
    sentence-end-double-space nil
-   confirm-kill-processes nil
-   vc-follow-symlinks nil)
+   confirm-kill-processes nil)
 #+END_SRC
 
 Don't use tabs for indentation. Also truncate lines instead of wrapping them.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (setq-default indent-tabs-mode nil
                 truncate-lines t)
 #+END_SRC
 
 Use y or n instead of yes or no. Additionally, use ibuffers to be consistent with buffer management and not having to worry about wrong key chords.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (defalias 'yes-or-no-p 'y-or-n-p)
   (defalias 'list-buffers 'ibuffer)
 #+END_SRC
 
 Turn off all the chrome that emacs puts by default.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (progn
     (scroll-bar-mode -1)
     (tool-bar-mode -1)
@@ -125,7 +183,7 @@ Turn off all the chrome that emacs puts by default.
 #+END_SRC
 
 A few modes are turned on by default
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (global-so-long-mode) ;; handles really long lines well
   (electric-pair-mode) ;; auto matching brackets, parentheses etc.
   (show-paren-mode) ;; show matching opening/closing parentheses
@@ -134,7 +192,7 @@ A few modes are turned on by default
 #+END_SRC
 
 Make the command key behave as 'meta' on macOS.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (when (eq system-type 'darwin)
     (setq mac-option-key-is-meta nil
           mac-command-key-is-meta t
@@ -143,39 +201,20 @@ Make the command key behave as 'meta' on macOS.
 #+END_SRC
 
 Delete whitespace on save
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (add-hook 'after-change-major-mode-hook
             (lambda ()
               (modify-syntax-entry ?_ "w")))
 #+END_SRC
 
-* Package Management
-
-Bootstrap package repos and package manager.
-#+BEGIN_SRC emacs-lisp :results silent
-  (require 'package)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-  (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-  (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
-
-  (setq package-enable-at-startup nil)
-  (package-initialize)
-
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-  (require 'use-package)
-  (setq use-package-always-ensure t)
-#+END_SRC
-
 * Support Packages
 
 Loading emacs from finder or spotlight causes it to not load many environment variables. This package fixes it.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell
     :config
     (exec-path-from-shell-initialize))
@@ -183,7 +222,7 @@ Loading emacs from finder or spotlight causes it to not load many environment va
 
 Various packages that are used by numerous other packages.
 + `which-key` allows using keybindings interactively. For example, if `<leader>gs` is mapped to `magit-status`, and I press only `<leader>g`, it'll show all the keys and commands that are valid follows.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package which-key
     :diminish
     :config
@@ -193,7 +232,7 @@ Various packages that are used by numerous other packages.
 #+END_SRC
 
 Simplify leader bindings with general.el.
-#+begin_src emacs-lisp :results silent
+#+begin_src emacs-lisp
   (use-package general
     :config
     (general-evil-setup t)
@@ -205,10 +244,10 @@ Simplify leader bindings with general.el.
 #+end_src
 * Common Keybindings
 
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (aa/leader-key-def
     "e"  '(:ignore t :which-key "emacs")
-    "ee" '((lambda () (interactive) (find-file "~/.emacs.d/settings.org")) :which-key "open config")
+    "ee" '((lambda () (interactive) (find-file "~/.emacs.d/config.org")) :which-key "open config")
     "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
     "ek" '(kill-emacs :which-key "kill emacs")
 
@@ -226,13 +265,13 @@ Simplify leader bindings with general.el.
 * Appearance
 
 Set default frame height.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (add-to-list 'default-frame-alist '(width . 200))
   (add-to-list 'default-frame-alist '(height . 48))
 #+END_SRC
 
 Use ~Fira Code~ font with ligatures. Install the symbol font with ~M-x fira-code-mode-intall-fonts~. This is non-optional, and is required even after installing ~Fira Code~ to the system. Restart emacs after installing symbol fonts.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package fira-code-mode
     :demand t
     :diminish
@@ -256,7 +295,7 @@ Use ~Fira Code~ font with ligatures. Install the symbol font with ~M-x fira-code
 #+END_SRC
 
 Load theme after creating a new frame. This is required to work with server/client model. Otherwise, emacs will load theme only once when starting server and all subsequent frames won't get the theme.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (add-hook 'after-make-frame-functions
             (lambda (frame)
               (with-selected-frame frame
@@ -264,7 +303,7 @@ Load theme after creating a new frame. This is required to work with server/clie
 #+END_SRC
 
 Config for mode line:
-#+begin_src emacs-lisp :results silent
+#+begin_src emacs-lisp
   ;; Diminish minor modes from mode line
   (use-package diminish
     :config
@@ -278,14 +317,14 @@ Config for mode line:
 * Evil Mode
 
 Add undo package to allow branching undos.
-#+begin_src emacs-lisp :results silent
+#+begin_src emacs-lisp
   (use-package undo-fu)
 #+end_src
 
 Being a long time (neo)vim user, I use evil mode exclusively for editing. When they say it's impossible to get out of vim, it has a deeper meaning.
 
 I use different colored cursors to depict what mode I'm in. Way easier to work with than looking at minibuffer.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package evil
     :init
     (setq evil-respect-visual-line-mode t
@@ -304,7 +343,7 @@ I use different colored cursors to depict what mode I'm in. Way easier to work w
 #+END_SRC
 
 Commentary package allows me to retain my muscle memory of (un)commenting code.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package evil-commentary
     :after evil
     :diminish
@@ -313,7 +352,7 @@ Commentary package allows me to retain my muscle memory of (un)commenting code.
 #+END_SRC
 
 Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
-#+begin_src emacs-lisp :results silent
+#+begin_src emacs-lisp
 
   (use-package evil-surround
     :after evil
@@ -322,7 +361,7 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
 #+end_src
 
 ~evil-collection~ adds evil bindings for packages and modes not covered by ~evil~.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package evil-collection
     :init
     (evil-collection-init '(deadgrep dired dired-sidebar ediff ibuffer magit vterm xref)))
@@ -331,7 +370,7 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
 * Org Mode
 
 Set up org default files and directories:
-#+begin_src emacs-lisp :results silent
+#+begin_src emacs-lisp
   (with-eval-after-load 'org
     (setq org-directory "~/Dropbox/org"
           org-default-notes-file (concat org-directory "/notes.org")
@@ -340,7 +379,7 @@ Set up org default files and directories:
 #+end_src
 
 Define some evil keybindings for org mode.
-#+begin_src emacs-lisp :results silent
+#+begin_src emacs-lisp
   (aa/leader-key-def
     "r"  '(:ignore t :which-key "org mode")
     "ra" '(org-agenda :which-key "agenda")
@@ -348,13 +387,14 @@ Define some evil keybindings for org mode.
     "ri" '((lambda () (interactive) (org-indent-block)) :which-key "indent block")
     "rl" '(org-store-link :which-key "store Link")
     "ro" '((lambda () (interactive) (find-file org-default-notes-file)) :which-key "open notes")
-    "rp" '(org-present :which-key "present"))
+    "rp" '(org-present :which-key "present")
+    "rt" '(org-babel-tangle :which-key "tangle"))
 #+end_src
 
 - Use org indent mode. This allows visual soft indentation of files without me having to maintain that.
 - Turn on visual line mode to wrap lines.
 - Turn on variable pitch mode to use different scale for headings
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (with-eval-after-load 'org
     (setq org-startup-indented t
           org-hide-emphasis-markers t
@@ -370,7 +410,7 @@ Define some evil keybindings for org mode.
 #+END_SRC
 
 Org bullets package prettifies the headline markers:
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package org-bullets
     :custom
     (org-bullets-bullet-list '("◉" "☯" "○" "☯" "✸" "☯" "✿" "☯" "✜" "☯" "◆" "☯" "▶"))
@@ -391,7 +431,7 @@ Org bullets package prettifies the headline markers:
 #+END_SRC
 
 Configure font. The variable-pitch is used for fonts which are scaled. Eg: Headlines and content. Fixed pitch is for things with fixed size, like code, tables etc.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (add-hook 'after-make-frame-functions
             (lambda (frame)
               (with-selected-frame frame
@@ -421,7 +461,7 @@ Configure font. The variable-pitch is used for fonts which are scaled. Eg: Headl
 #+END_SRC
 
 Defined which elements of the org files are fixed pitch, so they're not scaled:
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (add-hook 'after-make-frame-functions
             (lambda (frame)
               (with-selected-frame frame
@@ -442,7 +482,7 @@ Defined which elements of the org files are fixed pitch, so they're not scaled:
 #+END_SRC
 
 Replace default block delimiters with ligatures
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
                                          ("#+END_SRC" . "†")
                                          ("#+begin_src" . "†")
@@ -452,7 +492,7 @@ Replace default block delimiters with ligatures
 #+END_SRC
 
 Replace list bullets with prettier dots.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
@@ -462,16 +502,8 @@ Replace list bullets with prettier dots.
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
 #+END_SRC
 
-Add toc to org files automatically
-#+BEGIN_SRC emacs-lisp :results silent
-  (use-package org-make-toc
-    :commands org-make-toc-mode
-    :init
-    (add-hook 'org-mode-hook #'org-make-toc-mode))
-#+END_SRC
-
 Add ability to present org files
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package org-present
     :config
     (add-hook 'org-present-mode-hook
@@ -491,7 +523,7 @@ Add ability to present org files
 
 Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It provides the backend which many packages end up using. Alternatives would be helm and ido, which I've not yet tried.
 
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package ivy
     :diminish
     :bind (:map ivy-minibuffer-map
@@ -527,7 +559,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
 
 [[https://github.com/Yevgnen/ivy-rich][Ivy Rich]] adds some flair to Ivy minibuffer by providing additional details about candidates - major mode, project etc.
 
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package ivy-rich
     :after ivy
     :diminish
@@ -542,7 +574,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
 
 [[https://github.com/abo-abo/hydra][Hydra]] allows creating groups of keybindings. I don't use it directly, but packages like Ivy expose additional functionality with it.
 
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package hydra)
   (use-package ivy-hydra
     :after (ivy hydra))
@@ -551,7 +583,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
 
 [[https://github.com/abo-abo/swiper/blob/master/counsel.el][Counsel]] applies Ivy to a lot of areas in emacs - M-x menu, buffer menu etc.
 
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package counsel
     :after ivy
     :diminish
@@ -564,7 +596,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
 
 [[https://github.com/raxod502/prescient.el][Prescient.el]] is a package that adds sane sorting and filtering behaviour, and it comes with adapters for popular completion frameworks (including Ivy).
 
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package prescient
     :commands prescient-persist-mode
     :init (prescient-persist-mode 1)
@@ -582,7 +614,7 @@ Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It
 
 A few keybindings to command it all.
 
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (aa/leader-key-def
   "b" '(:ignore t :which-key "buffer")
   "bb" '(counsel-projectile-switch-to-buffer :which-key "list in project")
@@ -596,7 +628,7 @@ A few keybindings to command it all.
 * VCS
 
 The primary git interface I use, and also one of the main reasons I use emacs. `libgit` provides native bindings which makes magit faster.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package libgit)
 
   (use-package magit
@@ -612,14 +644,14 @@ The primary git interface I use, and also one of the main reasons I use emacs. `
 #+END_SRC
 
 Set ediff to use the current frame instead of creating a new one.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 #+END_SRC
 
 * Project Management
 
 Projectile plays pretty well with the other packages, including magit and dired sidebar.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package projectile
     :after evil
     :diminish
@@ -643,7 +675,7 @@ Projectile plays pretty well with the other packages, including magit and dired 
 #+END_SRC
 
 Perspective allows creation of multiple, independent buffer lists and switch between them.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package perspective
     :config
     (unless (equal persp-mode t)
@@ -661,7 +693,7 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
 
 * Programming Languages
 *** Common Config
-#+begin_src emacs-lisp :results silent
+#+begin_src emacs-lisp
   (use-package editorconfig
     :diminish
     :config
@@ -669,19 +701,19 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
 #+end_src
 
 *** Ruby
-#+begin_src emacs-lisp :results silent
+#+begin_src emacs-lisp
   (use-package ruby-end
     :diminish)
 #+end_src
 *** Typescript
-#+begin_src emacs-lisp :results silent
+#+begin_src emacs-lisp
   (use-package typescript-mode
     :defer t
     :config
     (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode)))
 #+end_src
 *** Elixir
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package elixir-mode
     :after ruby-end
     :defer t
@@ -697,7 +729,7 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
               (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
 #+END_SRC
 *** Kubernetes
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package kubel
     :defer t)
   (use-package kubel-evil
@@ -707,7 +739,7 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
     "k" '(kubel :which-key "k8s"))
 #+END_SRC
 *** Web
-#+begin_src emacs-lisp :results silent
+#+begin_src emacs-lisp
   (use-package web-mode
     :mode "\\.p?html?\\'"
     :mode "\\.eex\\'"
@@ -746,20 +778,20 @@ Perspective allows creation of multiple, independent buffer lists and switch bet
 #+end_src
 
 *** Yaml
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package yaml-mode)
 #+END_SRC
 
 *** Markdown
 
 Enable visual line for word wrap and sane navigation.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (add-hook 'markdown-mode-hook #'visual-line-mode)
 #+END_SRC
 
 * Snippet Support
 Add snippet support. Actual snippets live outside of this file. Custom snippets can be saved in ~~/.emacs.d/snippets~ directory.
-#+begin_src emacs-lisp :results silent
+#+begin_src emacs-lisp
   (use-package yasnippet
     :after company
     :diminish yas-minor-mode
@@ -775,7 +807,7 @@ Add snippet support. Actual snippets live outside of this file. Custom snippets 
 * Terminal
 Add ~vterm~, the most complete terminal emulator for emacs, and supporting packages.
 
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package vterm)
 
   (use-package vterm-toggle
@@ -794,7 +826,7 @@ Add ~vterm~, the most complete terminal emulator for emacs, and supporting packa
 * Code completion and Error Checking
 
 Using company for auto-completion backend. Most modern languages implement LSP (Language Server Protocol), allowing for rich auto-completion.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package company
     :diminish
     :init
@@ -831,7 +863,7 @@ Using company for auto-completion backend. Most modern languages implement LSP (
 #+END_SRC
 
 * Sidebar
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package dired-sidebar
     :commands (dired-sidebar-toggle-sidebar)
     :after evil
@@ -854,7 +886,7 @@ Using company for auto-completion backend. Most modern languages implement LSP (
 #+END_SRC
 
 Run `M-x all-the-icons-install-fonts` to install the icons.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package all-the-icons)
 
   (use-package all-the-icons-dired
@@ -865,7 +897,7 @@ Run `M-x all-the-icons-install-fonts` to install the icons.
 #+END_SRC
 
 * General Searching
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (use-package ripgrep)
 
   (use-package deadgrep)
@@ -877,7 +909,7 @@ Run `M-x all-the-icons-install-fonts` to install the icons.
 * Custom Functions
 
 Copy current file path relative to project root.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (defun aa/copy-file-path ()
     (interactive)
     (kill-new (file-relative-name buffer-file-name (projectile-project-root))))
@@ -886,7 +918,7 @@ Copy current file path relative to project root.
 #+END_SRC
 
 Kill this buffer and window, as long as it's not the only window open.
-#+begin_src emacs-lisp :results silent
+#+begin_src emacs-lisp
   (defun aa/close-and-kill-this-pane ()
     "If there are multiple windows, then close this one and kill its buffer"
     (interactive)
@@ -896,7 +928,7 @@ Kill this buffer and window, as long as it's not the only window open.
 #+end_src
 
 Add custom methods to correctly locate elixir and rails projects inside a multi-project monorepo.
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
   (defun aa/find-mix-project (dir)
     "Try to locate a Elixir project root by 'mix.exs' above DIR."
     (let ((mix_root (locate-dominating-file dir "mix.exs")))
