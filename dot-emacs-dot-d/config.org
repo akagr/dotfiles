@@ -915,7 +915,7 @@ Run `M-x all-the-icons-install-fonts` to install the icons.
 
 * Custom Functions
 
-Copy current file path relative to project root.
+*** Copy current file path relative to project root.
 #+BEGIN_SRC emacs-lisp
   (defun aa/copy-file-path ()
     (interactive)
@@ -924,7 +924,7 @@ Copy current file path relative to project root.
   (defalias 'copy-file-path 'aa/copy-file-path)
 #+END_SRC
 
-Kill this buffer and window, as long as it's not the only window open.
+*** Kill this buffer and window, as long as it's not the only window open.
 #+begin_src emacs-lisp
   (defun aa/close-and-kill-this-pane ()
     "If there are multiple windows, then close this one and kill its buffer"
@@ -934,7 +934,7 @@ Kill this buffer and window, as long as it's not the only window open.
         (delete-window)))
 #+end_src
 
-Add custom methods to correctly locate elixir and rails projects inside a multi-project monorepo.
+*** Add custom methods to correctly locate elixir and rails projects inside a multi-project monorepo.
 #+BEGIN_SRC emacs-lisp
   (defun aa/find-mix-project (dir)
     "Try to locate a Elixir project root by 'mix.exs' above DIR."
@@ -947,6 +947,19 @@ Add custom methods to correctly locate elixir and rails projects inside a multi-
     (let ((rails_root (locate-dominating-file dir "Gemfile")))
       (message "Found Rails project root in '%s' starting from '%s'" rails_root dir)
       (if (stringp rails_root) `(transient . ,rails_root) nil)))
+#+END_SRC
+
+*** Print emacs startup time
+#+BEGIN_SRC emacs-lisp
+  (defun aa/print-startup-time ()
+    "Log emacs startup time"
+    (interactive)
+    (message "Emacs started in %s with %d garbage collections."
+             (format
+              "%.2f seconds"
+              (float-time
+               (time-subtract after-init-time before-init-time)))
+             gcs-done))
 #+END_SRC
 
 * Sources
