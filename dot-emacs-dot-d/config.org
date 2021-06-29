@@ -840,7 +840,7 @@ Using company for auto-completion backend. Most modern languages implement LSP (
 
   ;; Work around until project-root works
   (defun project-root (project)
-      (car (project-roots project)))
+    (car (project-roots project)))
 
   (use-package eglot
     :after elixir-mode
@@ -861,7 +861,8 @@ Using company for auto-completion backend. Most modern languages implement LSP (
     :config
     (global-flycheck-mode)
     (flycheck-set-indication-mode 'left-margin)
-
+    (with-eval-after-load 'flycheck
+      (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
     (add-to-list 'flycheck-checkers 'proselint))
 
   (use-package flycheck-inline
@@ -962,6 +963,48 @@ Run `M-x all-the-icons-install-fonts` to install the icons.
              gcs-done))
 #+END_SRC
 
+*** Auto tangle this file after save
+#+BEGIN_SRC emacs-lisp
+  (use-package async
+    :demand t)
+
+  (defvar *config-file* (expand-file-name "config.org" user-emacs-directory)
+    "The configuration file.")
+
+  (defvar *show-async-tangle-results* nil
+    "Keeps *emacs* async buffers around for later inspection.")
+
+  (defun aa/async-babel-tangle (org-file)
+    "Tangles the org file asynchronously."
+    (let ((init-tangle-start-time (current-time))
+          (file (buffer-file-name))
+          (async-quiet-switch "-q"))
+      (async-start
+       `(lambda ()
+          (require 'ob-tangle)
+          (org-babel-tangle-file ,org-file))
+       (unless *show-async-tangle-results*
+         `(lambda (result)
+            (if result
+                (message "SUCCESS: %s successfully tangled (%.2fs)."
+                         ,org-file
+                         (float-time
+                          (time-subtract (current-time)
+                                         ',init-tangle-start-time)))
+              (message "ERROR: %s as tangle failed." ,org-file)))))))
+
+  (defun aa/config-tangle ()
+    "Tangles the org file asynchronously."
+    (aa/async-babel-tangle *config-file*))
+
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (when (equal (file-name-nondirectory buffer-file-truename)
+                           "config.org")
+                (add-hook 'after-save-hook
+                          'aa/config-tangle
+                          nil 'make-it-local))))
+#+END_SRC
 * Sources
 Huge thanks to these amazing people whose configs I borrowed from:
 - [[https://github.com/meatcar/emacs.d/blob/master/config.org][Denys Pavlov]]
