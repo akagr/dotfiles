@@ -99,10 +99,11 @@ Optimizations for improving I/O performance. Increase max bytes read from a sub-
 
 Updating some settings so straight.el can play nicely with use-package.
 #+BEGIN_SRC emacs-lisp
-(setq straight-use-package-by-default t
-      straight-cache-autoloads t
-      straight-vc-git-default-clone-depth 1
-      vc-follow-symlinks t)
+  (setq straight-use-package-by-default t
+        straight-cache-autoloads t
+        straight-check-for-modifications '(check-on-save find-when-checking)
+        straight-vc-git-default-clone-depth 1
+        vc-follow-symlinks t)
 #+END_SRC
 
 Fetching =straight.el=.
