@@ -3,6 +3,6 @@
 # key: srcel
 # --
 
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp
 $0
 #+END_SRC
