@@ -11,7 +11,6 @@ To quickly get up and running, we can generate the init files like so:
   emacs -Q ~/.emacs.d/config.org -f org-babel-tangle -f kill-emacs
 #+end_src
 
-
 * Quick keybindings for memory
 
 |------------+---------------------------------------------|
@@ -104,11 +103,6 @@ Updating some settings so straight.el can play nicely with use-package.
       straight-cache-autoloads t
       straight-vc-git-default-clone-depth 1
       vc-follow-symlinks t)
-#+END_SRC
-
-Enable debugging on error.
-#+BEGIN_SRC emacs-lisp
-  (setq debug-on-error t)
 #+END_SRC
 
 Fetching =straight.el=.
