@@ -1,4 +1,4 @@
-+TITLE: Emacs Config
+#+TITLE: Emacs Config
 #+AUTHOR: Akash Agrawal
 #+EMAIL: akagr@outlook.com
 #+PROPERTY: header-args :results silent :tangle "./init.el"
