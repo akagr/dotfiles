@@ -5,6 +5,13 @@
 #+STARTUP: content
 #+babel: :cache yes
 
+* Setup
+To quickly get up and running, we can generate the init files like so:
+#+begin_src sh :tangle no
+  emacs -Q ~/.emacs.d/config.org -f org-babel-tangle -f kill-emacs
+#+end_src
+
+
 * Quick keybindings for memory
 
 |------------+---------------------------------------------|
