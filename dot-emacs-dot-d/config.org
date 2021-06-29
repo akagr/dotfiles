@@ -249,7 +249,7 @@ Simplify leader bindings with general.el.
 #+BEGIN_SRC emacs-lisp
   (aa/leader-key-def
     "e"  '(:ignore t :which-key "emacs")
-    "ee" '((lambda () (interactive) (find-file "~/.emacs.d/config.org")) :which-key "open config")
+    "ee" '((lambda () (interactive) (find-file (expand-file-name "config.org" user-emacs-directory))) :which-key "open config")
     "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
     "ek" '(kill-emacs :which-key "kill emacs")
 
