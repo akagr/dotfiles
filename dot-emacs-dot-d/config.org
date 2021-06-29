@@ -941,3 +941,8 @@ Add custom methods to correctly locate elixir and rails projects inside a multi-
       (message "Found Rails project root in '%s' starting from '%s'" rails_root dir)
       (if (stringp rails_root) `(transient . ,rails_root) nil)))
 #+END_SRC
+
+* Sources
+Huge thanks to these amazing people whose configs I borrowed from:
+- [[https://github.com/meatcar/emacs.d/blob/master/config.org][Denys Pavlov]]
+- [[https://github.com/daviwil/dotfiles/blob/master/Emacs.org][David Wilson]]
