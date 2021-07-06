@@ -658,7 +658,8 @@ Projectile plays pretty well with the other packages, including magit and dired 
     :after evil
     :diminish
     :init
-    (setq projectile-completion-system 'ivy)
+    (setq projectile-completion-system 'ivy
+          projectile-enable-caching t)
     :config
     (define-key projectile-mode-map (kbd "M-p") 'projectile-command-map)
     (projectile-mode +1))
