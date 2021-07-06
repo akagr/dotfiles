@@ -625,7 +625,7 @@ A few keybindings to command it all.
 
   (general-define-key
    :states 'normal
-   "/" 'swiper)
+   "C-s" 'swiper)
 #+END_SRC
 * VCS
 
