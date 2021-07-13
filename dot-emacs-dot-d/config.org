@@ -256,7 +256,7 @@ Simplify leader bindings with general.el.
     "h"  '(help-command :which-key "help")
 
     "t"  '(:ignore t :which-key "toggle")
-    "tt" '(counsel-load-theme :which-key "theme")
+    "tt" '(load-theme :which-key "theme")
     "tw" '(toggle-truncate-lines :which-key "wrap lines")
 
     "c"  '(:ignore t :which-key "code")
@@ -485,10 +485,10 @@ Defined which elements of the org files are fixed pitch, so they're not scaled:
 
 Replace default block delimiters with ligatures
 #+BEGIN_SRC emacs-lisp
-  (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
-                                         ("#+END_SRC" . "†")
-                                         ("#+begin_src" . "†")
-                                         ("#+end_src" . "†")))
+  (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "λ")
+                                         ("#+END_SRC" . "λ")
+                                         ("#+begin_src" . "λ")
+                                         ("#+end_src" . "λ")))
   (setq prettify-symbols-unprettify-at-point t)
   (add-hook 'org-mode-hook 'prettify-symbols-mode)
 #+END_SRC
@@ -521,112 +521,98 @@ Add ability to present org files
                    (org-present-show-cursor)
                    (org-present-read-write))))
 #+END_SRC
-* Better UX for Menus - Ivy and Bros.
+* Better UX for Menus
 
-Ivy allows me to use fuzzy find files, M-x commands, subdirectories, buffers. It provides the backend which many packages end up using. Alternatives would be helm and ido, which I've not yet tried.
-
+Add =vertico= to handle all the menu presentation.
 #+BEGIN_SRC emacs-lisp
-  (use-package ivy
-    :diminish
-    :bind (:map ivy-minibuffer-map
-                ("TAB" . ivy-alt-done)
-                ("C-l" . ivy-alt-done)
-                ("C-j" . ivy-next-line)
-                ("C-k" . ivy-previous-line)
-                :map ivy-switch-buffer-map
-                ("C-j" . ivy-next-line)
-                ("C-k" . ivy-previous-line)
-                ("C-l" . ivy-done)
-                ("C-d" . ivy-switch-buffer-kill)
-                :map ivy-reverse-i-search-map
-                ("C-j" . ivy-next-line)
-                ("C-k" . ivy-previous-line)
-                ("C-d" . ivy-reverse-i-search-kill))
-    :config
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers nil
-          ivy-initial-inputs-alist nil
-          ivy-count-format "(%d/%d) ")
-    ;; Don't want to see these buffers in switcher. Rarely,
-    ;; if ever have I switched to them.
-    (add-to-list 'ivy-ignore-buffers "^magit")
-    (add-to-list 'ivy-ignore-buffers "^:") ;; This removes the dired-sidebar buffer from list
-    (add-to-list 'ivy-ignore-buffers "\\*Messages\\*")
-    (add-to-list 'ivy-ignore-buffers "\\*vterm\\*")
-    (add-to-list 'ivy-ignore-buffers "\\*EGLOT")
-    (add-to-list 'ivy-ignore-buffers "\\*eldoc*")
-    (add-to-list 'ivy-ignore-buffers "\\*Warnings*")
-    (add-to-list 'ivy-ignore-buffers "\\*Compile-Log\\*"))
-#+END_SRC
-
-[[https://github.com/Yevgnen/ivy-rich][Ivy Rich]] adds some flair to Ivy minibuffer by providing additional details about candidates - major mode, project etc.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package ivy-rich
-    :after ivy
-    :diminish
+  (use-package vertico
+    :init
+    (vertico-mode)
     :custom
-    (ivy-virtual-abbreviate 'full)
-    (ivy-rich-switch-buffer-align-virtual-buffer nil)
-    (ivy-rich-path-style 'full)
-    :config
-    (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
-    (ivy-rich-mode))
+    (vertico-cycle t))
 #+END_SRC
 
-[[https://github.com/abo-abo/hydra][Hydra]] allows creating groups of keybindings. I don't use it directly, but packages like Ivy expose additional functionality with it.
-
+Save history of selections across emacs sessions.
 #+BEGIN_SRC emacs-lisp
-  (use-package hydra)
-  (use-package ivy-hydra
-    :after (ivy hydra))
-
+  (use-package savehist
+    :init
+    (savehist-mode))
 #+END_SRC
 
-[[https://github.com/abo-abo/swiper/blob/master/counsel.el][Counsel]] applies Ivy to a lot of areas in emacs - M-x menu, buffer menu etc.
-
+Add =marginalia= for richer annotations in menus.
 #+BEGIN_SRC emacs-lisp
-  (use-package counsel
-    :after ivy
-    :diminish
-    :config
-    (counsel-mode t)
-    :bind (("M-x" . counsel-M-x)))
-
-  (use-package wgrep)
+  (use-package marginalia
+    :after vertico
+    :custom
+    (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+    :init
+    (marginalia-mode))
 #+END_SRC
 
-[[https://github.com/raxod502/prescient.el][Prescient.el]] is a package that adds sane sorting and filtering behaviour, and it comes with adapters for popular completion frameworks (including Ivy).
-
+Add =orderless= for saner ordering and filtering of completion candidates.
 #+BEGIN_SRC emacs-lisp
-  (use-package prescient
-    :commands prescient-persist-mode
-    :init (prescient-persist-mode 1)
-    :config
-    (setq prescient-filter-method '(literal)
-          prescient-sort-full-matches-first nil))
-
-  (use-package ivy-prescient
-    :after (counsel counsel-projectile prescient)
-    :config
-    (ivy-prescient-mode t)
-    (setq ivy-prescient-sort-commands t))
-
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless))
+    (completion-category-defaults nil)
+    (completion-category-overrides '(file (styles partial-completion))))
 #+END_SRC
 
-A few keybindings to command it all.
 
+Add extra completion commands ala =consult=.
+#+BEGIN_SRC emacs-lisp
+  (use-package consult
+    :init
+    (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+    (setq xref-show-xrefs-function #'consult-xref
+          xref-show-definitions-function #'consult-xref)
+    :config
+    (setq consult-project-root-function #'projectile-project-root))
+#+END_SRC
+
+=embark= allows 'right-click' behaviour. i.e. it allows adding contextual actions to things.
+#+BEGIN_SRC emacs-lisp
+  (use-package embark
+    :bind
+    (("C-." . embark-act)         ;; pick some comfortable binding
+     ("C-;" . embark-dwim)        ;; good alternative: M-.
+     ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+
+    :init
+    ;; Optionally replace the key help with a completing-read interface
+    (setq prefix-help-command #'embark-prefix-help-command)
+
+    :config
+    ;; Hide the mode line of the Embark live/completions buffers
+    (add-to-list 'display-buffer-alist
+                 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                   nil
+                   (window-parameters (mode-line-format . none)))))
+
+  ;; Consult users will also want the embark-consult package.
+  (use-package embark-consult
+    :after (embark consult)
+    :demand t ;; only necessary if you have the hook below
+    ;; if you want to have consult previews as you move around an
+    ;; auto-updating embark collect buffer
+    :hook
+    (embark-collect-mode . consult-preview-at-point-mode))
+#+END_SRC
+
+Add common keybindings for buffer.
 #+BEGIN_SRC emacs-lisp
   (aa/leader-key-def
   "b" '(:ignore t :which-key "buffer")
-  "bb" '(counsel-projectile-switch-to-buffer :which-key "list in project")
+  "bb" '(projectile-switch-to-buffer :which-key "list in project")
   "bc" '(kill-this-buffer :which-key "kill current")
   "bd" '(aa/close-and-kill-this-pane :which-key "close current"))
 
   (general-define-key
    :states 'normal
-   "C-s" 'swiper)
+   "C-b" 'consult-buffer
+   "C-s" 'consult-line)
 #+END_SRC
+
 * VCS
 
 The primary git interface I use, and also one of the main reasons I use emacs. `libgit` provides native bindings which makes magit faster.
@@ -658,40 +644,13 @@ Projectile plays pretty well with the other packages, including magit and dired 
     :after evil
     :diminish
     :init
-    (setq projectile-completion-system 'ivy
-          projectile-enable-caching t)
+    (setq projectile-enable-caching t)
     :config
     (define-key projectile-mode-map (kbd "M-p") 'projectile-command-map)
     (projectile-mode +1))
 
-  (use-package counsel-projectile
-    :after projectile
-    :config
-    (setq counsel-projectile-sort-files t
-          counsel-projectile-sort-projects t
-          counsel-projectile-sort-buffers t
-          counsel-projectile-sort-directories t))
-
   (aa/leader-key-def
-    "p"  '(projectile-command-map :which-key "projectile")
-    "pf" '(counsel-projectile-find-file :which-key "find file"))
-#+END_SRC
-
-Perspective allows creation of multiple, independent buffer lists and switch between them.
-#+BEGIN_SRC emacs-lisp
-  (use-package perspective
-    :config
-    (unless (equal persp-mode t)
-      (persp-mode)))
-
-  (general-define-key
-   :states 'normal
-   "C-b" 'persp-counsel-switch-buffer)
-
-  (aa/leader-key-def
-    "bs" '(persp-switch :which-key "switch perspective")
-    "bk" '(persp-kill :which-key "kill perspective")
-    "bn" '(persp-next :which-key "next perspective"))
+    "p"  '(projectile-command-map :which-key "projectile"))
 #+END_SRC
 
 * Programming Languages
