@@ -751,6 +751,15 @@ Enable visual line for word wrap and sane navigation.
   (add-hook 'markdown-mode-hook #'visual-line-mode)
 #+END_SRC
 
+*** Lisp
+#+BEGIN_SRC emacs-lisp
+  (use-package paredit
+    :hook (emacs-lisp-mode . paredit-mode))
+
+  (use-package evil-paredit
+    :hook (emacs-lisp-mode . evil-paredit-mode))
+#+END_SRC
+
 * Snippet Support
 Add snippet support. Actual snippets live outside of this file. Custom snippets can be saved in ~~/.emacs.d/snippets~ directory.
 #+begin_src emacs-lisp
