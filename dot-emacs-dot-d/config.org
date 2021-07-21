@@ -609,7 +609,7 @@ Add common keybindings for buffer.
 
   (general-define-key
    :states 'normal
-   "C-b" 'consult-buffer
+   "C-b" 'switch-to-buffer
    "C-s" 'consult-line)
 #+END_SRC
 
@@ -636,6 +636,13 @@ Set ediff to use the current frame instead of creating a new one.
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 #+END_SRC
 
+* Buffer Management
+#+BEGIN_SRC emacs-lisp
+  (use-package perspective
+    :init
+    (persp-mode))
+
+#+END_SRC
 * Project Management
 
 Projectile plays pretty well with the other packages, including magit and dired sidebar.
@@ -884,6 +891,7 @@ Run `M-x all-the-icons-install-fonts` to install the icons.
 *** Copy current file path relative to project root.
 #+BEGIN_SRC emacs-lisp
   (defun aa/copy-file-path ()
+    "Copy file path of current buffer relative to project root."
     (interactive)
     (kill-new (file-relative-name buffer-file-name (projectile-project-root))))
 
