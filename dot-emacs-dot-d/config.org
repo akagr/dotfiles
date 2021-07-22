@@ -480,8 +480,8 @@ Org bullets package prettifies the headline markers:
   (use-package evil-org
     :diminish
     :commands evil-org-mode
+    :hook (org-mode . evil-org-mode)
     :init
-    (add-hook 'org-mode-hook #'evil-org-mode)
     (add-hook 'evil-org-mode-hook
               (lambda ()
                 (evil-org-set-key-theme)))
@@ -560,6 +560,7 @@ Replace list bullets with prettier dots.
 Add ability to present org files
 #+BEGIN_SRC emacs-lisp
   (use-package org-present
+    :commands (org-present)
     :config
     (add-hook 'org-present-mode-hook
                  (lambda ()
@@ -869,9 +870,8 @@ Using company for auto-completion backend. Most modern languages implement LSP (
 
   (use-package eglot
     :after elixir-mode
+    :hook ((elixir-mode ruby-mode) . eglog-ensure)
     :config
-    (add-hook 'elixir-mode-hook 'eglot-ensure)
-    (add-hook 'ruby-mode-hook 'eglot-ensure)
     (add-to-list 'eglot-server-programs '(elixir-mode "/Users/akash/Downloads/elixir-ls/language_server.sh")))
 
   ;; Helps with monorepo project where projects might not be the top level
@@ -880,18 +880,18 @@ Using company for auto-completion backend. Most modern languages implement LSP (
 
   (use-package flycheck
     :diminish
+    :hook (prog-mode . flycheck-mode)
     :custom
     (flycheck-emacs-lisp-initialize-packages t)
     (flycheck-display-errors-delay 0.1)
     :config
-    (global-flycheck-mode)
     (flycheck-set-indication-mode 'left-margin)
     (with-eval-after-load 'flycheck
       (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
     (add-to-list 'flycheck-checkers 'proselint))
 
   (use-package flycheck-inline
-    :config (global-flycheck-inline-mode))
+    :hook (prog-mode . flycheck-inline-mode))
 #+END_SRC
 
 * Sidebar
