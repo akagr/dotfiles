@@ -265,6 +265,72 @@ Simplify leader bindings with general.el.
 #+END_SRC
 
 * Appearance
+*** Font
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (with-selected-frame frame
+                ;; Set the font face based on platform
+                (set-face-attribute 'default frame
+                                    :font "JetBrains Mono"
+                                    :weight 'regular
+                                    :height 140)
+
+                ;; Set the fixed pitch face
+                (set-face-attribute 'fixed-pitch frame
+                                    :font "JetBrains Mono"
+                                    :weight 'regular
+                                    :height 140)
+
+                ;; Set the variable pitch face
+                (set-face-attribute 'variable-pitch frame
+                                    :font "JetBrains Mono"
+                                    :height 140
+                                    :weight 'regular))))
+#+END_SRC
+
+Enable ligature support by using auto composition mode.
+#+BEGIN_SRC emacs-lisp
+  (let ((ligatures `((?-  . ,(regexp-opt '("-|" "-~" "---" "-<<" "-<" "--" "->" "->>" "-->")))
+                     (?/  . ,(regexp-opt '("/**" "/*" "///" "/=" "/==" "/>" "//")))
+                     (?*  . ,(regexp-opt '("*>" "***" "*/")))
+                     (?<  . ,(regexp-opt '("<-" "<<-" "<=>" "<=" "<|" "<||" "<|||::=" "<|>" "<:" "<>" "<-<"
+                                           "<<<" "<==" "<<=" "<=<" "<==>" "<-|" "<<" "<~>" "<=|" "<~~" "<~"
+                                           "<$>" "<$" "<+>" "<+" "</>" "</" "<*" "<*>" "<->" "<!--")))
+                     (?:  . ,(regexp-opt '(":>" ":<" ":::" "::" ":?" ":?>" ":=")))
+                     (?=  . ,(regexp-opt '("=>>" "==>" "=/=" "=!=" "=>" "===" "=:=" "==")))
+                     (?!  . ,(regexp-opt '("!==" "!!" "!=")))
+                     (?>  . ,(regexp-opt '(">]" ">:" ">>-" ">>=" ">=>" ">>>" ">-" ">=")))
+                     (?&  . ,(regexp-opt '("&&&" "&&")))
+                     (?|  . ,(regexp-opt '("|||>" "||>" "|>" "|]" "|}" "|=>" "|->" "|=" "||-" "|-" "||=" "||")))
+                     (?.  . ,(regexp-opt '(".." ".?" ".=" ".-" "..<" "...")))
+                     (?+  . ,(regexp-opt '("+++" "+>" "++")))
+                     (?\[ . ,(regexp-opt '("[||]" "[<" "[|")))
+                     (?\{ . ,(regexp-opt '("{|")))
+                     (?\? . ,(regexp-opt '("??" "?." "?=" "?:")))
+                     (?#  . ,(regexp-opt '("####" "###" "#[" "#{" "#=" "#!" "#:" "#_(" "#_" "#?" "#(" "##")))
+                     (?\; . ,(regexp-opt '(";;")))
+                     (?_  . ,(regexp-opt '("_|_" "__")))
+                     (?\\ . ,(regexp-opt '("\\" "\\/")))
+                     (?~  . ,(regexp-opt '("~~" "~~>" "~>" "~=" "~-" "~@")))
+                     (?$  . ,(regexp-opt '("$>")))
+                     (?^  . ,(regexp-opt '("^=")))
+                     (?\] . ,(regexp-opt '("]#"))))))
+    (dolist (char-regexp ligatures)
+      (set-char-table-range composition-function-table (car char-regexp)
+                            `([,(cdr char-regexp) 0 font-shape-gstring]))))
+#+END_SRC
+
+Disable auto composition everywhere outside of prog-mode.
+#+BEGIN_SRC emacs-lisp
+  (global-auto-composition-mode -1)
+
+  (defun aa/enable-auto-composition ()
+    (auto-composition-mode))
+
+  (add-hook 'prog-mode-hook #'aa/enable-auto-composition)
+#+END_SRC
+*** Frame dimensions
 
 Set default frame height.
 #+BEGIN_SRC emacs-lisp
@@ -272,19 +338,9 @@ Set default frame height.
   (add-to-list 'default-frame-alist '(height . 48))
 #+END_SRC
 
-Use ~Fira Code~ font with ligatures. Install the symbol font with ~M-x fira-code-mode-intall-fonts~. This is non-optional, and is required even after installing ~Fira Code~ to the system. Restart emacs after installing symbol fonts.
-#+BEGIN_SRC emacs-lisp
-  (use-package fira-code-mode
-    :demand t
-    :diminish
-    :custom (fira-code-mode-disabled-ligatures '("[]" "#{" "#(" "#_" "#_(" "x"))
-    :hook prog-mode
-    :config
-    (set-face-attribute 'default nil
-                        :family "FiraCode Nerd Font"
-                        :height 130
-                        :weight 'normal))
+*** Theme
 
+#+BEGIN_SRC emacs-lisp
   (use-package rainbow-delimiters
     :hook ((prog-mode . rainbow-delimiters-mode)))
 
@@ -303,6 +359,8 @@ Load theme after creating a new frame. This is required to work with server/clie
               (with-selected-frame frame
                 (load-theme 'doom-dracula t))))
 #+END_SRC
+
+*** Mode line
 
 Config for mode line:
 #+begin_src emacs-lisp
@@ -439,8 +497,8 @@ Configure font. The variable-pitch is used for fonts which are scaled. Eg: Headl
               (with-selected-frame frame
                 (progn
                   (let* ((variable-tuple
-                          (cond ((x-list-fonts "FiraCode Nerd Font") '(:font "FiraCode Nerd Font"))
-                                (nil (warn "Cannot find Firacode. Install FiraCode Nerd Font."))))
+                          (cond ((x-list-fonts "JetBrains Mono") '(:font "JetBrains Mono"))
+                                (nil (warn "Cannot find JetBrains Mono."))))
                          (base-font-color   (face-foreground 'default nil 'default))
                          (headline         `(:inherit default :weight bold :foreground ,base-font-color)))
 
@@ -454,12 +512,7 @@ Configure font. The variable-pitch is used for fonts which are scaled. Eg: Headl
                      `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.1))))
                      `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.25))))
                      `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.5))))
-                     `(org-document-title ((t (,@headline ,@variable-tuple :height 1.75 :underline nil)))))))
-
-                (custom-theme-set-faces
-                 'user
-                 '(variable-pitch ((t (:family "FiraCode Nerd Font" :height 140 :weight normal))))
-                 '(fixed-pitch ((t ( :family "FiraCode Nerd Font" :height 130))))))))
+                     `(org-document-title ((t (,@headline ,@variable-tuple :height 1.75 :underline nil))))))))))
 #+END_SRC
 
 Defined which elements of the org files are fixed pitch, so they're not scaled:
