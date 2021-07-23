@@ -267,26 +267,33 @@ Simplify leader bindings with general.el.
 * Appearance
 *** Font
 #+BEGIN_SRC emacs-lisp
+  (defun aa/apply-fonts (frame)
+    "Apply selected fonts to emacs."
+
+    ;; Set the font face based on platform
+    (set-face-attribute 'default frame
+                        :font "JetBrains Mono"
+                        :weight 'regular
+                        :height 140)
+
+    ;; Set the fixed pitch face
+    (set-face-attribute 'fixed-pitch frame
+                        :font "JetBrains Mono"
+                        :weight 'regular
+                        :height 140)
+
+    ;; Set the variable pitch face
+    (set-face-attribute 'variable-pitch frame
+                        :font "JetBrains Mono"
+                        :height 140
+                        :weight 'regular))
+
   (add-hook 'after-make-frame-functions
             (lambda (frame)
               (with-selected-frame frame
-                ;; Set the font face based on platform
-                (set-face-attribute 'default frame
-                                    :font "JetBrains Mono"
-                                    :weight 'regular
-                                    :height 140)
+                (aa/apply-fonts frame))))
 
-                ;; Set the fixed pitch face
-                (set-face-attribute 'fixed-pitch frame
-                                    :font "JetBrains Mono"
-                                    :weight 'regular
-                                    :height 140)
-
-                ;; Set the variable pitch face
-                (set-face-attribute 'variable-pitch frame
-                                    :font "JetBrains Mono"
-                                    :height 140
-                                    :weight 'regular))))
+  (aa/apply-fonts nil)
 #+END_SRC
 
 Enable ligature support by using auto composition mode.
@@ -810,6 +817,12 @@ Projectile plays pretty well with the other packages, including magit and dired 
 Enable visual line for word wrap and sane navigation.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'markdown-mode-hook #'visual-line-mode)
+#+END_SRC
+
+*** Dockerfile
+#+BEGIN_SRC emacs-lisp
+  (use-package dockerfile-mode
+    :mode ("Dockerfile\\'" . dockerfile-mode))
 #+END_SRC
 
 *** Lisp
