@@ -260,7 +260,9 @@ Simplify leader bindings with general.el.
     "tw" '(toggle-truncate-lines :which-key "wrap lines")
 
     "c"  '(:ignore t :which-key "code")
+    "ca" '(align-regexp :which-key "align regex")
     "cc" '(xref-find-definitions :which-key "find definitions")
+    "ce" '(eval-last-sexp :which-key "eval last sexp")
     "cr" '(xref-find-references :which-key "find references"))
 #+END_SRC
 
