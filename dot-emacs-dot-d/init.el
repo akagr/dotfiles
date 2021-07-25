@@ -549,8 +549,9 @@
 
 (add-hook 'org-mode-hook
           (lambda ()
-            (when (equal (file-name-nondirectory buffer-file-truename)
-                         "config.org")
+            (when (and buffer-file-truename
+                       (equal (file-name-nondirectory buffer-file-truename)
+                              "config.org"))
               (add-hook 'after-save-hook
                         'aa/config-tangle
                         nil 'make-it-local))))

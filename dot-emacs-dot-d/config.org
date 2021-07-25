@@ -516,7 +516,7 @@ Helps with evil keybindings in =org-mode=.
 
 The =variable-pitch= is used for fonts which are scaled. Eg: Headlines and content. =fixed-pitch= is for things with fixed size, like code, tables etc.
 #+BEGIN_SRC emacs-lisp
-  (defun aa/apply-org-font-styles ()
+  (defun aa/apply-org-headline-styles ()
     "Applies org font styles to supplied frame"
     (let* ((variable-tuple
             (cond ((x-list-fonts "JetBrains Mono") '(:font "JetBrains Mono"))
@@ -536,13 +536,12 @@ The =variable-pitch= is used for fonts which are scaled. Eg: Headlines and conte
        `(org-document-title ((t (,@headline ,@variable-tuple :height 1.75 :underline nil)))))))
 
   ;; Apply font styles for org mode
-  (add-hook 'org-mode-hook
-            #'(lambda () (if window-system (aa/apply-org-font-styles))))
+  (if window-system (aa/apply-org-headline-styles))
 #+END_SRC
 
 Defined which elements of the org files are fixed pitch, so they're not scaled:
 #+BEGIN_SRC emacs-lisp
-  (defun aa/apply-org-font-customisation ()
+  (defun aa/apply-org-fixed-pitch-styles ()
     "Applies variable fonts to different org elements"
     (custom-theme-set-faces
      'user
@@ -559,8 +558,7 @@ Defined which elements of the org files are fixed pitch, so they're not scaled:
      '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1))))
      '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))))
 
-  (add-hook 'org-mode-hook
-            #'(lambda () (if window-system (aa/apply-org-font-customisation))))
+  (if window-system (aa/apply-org-fixed-pitch-styles))
 #+END_SRC
 
 Replace default block delimiters with ligatures
@@ -1063,8 +1061,9 @@ Run ~M-x all-the-icons-install-fonts~ to install the icons.
 
   (add-hook 'org-mode-hook
             (lambda ()
-              (when (equal (file-name-nondirectory buffer-file-truename)
-                           "config.org")
+              (when (and buffer-file-truename
+                         (equal (file-name-nondirectory buffer-file-truename)
+                                "config.org"))
                 (add-hook 'after-save-hook
                           'aa/config-tangle
                           nil 'make-it-local))))

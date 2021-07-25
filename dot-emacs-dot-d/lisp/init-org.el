@@ -48,7 +48,7 @@
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
-(defun aa/apply-org-font-styles ()
+(defun aa/apply-org-headline-styles ()
   "Applies org font styles to supplied frame"
   (let* ((variable-tuple
           (cond ((x-list-fonts "JetBrains Mono") '(:font "JetBrains Mono"))
@@ -68,10 +68,9 @@
      `(org-document-title ((t (,@headline ,@variable-tuple :height 1.75 :underline nil)))))))
 
 ;; Apply font styles for org mode
-(add-hook 'org-mode-hook
-          #'(lambda () (if window-system (aa/apply-org-font-styles))))
+(if window-system (aa/apply-org-headline-styles))
 
-(defun aa/apply-org-font-customisation ()
+(defun aa/apply-org-fixed-pitch-styles ()
   "Applies variable fonts to different org elements"
   (custom-theme-set-faces
    'user
@@ -88,8 +87,7 @@
    '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1))))
    '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))))
 
-(add-hook 'org-mode-hook
-          #'(lambda () (if window-system (aa/apply-org-font-customisation))))
+(if window-system (aa/apply-org-fixed-pitch-styles))
 
 (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "λ")
                                        ("#+END_SRC" . "λ")
