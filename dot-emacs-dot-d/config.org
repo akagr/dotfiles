@@ -518,14 +518,9 @@ Configure font. The variable-pitch is used for fonts which are scaled. Eg: Headl
        `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.5))))
        `(org-document-title ((t (,@headline ,@variable-tuple :height 1.75 :underline nil)))))))
 
-  ;; Apply font styles for child frames created from daemon
-  (add-hook 'after-make-frame-functions
-            #'(lambda (frame)
-              (with-selected-frame frame
-                (aa/apply-org-font-styles))))
-
-  ;; Apply font styles when run as standalone without daemon
-  (if window-system (aa/apply-org-font-styles))
+  ;; Apply font styles for org mode
+  (add-hook 'org-mode-hook
+            #'(lambda () (if window-system (aa/apply-org-font-styles))))
 #+END_SRC
 
 Defined which elements of the org files are fixed pitch, so they're not scaled:
@@ -547,12 +542,8 @@ Defined which elements of the org files are fixed pitch, so they're not scaled:
      '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1))))
      '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))))
 
-  (add-hook 'after-make-frame-functions
-            (lambda (frame)
-              (with-selected-frame frame
-                (aa/apply-org-font-customisation))))
-
-  (if window-system (aa/apply-org-font-customisation))
+  (add-hook 'org-mode-hook
+            #'(lambda () (if window-system (aa/apply-org-font-customisation))))
 #+END_SRC
 
 Replace default block delimiters with ligatures
