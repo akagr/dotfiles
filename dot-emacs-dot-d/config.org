@@ -5,23 +5,7 @@
 #+STARTUP: content
 #+babel: :cache yes
 
-* Setup
-To quickly get up and running, we can generate the init files like so:
-#+begin_src sh :tangle no
-  emacs -Q ~/.emacs.d/config.org -f org-babel-tangle -f kill-emacs
-#+end_src
-
-* Quick keybindings for memory
-
-|------------+---------------------------------------------|
-| Keybinding | Explanation                                 |
-|------------+---------------------------------------------|
-| C-c C-c    | Execute code block                          |
-| C-c C-o    | Open source block result                    |
-| C-c C-,    | Insert structure template (Eg: Code blocks) |
-| C-c '      | Edit the current source code block          |
-| srcel<TAB> | Insert elisp code block                     |
-|------------+---------------------------------------------|
+This is my [[https://www.gnu.org/software/emacs/][Emacs]] config, written using [[https://orgmode.org][Org]] in literate environment. I use this primarily on macOS and haven't tested it on other platforms, but I imagine most of the code works with minor to no changes on Linux and possibly Windows too.
 
 * Early Init
 :properties:
@@ -1089,3 +1073,14 @@ Run ~M-x all-the-icons-install-fonts~ to install the icons.
 Huge thanks to these amazing people whose configs I borrowed from:
 - [[https://github.com/meatcar/emacs.d/blob/master/config.org][Denys Pavlov]]
 - [[https://github.com/daviwil/dotfiles/blob/master/Emacs.org][David Wilson]]
+* Quick keybindings for memory
+
+|------------+---------------------------------------------|
+| Keybinding | Explanation                                 |
+|------------+---------------------------------------------|
+| C-c C-c    | Execute code block                          |
+| C-c C-o    | Open source block result                    |
+| C-c C-,    | Insert structure template (Eg: Code blocks) |
+| C-c '      | Edit the current source code block          |
+| srcel<TAB> | Insert elisp code block                     |
+|------------+---------------------------------------------|
