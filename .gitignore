@@ -1,6 +1,8 @@
 .vim/bundle
 .vim/.netrwhist
 .vim/autoload
+.vim/plugged
+
 dot-emacs-dot-d/elpa
 dot-emacs-dot-d/.cache
 dot-emacs-dot-d/.lsp-*
@@ -18,5 +20,6 @@ dot-emacs-dot-d/var
 dot-emacs-dot-d/init.el
 dot-emacs-dot-d/early-init.el
 dot-emacs-dot-d/eln-cache
+
 *#
 *~
