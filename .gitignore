@@ -17,8 +17,6 @@ dot-emacs-dot-d/image-dired
 dot-emacs-dot-d/projects
 dot-emacs-dot-d/*.html
 dot-emacs-dot-d/var
-dot-emacs-dot-d/init.el
-dot-emacs-dot-d/early-init.el
 dot-emacs-dot-d/eln-cache
 
 *#

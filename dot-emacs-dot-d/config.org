@@ -150,17 +150,22 @@ Installing =use-package= now.
 
 * Bootstrapping and Default
 
+*** Setup load path
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+#+END_SRC
+
+*** Update defaults
 Turn off auto backup files, startup message and other more sensible defaults.
 #+BEGIN_SRC emacs-lisp
-  (setq
-   auto-save-default nil
-   create-lockfiles nil
-   make-backup-files nil
-   inhibit-startup-message t
-   load-prefer-newer t
-   ring-bell-function 'ignore
-   sentence-end-double-space nil
-   confirm-kill-processes nil)
+  (setq auto-save-default nil
+        create-lockfiles nil
+        make-backup-files nil
+        inhibit-startup-message t
+        load-prefer-newer t
+        ring-bell-function 'ignore
+        sentence-end-double-space nil
+        confirm-kill-processes nil)
 #+END_SRC
 
 Don't use tabs for indentation. Also truncate lines instead of wrapping them.
@@ -437,8 +442,20 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
 #+END_SRC
 
 * Org Mode
+:properties:
+:header-args+: :tangle "./lisp/init-org.el"
+:end:
 
-Set up org default files and directories:
+*** Load relevant config when org is loaded
+This gets placed in ~init.el~ and requires all the code following it related to org mode.
+#+BEGIN_SRC emacs-lisp :tangle "./init.el"
+  (add-hook 'org-mode-hook
+            #'(lambda ()
+                (require 'init-org)))
+#+END_SRC
+
+*** Set up org default files and directories:
+
 #+begin_src emacs-lisp
   (with-eval-after-load 'org
     (setq org-directory "~/Dropbox/org"
@@ -447,7 +464,8 @@ Set up org default files and directories:
           org-archive-location (concat org-directory "/archive/%s::")))
 #+end_src
 
-Define some evil keybindings for org mode.
+*** Keybindings for org mode.
+
 #+begin_src emacs-lisp
   (aa/leader-key-def
     "r"  '(:ignore t :which-key "org mode")
@@ -460,9 +478,8 @@ Define some evil keybindings for org mode.
     "rt" '(org-babel-tangle :which-key "tangle"))
 #+end_src
 
-- Use org indent mode. This allows visual soft indentation of files without me having to maintain that.
-- Turn on visual line mode to wrap lines.
-- Turn on variable pitch mode to use different scale for headings
+*** Enable helpful org-specific minor modes
+
 #+BEGIN_SRC emacs-lisp
   (with-eval-after-load 'org
     (setq org-startup-indented t
@@ -473,18 +490,32 @@ Define some evil keybindings for org mode.
           org-src-tab-acts-natively t
           org-odd-levels-only t
           truncate-lines nil)
+
+    ;; Turn on visual line mode to wrap lines.
     (add-hook 'org-mode-hook #'visual-line-mode)
+    ;; Turn on variable pitch mode to use different scale for headings
     (add-hook 'org-mode-hook #'variable-pitch-mode)
+    ;; If the source block contains code that outputs images,
+    ;; show them inline in results area.
     (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images))
 #+END_SRC
 
-Org bullets package prettifies the headline markers:
+*** Org bullets
+
+=org-bullets= package prettifies the headline markers.
+
 #+BEGIN_SRC emacs-lisp
   (use-package org-bullets
     :custom
     (org-bullets-bullet-list '("◉" "☯" "○" "☯" "✸" "☯" "✿" "☯" "✜" "☯" "◆" "☯" "▶"))
     :hook (org-mode . org-bullets-mode))
+#+END_SRC
 
+*** Evil org mode
+
+Helps with evil keybindings in =org-mode=.
+
+#+BEGIN_SRC emacs-lisp
   (use-package evil-org
     :diminish
     :hook (org-mode . evil-org-mode)
@@ -497,7 +528,9 @@ Org bullets package prettifies the headline markers:
     (evil-org-agenda-set-keys))
 #+END_SRC
 
-Configure font. The variable-pitch is used for fonts which are scaled. Eg: Headlines and content. Fixed pitch is for things with fixed size, like code, tables etc.
+*** Font and text customisation
+
+The =variable-pitch= is used for fonts which are scaled. Eg: Headlines and content. =fixed-pitch= is for things with fixed size, like code, tables etc.
 #+BEGIN_SRC emacs-lisp
   (defun aa/apply-org-font-styles ()
     "Applies org font styles to supplied frame"
@@ -567,7 +600,9 @@ Replace list bullets with prettier dots.
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
 #+END_SRC
 
-Add ability to present org files
+*** Presentations with Org
+
+Add ability to present org files.
 #+BEGIN_SRC emacs-lisp
   (use-package org-present
     :commands (org-present)
@@ -584,6 +619,13 @@ Add ability to present org files
                    (org-remove-inline-images)
                    (org-present-show-cursor)
                    (org-present-read-write))))
+#+END_SRC
+
+*** Provide org package
+
+Provide org package for ~require~.
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-org)
 #+END_SRC
 * Better UX for Menus
 
