@@ -1,8 +1,7 @@
-(with-eval-after-load 'org
-  (setq org-directory "~/Dropbox/org"
-        org-default-notes-file (concat org-directory "/notes.org")
-        org-agenda-files '("~/Dropbox/org/")
-        org-archive-location (concat org-directory "/archive/%s::")))
+(setq org-directory "~/Dropbox/org"
+      org-default-notes-file (concat org-directory "/notes.org")
+      org-agenda-files '("~/Dropbox/org/")
+      org-archive-location (concat org-directory "/archive/%s::"))
 
 (aa/leader-key-def
   "r"  '(:ignore t :which-key "org mode")
@@ -14,27 +13,34 @@
   "rp" '(org-present :which-key "present")
   "rt" '(org-babel-tangle :which-key "tangle"))
 
-(with-eval-after-load 'org
-  (setq org-startup-indented t
-        org-hide-emphasis-markers t
-        org-fontify-done-headline t
-        org-hide-leading-stars t
-        org-pretty-entities t
-        org-src-tab-acts-natively t
-        truncate-lines nil)
+(setq org-startup-indented t
+      org-hide-emphasis-markers t
+      org-fontify-done-headline t
+      org-hide-leading-stars t
+      org-pretty-entities t
+      org-src-tab-acts-natively t
+      truncate-lines nil)
 
-  ;; Turn on visual line mode to wrap lines.
-  (add-hook 'org-mode-hook #'visual-line-mode)
-  ;; Turn on variable pitch mode to use different scale for headings
-  (add-hook 'org-mode-hook #'variable-pitch-mode)
-  ;; If the source block contains code that outputs images,
-  ;; show them inline in results area.
-  (add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images))
+;; Turn on visual line mode to wrap lines.
+(visual-line-mode)
+(add-hook 'org-mode-hook #'visual-line-mode)
+
+;; Turn on variable pitch mode to use different scale for headings
+(variable-pitch-mode)
+(add-hook 'org-mode-hook #'variable-pitch-mode)
+
+;; If the source block contains code that outputs images,
+;; show them inline in results area.
+(add-hook 'org-babel-after-execute-hook #'org-redisplay-inline-images)
 
 (use-package org-bullets
   :custom
   (org-bullets-bullet-list '("☯" "✸" "✿" "✜" "◆" "◉" "▶" "○"))
   :hook (org-mode . org-bullets-mode))
+
+;; Start once on initial org load.
+;; The hook above takes care of starting it on subsequent loads.
+(org-bullets-mode)
 
 (use-package evil-org
   :diminish
@@ -46,6 +52,10 @@
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
+
+;; Start once on initial org load.
+;; The hook above takes care of starting it on subsequent loads.
+(evil-org-mode)
 
 (defun aa/apply-org-headline-styles ()
   "Applies org font styles to supplied frame"
@@ -93,6 +103,8 @@
                                        ("#+begin_src" . "λ")
                                        ("#+end_src" . "λ")))
 (setq prettify-symbols-unprettify-at-point t)
+
+(prettify-symbols-mode)
 (add-hook 'org-mode-hook 'prettify-symbols-mode)
 
 (font-lock-add-keywords 'org-mode
