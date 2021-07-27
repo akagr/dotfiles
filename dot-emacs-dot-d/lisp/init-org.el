@@ -21,7 +21,6 @@
         org-hide-leading-stars t
         org-pretty-entities t
         org-src-tab-acts-natively t
-        org-odd-levels-only t
         truncate-lines nil)
 
   ;; Turn on visual line mode to wrap lines.
@@ -34,7 +33,7 @@
 
 (use-package org-bullets
   :custom
-  (org-bullets-bullet-list '("◉" "☯" "○" "☯" "✸" "☯" "✿" "☯" "✜" "☯" "◆" "☯" "▶"))
+  (org-bullets-bullet-list '("☯" "✸" "✿" "✜" "◆" "◉" "▶" "○"))
   :hook (org-mode . org-bullets-mode))
 
 (use-package evil-org
@@ -119,5 +118,8 @@
                  (org-remove-inline-images)
                  (org-present-show-cursor)
                  (org-present-read-write))))
+
+(use-package org-drill
+  :commands (org-drill))
 
 (provide 'init-org)
