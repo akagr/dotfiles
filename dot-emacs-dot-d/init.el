@@ -264,13 +264,13 @@
 
 (aa/leader-key-def
 "b" '(:ignore t :which-key "buffer")
-"bb" '(projectile-switch-to-buffer :which-key "list in project")
+"bb" '(switch-to-buffer :which-key "list buffers")
 "bc" '(kill-this-buffer :which-key "kill current")
-"bd" '(aa/close-and-kill-this-pane :which-key "close current"))
+"bd" '(aa/close-and-kill-this-pane :which-key "close current")
+"bp" '(projectile-switch-to-buffer :which-key "list in project"))
 
 (general-define-key
  :states 'normal
- "C-b" 'switch-to-buffer
  "C-s" 'consult-line)
 
 (use-package libgit)
