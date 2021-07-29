@@ -422,7 +422,7 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
 #+BEGIN_SRC emacs-lisp
   (use-package evil-collection
     :init
-    (evil-collection-init '(deadgrep dired dired-sidebar ediff ibuffer magit vterm xref)))
+    (evil-collection-init '(deadgrep dired dired-sidebar ediff embark ibuffer magit vterm xref)))
 #+END_SRC
 
 * Org Mode

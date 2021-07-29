@@ -199,7 +199,7 @@
 
 (use-package evil-collection
   :init
-  (evil-collection-init '(deadgrep dired dired-sidebar ediff ibuffer magit vterm xref)))
+  (evil-collection-init '(deadgrep dired dired-sidebar ediff embark ibuffer magit vterm xref)))
 
 (add-hook 'org-mode-hook
           #'(lambda ()
