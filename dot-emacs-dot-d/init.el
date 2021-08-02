@@ -595,3 +595,12 @@
               (add-hook 'after-save-hook
                         'aa/config-tangle
                         nil 'make-it-local))))
+
+(defun aa/dashcase (str)
+  "Converts a string to dash case.
+
+   Example:
+   (aa/dashcase \"Hello World\")
+   => \"hello-world\" "
+  (let ((down (downcase str)))
+    (replace-regexp-in-string "\\([^A-Za-z]\\)" "-" down)))

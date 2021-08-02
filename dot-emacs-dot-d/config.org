@@ -645,6 +645,7 @@ Allows preparing flashcard like interface for spaced repetition and revision. Ch
 
 Provide org package for ~require~.
 #+BEGIN_SRC emacs-lisp
+  (org-reload)
   (provide 'init-org)
 #+END_SRC
 * Better UX for Completions
@@ -1131,6 +1132,18 @@ Run ~M-x all-the-icons-install-fonts~ to install the icons.
                 (add-hook 'after-save-hook
                           'aa/config-tangle
                           nil 'make-it-local))))
+#+END_SRC
+
+** Convert strings to dash case
+#+BEGIN_SRC emacs-lisp
+  (defun aa/dashcase (str)
+    "Converts a string to dash case.
+
+     Example:
+     (aa/dashcase \"Hello World\")
+     => \"hello-world\" "
+    (let ((down (downcase str)))
+      (replace-regexp-in-string "\\([^A-Za-z]\\)" "-" down)))
 #+END_SRC
 * Sources
 Huge thanks to these amazing people whose configs I borrowed from:

@@ -134,4 +134,5 @@
 (use-package org-drill
   :commands (org-drill))
 
+(org-reload)
 (provide 'init-org)
