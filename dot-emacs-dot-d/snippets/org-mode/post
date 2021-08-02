@@ -13,9 +13,10 @@
 toc: false
 layout: post
 description: $2
-categories: []
+tags: []
 title: $1
 comments: true
+published: false
 ---
 #+END_EXPORT
 
