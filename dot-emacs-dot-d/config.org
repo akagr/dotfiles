@@ -446,8 +446,8 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
 This gets placed in ~init.el~ and requires all the code following it related to org mode.
 #+BEGIN_SRC emacs-lisp :tangle "./init.el"
   (add-hook 'org-mode-hook
-            #'(lambda ()
-                (require 'init-org)))
+            (lambda ()
+              (require 'init-org)))
 #+END_SRC
 
 ** Align tags on save

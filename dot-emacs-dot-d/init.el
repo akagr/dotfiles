@@ -214,8 +214,8 @@
      xref)))
 
 (add-hook 'org-mode-hook
-          #'(lambda ()
-              (require 'init-org)))
+          (lambda ()
+            (require 'init-org)))
 
 (add-hook 'org-mode-hook
           (lambda ()
