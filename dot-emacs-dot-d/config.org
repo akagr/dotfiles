@@ -422,7 +422,19 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
 #+BEGIN_SRC emacs-lisp
   (use-package evil-collection
     :init
-    (evil-collection-init '(deadgrep dired dired-sidebar ediff embark ibuffer magit vterm xref)))
+    (evil-collection-init
+     '(deadgrep
+       dired
+       dired-sidebar
+       ediff
+       embark
+       grep
+       ibuffer
+       magit
+       occur
+       vterm
+       wgrep
+       xref)))
 #+END_SRC
 
 * Org Mode
@@ -436,6 +448,16 @@ This gets placed in ~init.el~ and requires all the code following it related to 
   (add-hook 'org-mode-hook
             #'(lambda ()
                 (require 'init-org)))
+#+END_SRC
+
+** Align tags on save
+#+BEGIN_SRC emacs-lisp :tangle "./init.el"
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook
+                        (lambda ()
+                          (org-align-tags t))
+                        nil t)))
 #+END_SRC
 
 ** Set up org default files and directories:
@@ -625,7 +647,7 @@ Provide org package for ~require~.
 #+BEGIN_SRC emacs-lisp
   (provide 'init-org)
 #+END_SRC
-* Better UX for Menus
+* Better UX for Completions
 
 Add =vertico= to handle all the menu presentation.
 #+BEGIN_SRC emacs-lisp
@@ -681,6 +703,12 @@ Add extra completion commands ala =consult=.
     (("C-." . embark-act)         ;; pick some comfortable binding
      ("C-;" . embark-dwim)        ;; good alternative: M-.
      ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+
+    :custom
+    ;; This effectively disables the comfirmation for anything not
+    ;; listed.
+    (embark-allow-edit-commands
+     '(shell-command async-shell-command pp-eval-expression))
 
     :init
     ;; Optionally replace the key help with a completing-read interface

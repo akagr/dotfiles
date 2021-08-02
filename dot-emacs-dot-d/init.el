@@ -199,11 +199,30 @@
 
 (use-package evil-collection
   :init
-  (evil-collection-init '(deadgrep dired dired-sidebar ediff embark ibuffer magit vterm xref)))
+  (evil-collection-init
+   '(deadgrep
+     dired
+     dired-sidebar
+     ediff
+     embark
+     grep
+     ibuffer
+     magit
+     occur
+     vterm
+     wgrep
+     xref)))
 
 (add-hook 'org-mode-hook
           #'(lambda ()
               (require 'init-org)))
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook
+                      (lambda ()
+                        (org-align-tags t))
+                      nil t)))
 
 (use-package vertico
   :init
@@ -241,6 +260,12 @@
   (("C-." . embark-act)         ;; pick some comfortable binding
    ("C-;" . embark-dwim)        ;; good alternative: M-.
    ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+
+  :custom
+  ;; This effectively disables the comfirmation for anything not
+  ;; listed.
+  (embark-allow-edit-commands
+   '(shell-command async-shell-command pp-eval-expression))
 
   :init
   ;; Optionally replace the key help with a completing-read interface
