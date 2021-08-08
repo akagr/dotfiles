@@ -84,18 +84,18 @@
   (set-face-attribute 'default frame
                       :font "JetBrains Mono"
                       :weight 'regular
-                      :height 140)
+                      :height 150)
 
   ;; Set the fixed pitch face
   (set-face-attribute 'fixed-pitch frame
                       :font "JetBrains Mono"
                       :weight 'regular
-                      :height 140)
+                      :height 150)
 
   ;; Set the variable pitch face
   (set-face-attribute 'variable-pitch frame
                       :font "JetBrains Mono"
-                      :height 140
+                      :height 150
                       :weight 'regular))
 
 (add-hook 'after-make-frame-functions
