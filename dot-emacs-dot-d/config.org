@@ -372,6 +372,10 @@ Config for mode line:
     (diminish 'auto-revert-mode))
 #+end_src
 
+Add a border around mode line.
+#+BEGIN_SRC emacs-lisp
+  (custom-set-faces '(mode-line ((t (:box (:line-width 1 :color "gray50"))))))
+#+END_SRC
 * Evil Mode
 
 Add undo package to allow branching undos.

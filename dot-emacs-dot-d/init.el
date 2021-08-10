@@ -168,6 +168,8 @@
   (diminish 'eldoc-mode)
   (diminish 'auto-revert-mode))
 
+(custom-set-faces '(mode-line ((t (:box (:line-width 1 :color "gray50"))))))
+
 (use-package undo-fu)
 
 (use-package evil
