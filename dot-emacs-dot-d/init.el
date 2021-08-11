@@ -429,6 +429,9 @@
 (use-package evil-paredit
   :hook (emacs-lisp-mode . evil-paredit-mode))
 
+(use-package banner-comment
+  :commands banner-comment)
+
 (use-package yasnippet
   :diminish yas-minor-mode
   :hook ((prog-mode org-mode) . yas-minor-mode)

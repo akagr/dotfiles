@@ -929,6 +929,13 @@ Enable visual line for word wrap and sane navigation.
     :hook (emacs-lisp-mode . evil-paredit-mode))
 #+END_SRC
 
+** Comments
+
+Banner comments allows adding visibility to the comments. Great for headings.
+#+BEGIN_SRC emacs-lisp
+  (use-package banner-comment
+    :commands banner-comment)
+#+END_SRC
 * Snippet Support
 Add snippet support. Actual snippets live outside of this file. Custom snippets can be saved in ~~/.emacs.d/snippets~ directory.
 #+begin_src emacs-lisp
