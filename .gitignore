@@ -21,3 +21,5 @@ dot-emacs-dot-d/eln-cache
 
 *#
 *~
+/dot-emacs-dot-d/persist/
+/dot-emacs-dot-d/.org-id-locations

@@ -465,7 +465,8 @@
 
 (use-package eglot
   :after elixir-mode
-  :hook ((elixir-mode ruby-mode) . eglot-ensure)
+  :commands (eglot eglot-ensure)
+  ;; :hook ((elixir-mode ruby-mode) . eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs '(elixir-mode "/Users/akash/Downloads/elixir-ls/language_server.sh")))
 
