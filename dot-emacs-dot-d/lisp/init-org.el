@@ -13,14 +13,6 @@
   "rp" '(org-present :which-key "present")
   "rt" '(org-babel-tangle :which-key "tangle"))
 
-(setq org-startup-indented t
-      org-hide-emphasis-markers t
-      org-fontify-done-headline t
-      org-hide-leading-stars t
-      org-pretty-entities t
-      org-src-tab-acts-natively t
-      truncate-lines nil)
-
 ;; Turn on visual line mode to wrap lines.
 (visual-line-mode)
 (add-hook 'org-mode-hook #'visual-line-mode)

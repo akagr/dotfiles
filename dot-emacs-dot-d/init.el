@@ -219,6 +219,15 @@
           (lambda ()
             (require 'init-org)))
 
+(with-eval-after-load 'org
+  (setq org-startup-indented t
+        org-hide-emphasis-markers t
+        org-fontify-done-headline t
+        org-hide-leading-stars t
+        org-pretty-entities t
+        org-src-tab-acts-natively t
+        truncate-lines nil))
+
 (add-hook 'org-mode-hook
           (lambda ()
             (add-hook 'before-save-hook

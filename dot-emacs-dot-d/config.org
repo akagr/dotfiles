@@ -452,6 +452,15 @@ This gets placed in ~init.el~ and requires all the code following it related to 
   (add-hook 'org-mode-hook
             (lambda ()
               (require 'init-org)))
+
+  (with-eval-after-load 'org
+    (setq org-startup-indented t
+          org-hide-emphasis-markers t
+          org-fontify-done-headline t
+          org-hide-leading-stars t
+          org-pretty-entities t
+          org-src-tab-acts-natively t
+          truncate-lines nil))
 #+END_SRC
 
 ** Align tags on save
@@ -490,14 +499,6 @@ This gets placed in ~init.el~ and requires all the code following it related to 
 ** Enable helpful org-specific minor modes
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-startup-indented t
-        org-hide-emphasis-markers t
-        org-fontify-done-headline t
-        org-hide-leading-stars t
-        org-pretty-entities t
-        org-src-tab-acts-natively t
-        truncate-lines nil)
-
   ;; Turn on visual line mode to wrap lines.
   (visual-line-mode)
   (add-hook 'org-mode-hook #'visual-line-mode)
