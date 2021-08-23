@@ -254,7 +254,23 @@ Simplify leader bindings with general.el.
     "ce" '(eval-last-sexp :which-key "eval last sexp")
     "cr" '(xref-find-references :which-key "find references"))
 #+END_SRC
+* Helpful Instrospection
 
+[[https://github.com/Wilfred/helpful][Helpful]] allows much better help (introspection) pages. For example, when showing help for functions, it shows references, source code etc. all on single page. This reduces jumping to different locations frequently.
+#+BEGIN_SRC emacs-lisp
+  (use-package helpful
+    :bind
+    (("C-h f" . helpful-callable)
+     ("C-h v" . helpful-variable)
+     ("C-h k" . helpful-key))
+    :commands (helpful-callable
+               helpful-variable
+               helpful-key
+               helpful-at-point
+               helpful-command
+               helpful-macro
+               helpful-function))
+#+END_SRC
 * Appearance
 ** Font
 #+BEGIN_SRC emacs-lisp

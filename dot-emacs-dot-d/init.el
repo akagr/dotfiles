@@ -77,6 +77,19 @@
   "ce" '(eval-last-sexp :which-key "eval last sexp")
   "cr" '(xref-find-references :which-key "find references"))
 
+(use-package helpful
+  :bind
+  (("C-h f" . helpful-callable)
+   ("C-h v" . helpful-variable)
+   ("C-h k" . helpful-key))
+  :commands (helpful-callable
+             helpful-variable
+             helpful-key
+             helpful-at-point
+             helpful-command
+             helpful-macro
+             helpful-function))
+
 (defun aa/apply-fonts (frame)
   "Apply selected fonts to emacs."
 
