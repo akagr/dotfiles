@@ -498,6 +498,18 @@ This gets placed in ~init.el~ and requires all the code following it related to 
         org-archive-location (concat org-directory "/archive/%s::"))
 #+end_src
 
+** Show hidden elements under point
+#+BEGIN_SRC emacs-lisp
+  (use-package org-appear
+    :custom
+    (org-appear-autolinks t)
+    (org-appear-submarkers t)
+    :hook (org-mode . org-appear-mode))
+
+  ;; Start once on initial org load.
+  ;; The hook above takes care of starting it on subsequent loads.
+  (org-appear-mode)
+#+END_SRC
 ** Keybindings for org mode.
 
 #+begin_src emacs-lisp
