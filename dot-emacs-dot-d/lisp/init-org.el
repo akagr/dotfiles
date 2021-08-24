@@ -7,6 +7,7 @@
   :custom
   (org-appear-autolinks t)
   (org-appear-submarkers t)
+  (org-appear-delay 0.5)
   :hook (org-mode . org-appear-mode))
 
 ;; Start once on initial org load.

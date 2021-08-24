@@ -65,6 +65,9 @@
   "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
   "ek" '(kill-emacs :which-key "kill emacs")
 
+  "f"  '(:ignore t :which-key "file")
+  "ff" '(find-file :which-key "find")
+
   "h"  '(help-command :which-key "help")
 
   "t"  '(:ignore t :which-key "toggle")
@@ -238,6 +241,7 @@
         org-fontify-done-headline t
         org-hide-leading-stars t
         org-pretty-entities t
+        org-src-fontify-natively t
         org-src-tab-acts-natively t
         truncate-lines nil))
 
