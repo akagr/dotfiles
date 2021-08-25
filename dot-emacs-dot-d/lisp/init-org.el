@@ -60,47 +60,6 @@
 ;; The hook above takes care of starting it on subsequent loads.
 (evil-org-mode)
 
-(defun aa/apply-org-headline-styles ()
-  "Applies org font styles to supplied frame"
-  (let* ((variable-tuple
-          (cond ((x-list-fonts "JetBrains Mono") '(:font "JetBrains Mono"))
-                (nil (warn "Cannot find JetBrains Mono."))))
-         (headline '(:inherit default :weight bold)))
-
-    (custom-theme-set-faces
-     'user
-     `(org-level-8 ((t (,@headline ,@variable-tuple))))
-     `(org-level-7 ((t (,@headline ,@variable-tuple))))
-     `(org-level-6 ((t (,@headline ,@variable-tuple))))
-     `(org-level-5 ((t (,@headline ,@variable-tuple))))
-     `(org-level-4 ((t (,@headline ,@variable-tuple))))
-     `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.1))))
-     `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.25))))
-     `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.5))))
-     `(org-document-title ((t (,@headline ,@variable-tuple :height 1.75 :underline nil)))))))
-
-;; Apply font styles for org mode
-(if window-system (aa/apply-org-headline-styles))
-
-(defun aa/apply-org-fixed-pitch-styles ()
-  "Applies variable fonts to different org elements"
-  (custom-theme-set-faces
-   'user
-   '(org-block ((t (:inherit fixed-pitch))))
-   '(org-code ((t (:inherit (shadow fixed-pitch)))))
-   '(org-document-info ((t (:foreground "dark orange"))))
-   '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
-   '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-   '(org-link ((t (:foreground "royal blue" :underline t))))
-   '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-   '(org-property-value ((t (:inherit fixed-pitch))) t)
-   '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-   '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
-   '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1))))
-   '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))))
-
-(if window-system (aa/apply-org-fixed-pitch-styles))
-
 (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "λ")
                                        ("#+END_SRC" . "λ")
                                        ("#+begin_src" . "λ")

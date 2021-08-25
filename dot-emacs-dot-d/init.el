@@ -93,6 +93,9 @@
              helpful-macro
              helpful-function))
 
+(add-to-list 'default-frame-alist '(width . 200))
+(add-to-list 'default-frame-alist '(height . 48))
+
 (defun aa/apply-fonts (frame)
   "Apply selected fonts to emacs."
 
@@ -157,23 +160,31 @@
 
 (add-hook 'prog-mode-hook #'aa/enable-auto-composition)
 
-(add-to-list 'default-frame-alist '(width . 200))
-(add-to-list 'default-frame-alist '(height . 48))
-
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package doom-themes
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-dracula t))
+(setq aa/theme 'modus-vivendi)
+
+(setq modus-themes-italic-constructs t
+      modus-themes-bold-constructs t
+      modus-themes-no-mixed-fonts nil
+      modus-themes-syntax '(faint alt-syntax green-strings)
+      modus-themes-org-blocks 'gray-background
+      modus-themes-headings '((1 . (overline rainbow))
+                              (t . t))
+      modus-themes-scale-headings t
+      modus-themes-scale-1 1.7
+      modus-themes-scale-2 1.4
+      modus-themes-scale-3 1.2
+      modus-themes-scale-title 2.0
+      modus-themes-no-mixed-fonts t)
+
+(load-theme aa/theme t)
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
             (with-selected-frame frame
-              (load-theme 'doom-dracula t))))
+              (load-theme aa/theme t))))
 
 ;; Diminish minor modes from mode line
 (use-package diminish
