@@ -456,6 +456,9 @@
 
 (use-package yaml-mode)
 
+(use-package markdown-mode
+  :mode "\\.md\\'")
+
 (add-hook 'markdown-mode-hook #'visual-line-mode)
 
 (use-package dockerfile-mode
