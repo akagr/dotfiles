@@ -180,6 +180,10 @@
       modus-themes-scale-title 2.0
       modus-themes-no-mixed-fonts t)
 
+(setq modus-themes-vivendi-color-overrides
+      '((bg-main . "#121212")
+        (fg-main . "#f0f0f0")))
+
 (load-theme aa/theme t)
 
 (add-hook 'after-make-frame-functions
