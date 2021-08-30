@@ -368,19 +368,15 @@ Disable auto composition everywhere outside of prog-mode.
         modus-themes-no-mixed-fonts nil
         modus-themes-syntax '(faint alt-syntax green-strings)
         modus-themes-org-blocks 'gray-background
-        modus-themes-headings '((1 . (overline rainbow))
-                                (t . t))
         modus-themes-scale-headings t
-        modus-themes-scale-1 1.1
-        modus-themes-scale-2 1.2
-        modus-themes-scale-3 1.3
-        modus-themes-scale-4 1.5
-        modus-themes-scale-title 2.0
-        modus-themes-no-mixed-fonts t)
+        modus-themes-no-mixed-fonts t
+        modus-themes-headings '((1 . (rainbow))
+                                (t . t)))
 
   (setq modus-themes-vivendi-color-overrides
         '((bg-main . "#121212")
-          (fg-main . "#f0f0f0")))
+          (fg-main . "#f0f0f0")
+          (bg-dim . "#171717")))
 
   (load-theme aa/theme t)
 #+END_SRC
