@@ -22,6 +22,7 @@
   (tooltip-mode -1))
 
 (global-so-long-mode) ;; handles really long lines well
+(global-hl-line-mode) ;; highlight current line with background
 (electric-pair-mode) ;; auto matching brackets, parentheses etc.
 (show-paren-mode) ;; show matching opening/closing parentheses
 (column-number-mode) ;; show column number in mode line
@@ -170,6 +171,7 @@
       modus-themes-no-mixed-fonts nil
       modus-themes-syntax '(faint alt-syntax green-strings)
       modus-themes-org-blocks 'gray-background
+      modus-themes-hl-line '(accented intense)
       modus-themes-scale-headings t
       modus-themes-no-mixed-fonts t
       modus-themes-headings '((1 . (rainbow))
