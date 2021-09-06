@@ -22,7 +22,6 @@
   (tooltip-mode -1))
 
 (global-so-long-mode) ;; handles really long lines well
-(global-hl-line-mode) ;; highlight current line with background
 (electric-pair-mode) ;; auto matching brackets, parentheses etc.
 (show-paren-mode) ;; show matching opening/closing parentheses
 (column-number-mode) ;; show column number in mode line
@@ -164,25 +163,14 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(setq aa/theme 'modus-vivendi)
+(setq aa/theme 'doom-one)
 
-(setq modus-themes-italic-constructs t
-      modus-themes-bold-constructs t
-      modus-themes-no-mixed-fonts nil
-      modus-themes-syntax '(faint alt-syntax green-strings)
-      modus-themes-org-blocks 'gray-background
-      modus-themes-hl-line '(accented intense)
-      modus-themes-scale-headings t
-      modus-themes-no-mixed-fonts t
-      modus-themes-headings '((1 . (rainbow))
-                              (t . t)))
-
-(setq modus-themes-vivendi-color-overrides
-      '((bg-main . "#121212")
-        (fg-main . "#f0f0f0")
-        (bg-dim . "#171717")))
-
-(load-theme aa/theme t)
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t)
+  (load-theme aa/theme t)
+  (doom-themes-org-config))
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
