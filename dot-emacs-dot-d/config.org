@@ -457,6 +457,13 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
        xref)))
 #+END_SRC
 
+[[https://github.com/gabesoft/evil-mc][evil-mc]] adds an awesome multiple cursor mode.
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-mc
+    :config
+    (global-evil-mc-mode 1))
+#+END_SRC
+
 * Org Mode
 :properties:
 :header-args+: :tangle "./lisp/init-org.el"
@@ -471,10 +478,10 @@ This gets placed in ~init.el~ and requires all the code following it related to 
 
   (with-eval-after-load 'org
     (setq org-startup-indented t
-          org-hide-emphasis-markers t
+          org-hide-emphasis-markers nil
           org-fontify-done-headline t
           org-hide-leading-stars t
-          org-pretty-entities t
+          org-pretty-entities nil
           org-src-fontify-natively t
           org-src-tab-acts-natively t
           truncate-lines nil))

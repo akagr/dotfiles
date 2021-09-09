@@ -231,16 +231,20 @@
      wgrep
      xref)))
 
+(use-package evil-mc
+  :config
+  (global-evil-mc-mode 1))
+
 (add-hook 'org-mode-hook
           (lambda ()
             (require 'init-org)))
 
 (with-eval-after-load 'org
   (setq org-startup-indented t
-        org-hide-emphasis-markers t
+        org-hide-emphasis-markers nil
         org-fontify-done-headline t
         org-hide-leading-stars t
-        org-pretty-entities t
+        org-pretty-entities nil
         org-src-fontify-natively t
         org-src-tab-acts-natively t
         truncate-lines nil))
