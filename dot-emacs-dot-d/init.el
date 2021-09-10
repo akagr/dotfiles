@@ -483,10 +483,10 @@
   :config
   (setq vterm-toggle-hide-method 'reset-window-configration)
   (evil-collection-define-key 'insert 'vterm-mode-map
-    (kbd "C-t") 'vterm-toggle))
+    (kbd "M-t") 'vterm-toggle))
 (general-define-key
  :states 'normal
- "C-t" 'vterm-toggle)
+ "M-t" 'vterm-toggle)
 
 (use-package company
   :diminish
