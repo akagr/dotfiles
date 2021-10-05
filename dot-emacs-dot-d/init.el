@@ -241,10 +241,10 @@
 
 (with-eval-after-load 'org
   (setq org-startup-indented t
-        org-hide-emphasis-markers nil
+        org-hide-emphasis-markers t
         org-fontify-done-headline t
         org-hide-leading-stars t
-        org-pretty-entities nil
+        org-pretty-entities t
         org-src-fontify-natively t
         org-src-tab-acts-natively t
         truncate-lines nil))
@@ -319,13 +319,6 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-(aa/leader-key-def
-"b" '(:ignore t :which-key "buffer")
-"bb" '(switch-to-buffer :which-key "list buffers")
-"bc" '(kill-this-buffer :which-key "kill current")
-"bd" '(aa/close-and-kill-this-pane :which-key "close current")
-"bp" '(projectile-switch-to-buffer :which-key "list in project"))
-
 (general-define-key
  :states 'normal
  "C-s" 'consult-line)
@@ -345,9 +338,11 @@
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
-(use-package perspective
-  :init
-  (persp-mode))
+(aa/leader-key-def
+"b"   '(:ignore t :which-key "buffer")
+"bb"  '(switch-to-buffer :which-key "list buffers")
+"bc"  '(kill-this-buffer :which-key "kill current")
+"bd"  '(aa/close-and-kill-this-pane :which-key "close current"))
 
 (defun aa/dired-sort-directories ()
   "Sort dired listings with directories first."

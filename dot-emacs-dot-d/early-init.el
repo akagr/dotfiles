@@ -65,8 +65,12 @@
 
 (straight-use-package 'use-package)
 
+(when (require "diminish" nil t)
+  (message "Diminish loaded"))
+
 (use-package gcmh
   :demand t
+  :diminish
   :config (gcmh-mode 1))
 
 (provide 'early-init)

@@ -117,10 +117,16 @@ Installing =use-package= now.
   (straight-use-package 'use-package)
 #+END_SRC
 
+** Load Diminish
+#+BEGIN_SRC emacs-lisp
+  (when (require "diminish" nil t)
+    (message "Diminish loaded"))
+#+END_SRC
 ** Use the garbage collector magic hack
 #+begin_src emacs-lisp
   (use-package gcmh
     :demand t
+    :diminish
     :config (gcmh-mode 1))
   #+end_src
 ** End early init
@@ -478,10 +484,10 @@ This gets placed in ~init.el~ and requires all the code following it related to 
 
   (with-eval-after-load 'org
     (setq org-startup-indented t
-          org-hide-emphasis-markers nil
+          org-hide-emphasis-markers t
           org-fontify-done-headline t
           org-hide-leading-stars t
-          org-pretty-entities nil
+          org-pretty-entities t
           org-src-fontify-natively t
           org-src-tab-acts-natively t
           truncate-lines nil))
@@ -729,13 +735,6 @@ Add extra completion commands ala =consult=.
 
 Add common keybindings for buffer.
 #+BEGIN_SRC emacs-lisp
-  (aa/leader-key-def
-  "b" '(:ignore t :which-key "buffer")
-  "bb" '(switch-to-buffer :which-key "list buffers")
-  "bc" '(kill-this-buffer :which-key "kill current")
-  "bd" '(aa/close-and-kill-this-pane :which-key "close current")
-  "bp" '(projectile-switch-to-buffer :which-key "list in project"))
-
   (general-define-key
    :states 'normal
    "C-s" 'consult-line)
@@ -764,12 +763,15 @@ Set ediff to use the current frame instead of creating a new one.
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 #+END_SRC
 
-* Buffer Management
-#+BEGIN_SRC emacs-lisp
-  (use-package perspective
-    :init
-    (persp-mode))
+* Buffer management
 
+** Buffer keybindings
+#+BEGIN_SRC emacs-lisp
+  (aa/leader-key-def
+  "b"   '(:ignore t :which-key "buffer")
+  "bb"  '(switch-to-buffer :which-key "list buffers")
+  "bc"  '(kill-this-buffer :which-key "kill current")
+  "bd"  '(aa/close-and-kill-this-pane :which-key "close current"))
 #+END_SRC
 * Dired
 
