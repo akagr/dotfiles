@@ -119,8 +119,8 @@ Installing =use-package= now.
 
 ** Load Diminish
 #+BEGIN_SRC emacs-lisp
-  (when (require "diminish" nil t)
-    (message "Diminish loaded"))
+  ;; (when (require "diminish" nil t)
+  ;;   (message "Diminish loaded"))
 #+END_SRC
 ** Use the garbage collector magic hack
 #+begin_src emacs-lisp

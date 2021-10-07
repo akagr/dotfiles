@@ -65,8 +65,8 @@
 
 (straight-use-package 'use-package)
 
-(when (require "diminish" nil t)
-  (message "Diminish loaded"))
+;; (when (require "diminish" nil t)
+;;   (message "Diminish loaded"))
 
 (use-package gcmh
   :demand t
