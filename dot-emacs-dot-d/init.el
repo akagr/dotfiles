@@ -374,6 +374,8 @@
   :config
   (editorconfig-mode 1))
 
+(use-package geiser-chez)
+
 (use-package ruby-end
   :hook (ruby-mode . ruby-end-mode)
   :diminish)
