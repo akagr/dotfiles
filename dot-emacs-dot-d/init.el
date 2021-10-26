@@ -396,15 +396,6 @@
   (add-hook 'elixir-mode-hook
             (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
 
-(use-package kubel
-  :commands kubel)
-
-(use-package kubel-evil
-  :after kubel)
-
-(aa/leader-key-def
-  "k" '(kubel :which-key "k8s"))
-
 (use-package web-mode
   :mode "\\.p?html?\\'"
   :mode "\\.eex\\'"

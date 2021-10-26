@@ -845,17 +845,6 @@ Projectile plays pretty well with the other packages, including magit and dired 
     (add-hook 'elixir-mode-hook
               (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
 #+END_SRC
-** Kubernetes
-#+BEGIN_SRC emacs-lisp
-  (use-package kubel
-    :commands kubel)
-
-  (use-package kubel-evil
-    :after kubel)
-
-  (aa/leader-key-def
-    "k" '(kubel :which-key "k8s"))
-#+END_SRC
 ** Web
 #+begin_src emacs-lisp
   (use-package web-mode
