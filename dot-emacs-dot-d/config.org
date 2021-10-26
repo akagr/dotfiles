@@ -421,8 +421,8 @@ I use different colored cursors to depict what mode I'm in. Way easier to work w
           evil-emacs-state-cursor '("indian red" box)
           evil-normal-state-cursor '("indian red" box)
           evil-visual-state-cursor '("royal blue" box)
-          evil-insert-state-cursor '("yellow green" bar)
-          evil-replace-state-cursor '("red" bar)
+          evil-insert-state-cursor '("yellow green" box)
+          evil-replace-state-cursor '("red" box)
           evil-operator-state-cursor '("red" hollow)))
 #+END_SRC
 
@@ -816,7 +816,10 @@ Projectile plays pretty well with the other packages, including magit and dired 
     :config
     (editorconfig-mode 1))
 #+end_src
-
+** Lisp(s)
+#+BEGIN_SRC emacs-lisp
+  (use-package geiser-chez)
+#+END_SRC
 ** Ruby
 #+begin_src emacs-lisp
   (use-package ruby-end

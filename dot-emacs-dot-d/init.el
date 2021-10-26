@@ -200,8 +200,8 @@
         evil-emacs-state-cursor '("indian red" box)
         evil-normal-state-cursor '("indian red" box)
         evil-visual-state-cursor '("royal blue" box)
-        evil-insert-state-cursor '("yellow green" bar)
-        evil-replace-state-cursor '("red" bar)
+        evil-insert-state-cursor '("yellow green" box)
+        evil-replace-state-cursor '("red" box)
         evil-operator-state-cursor '("red" hollow)))
 
 (use-package evil-commentary
@@ -373,6 +373,8 @@
   :diminish
   :config
   (editorconfig-mode 1))
+
+(use-package geiser-chez)
 
 (use-package ruby-end
   :hook (ruby-mode . ruby-end-mode)
