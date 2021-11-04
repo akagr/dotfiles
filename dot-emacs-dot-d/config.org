@@ -816,10 +816,6 @@ Projectile plays pretty well with the other packages, including magit and dired 
     :config
     (editorconfig-mode 1))
 #+end_src
-** Lisp(s)
-#+BEGIN_SRC emacs-lisp
-  (use-package geiser-chez)
-#+END_SRC
 ** Ruby
 #+begin_src emacs-lisp
   (use-package ruby-end
@@ -917,6 +913,10 @@ Enable visual line for word wrap and sane navigation.
 
   (use-package evil-paredit
     :hook (emacs-lisp-mode . evil-paredit-mode))
+
+  (use-package slime
+    :init
+    (setq inferior-lisp-program "sbcl"))
 #+END_SRC
 
 ** Comments

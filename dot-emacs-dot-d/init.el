@@ -374,8 +374,6 @@
   :config
   (editorconfig-mode 1))
 
-(use-package geiser-chez)
-
 (use-package ruby-end
   :hook (ruby-mode . ruby-end-mode)
   :diminish)
@@ -449,6 +447,10 @@
 
 (use-package evil-paredit
   :hook (emacs-lisp-mode . evil-paredit-mode))
+
+(use-package slime
+  :init
+  (setq inferior-lisp-program "sbcl"))
 
 (use-package banner-comment
   :commands banner-comment)
