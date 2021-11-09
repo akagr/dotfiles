@@ -39,6 +39,92 @@
           (lambda ()
             (modify-syntax-entry ?_ "w")))
 
+(defun aa/copy-file-path ()
+  "Copy file path of current buffer relative to project root."
+  (interactive)
+  (kill-new (file-relative-name buffer-file-name (projectile-project-root))))
+
+(defalias 'copy-file-path 'aa/copy-file-path)
+
+(defun aa/close-and-kill-this-pane ()
+  "If there are multiple windows, then close this one and kill its buffer"
+  (interactive)
+  (kill-this-buffer)
+  (if (not (one-window-p))
+      (delete-window)))
+
+(defun aa/find-mix-project (dir)
+  "Try to locate a Elixir project root by 'mix.exs' above DIR."
+  (let ((mix_root (locate-dominating-file dir "mix.exs")))
+    (message "Found Elixir project root in '%s' starting from '%s'" mix_root dir)
+    (if (stringp mix_root) `(transient . ,mix_root) nil)))
+
+(defun aa/find-rails-project (dir)
+  "Try to locate a Rails project root by 'Gemfile' above DIR."
+  (let ((rails_root (locate-dominating-file dir "Gemfile")))
+    (message "Found Rails project root in '%s' starting from '%s'" rails_root dir)
+    (if (stringp rails_root) `(transient . ,rails_root) nil)))
+
+(defun aa/print-startup-time ()
+  "Log emacs startup time"
+  (interactive)
+  (message "Emacs started in %s with %d garbage collections."
+           (format
+            "%.2f seconds"
+            (float-time
+             (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(use-package async
+  :demand t)
+
+(defvar *config-file* (expand-file-name "config.org" user-emacs-directory)
+  "The configuration file.")
+
+(defvar *show-async-tangle-results* nil
+  "Keeps *emacs* async buffers around for later inspection.")
+
+(defun aa/async-babel-tangle (org-file)
+  "Tangles the org file asynchronously."
+  (let ((init-tangle-start-time (current-time))
+        (file (buffer-file-name))
+        (async-quiet-switch "-q"))
+    (async-start
+     `(lambda ()
+        (require 'ob-tangle)
+        (org-babel-tangle-file ,org-file))
+     (unless *show-async-tangle-results*
+       `(lambda (result)
+          (if result
+              (message "SUCCESS: %s successfully tangled (%.2fs)."
+                       ,org-file
+                       (float-time
+                        (time-subtract (current-time)
+                                       ',init-tangle-start-time)))
+            (message "ERROR: %s as tangle failed." ,org-file)))))))
+
+(defun aa/config-tangle ()
+  "Tangles the org file asynchronously."
+  (aa/async-babel-tangle *config-file*))
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (when (and buffer-file-truename
+                       (equal (file-name-nondirectory buffer-file-truename)
+                              "config.org"))
+              (add-hook 'after-save-hook
+                        'aa/config-tangle
+                        nil 'make-it-local))))
+
+(defun aa/dashcase (str)
+  "Converts a string to dash case.
+
+   Example:
+   (aa/dashcase \"Hello World\")
+   => \"hello-world\" "
+  (let ((down (downcase str)))
+    (replace-regexp-in-string "\\([^A-Za-z]\\)" "-" down)))
+
 (use-package exec-path-from-shell
   :config
   (exec-path-from-shell-initialize))
@@ -308,7 +394,23 @@
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
-                 (window-parameters (mode-line-format . none)))))
+                 (window-parameters (mode-line-format . none))))
+
+  ;; Add ability to open in another window
+  (eval-when-compile
+    (defmacro aa/embark-ace-action (fn)
+      "Add functions to open objects in other window."
+      `(defun ,(intern (concat "aa/embark-ace-" (symbol-name fn))) ()
+         (interactive)
+         (with-demoted-errors "%s"
+           (require 'ace-window)
+           (let ((aw-dispatch-always t))
+             (aw-switch-to-window (aw-select nil))
+             (call-interactively (symbol-function ',fn)))))))
+
+  (define-key embark-file-keymap     (kbd "o") (aa/embark-ace-action find-file))
+  (define-key embark-buffer-keymap   (kbd "o") (aa/embark-ace-action switch-to-buffer))
+  (define-key embark-bookmark-keymap (kbd "o") (aa/embark-ace-action bookmark-jump)))
 
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
@@ -338,11 +440,21 @@
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
+(use-package ace-window
+  :commands (ace-window)
+  :custom
+  (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  (aw-background nil))
+
 (aa/leader-key-def
 "b"   '(:ignore t :which-key "buffer")
 "bb"  '(switch-to-buffer :which-key "list buffers")
 "bc"  '(kill-this-buffer :which-key "kill current")
 "bd"  '(aa/close-and-kill-this-pane :which-key "close current"))
+
+(general-define-key
+ :states '(normal insert visual)
+ "M-o" 'ace-window)
 
 (defun aa/dired-sort-directories ()
   "Sort dired listings with directories first."
@@ -547,89 +659,3 @@
 
 (aa/leader-key-def
   "s" '(deadgrep :which-key "search"))
-
-(defun aa/copy-file-path ()
-  "Copy file path of current buffer relative to project root."
-  (interactive)
-  (kill-new (file-relative-name buffer-file-name (projectile-project-root))))
-
-(defalias 'copy-file-path 'aa/copy-file-path)
-
-(defun aa/close-and-kill-this-pane ()
-  "If there are multiple windows, then close this one and kill its buffer"
-  (interactive)
-  (kill-this-buffer)
-  (if (not (one-window-p))
-      (delete-window)))
-
-(defun aa/find-mix-project (dir)
-  "Try to locate a Elixir project root by 'mix.exs' above DIR."
-  (let ((mix_root (locate-dominating-file dir "mix.exs")))
-    (message "Found Elixir project root in '%s' starting from '%s'" mix_root dir)
-    (if (stringp mix_root) `(transient . ,mix_root) nil)))
-
-(defun aa/find-rails-project (dir)
-  "Try to locate a Rails project root by 'Gemfile' above DIR."
-  (let ((rails_root (locate-dominating-file dir "Gemfile")))
-    (message "Found Rails project root in '%s' starting from '%s'" rails_root dir)
-    (if (stringp rails_root) `(transient . ,rails_root) nil)))
-
-(defun aa/print-startup-time ()
-  "Log emacs startup time"
-  (interactive)
-  (message "Emacs started in %s with %d garbage collections."
-           (format
-            "%.2f seconds"
-            (float-time
-             (time-subtract after-init-time before-init-time)))
-           gcs-done))
-
-(use-package async
-  :demand t)
-
-(defvar *config-file* (expand-file-name "config.org" user-emacs-directory)
-  "The configuration file.")
-
-(defvar *show-async-tangle-results* nil
-  "Keeps *emacs* async buffers around for later inspection.")
-
-(defun aa/async-babel-tangle (org-file)
-  "Tangles the org file asynchronously."
-  (let ((init-tangle-start-time (current-time))
-        (file (buffer-file-name))
-        (async-quiet-switch "-q"))
-    (async-start
-     `(lambda ()
-        (require 'ob-tangle)
-        (org-babel-tangle-file ,org-file))
-     (unless *show-async-tangle-results*
-       `(lambda (result)
-          (if result
-              (message "SUCCESS: %s successfully tangled (%.2fs)."
-                       ,org-file
-                       (float-time
-                        (time-subtract (current-time)
-                                       ',init-tangle-start-time)))
-            (message "ERROR: %s as tangle failed." ,org-file)))))))
-
-(defun aa/config-tangle ()
-  "Tangles the org file asynchronously."
-  (aa/async-babel-tangle *config-file*))
-
-(add-hook 'org-mode-hook
-          (lambda ()
-            (when (and buffer-file-truename
-                       (equal (file-name-nondirectory buffer-file-truename)
-                              "config.org"))
-              (add-hook 'after-save-hook
-                        'aa/config-tangle
-                        nil 'make-it-local))))
-
-(defun aa/dashcase (str)
-  "Converts a string to dash case.
-
-   Example:
-   (aa/dashcase \"Hello World\")
-   => \"hello-world\" "
-  (let ((down (downcase str)))
-    (replace-regexp-in-string "\\([^A-Za-z]\\)" "-" down)))
