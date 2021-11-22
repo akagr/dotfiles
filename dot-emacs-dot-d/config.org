@@ -958,6 +958,14 @@ Projectile plays pretty well with the other packages, including magit and dired 
     :hook (ruby-mode . ruby-end-mode)
     :diminish)
 #+end_src
+
+Rubocop is the de-facto lint and syntax checker for ruby.
+#+BEGIN_SRC emacs-lisp
+  (use-package rubocop
+    :hook (ruby-mode . rubocop-mode)
+    :custom
+    (rubocop-autocorrect-on-save t))
+#+END_SRC
 ** Typescript
 #+begin_src emacs-lisp
   (use-package typescript-mode

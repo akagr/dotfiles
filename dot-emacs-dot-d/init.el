@@ -491,6 +491,11 @@
   :hook (ruby-mode . ruby-end-mode)
   :diminish)
 
+(use-package rubocop
+  :hook (ruby-mode . rubocop-mode)
+  :custom
+  (rubocop-autocorrect-on-save t))
+
 (use-package typescript-mode
   :mode ("\\.tsx?\\'" . typescript-mode))
 
