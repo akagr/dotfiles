@@ -457,6 +457,24 @@
  :states '(normal insert visual)
  "M-o" 'ace-window)
 
+(setq ibuffer-saved-filter-groups
+      '(("home"
+         ("Dired" (mode . dired-mode))
+         ("Emacs Config" (or (filename . "config.org")
+                             (filename . "init.el")
+                             (filename . "early-init.el")))
+         ("Magit" (name . "\*magit"))
+         ("Help" (or (name . "\*Help\*")
+                     (name . "\*Apropos\*")
+                     (name . "\*info\*"))))))
+
+(setq ibuffer-show-empty-filter-groups nil)
+
+(add-hook 'ibuffer-mode-hook
+          '(lambda ()
+             (ibuffer-auto-mode 1)
+             (ibuffer-switch-to-saved-filter-groups "home")))
+
 (defun aa/dired-sort-directories ()
   "Sort dired listings with directories first."
   (save-excursion

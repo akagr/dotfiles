@@ -909,6 +909,28 @@ Set ediff to use the current frame instead of creating a new one.
    :states '(normal insert visual)
    "M-o" 'ace-window)
 #+END_SRC
+** Ibuffer
+Create buffer groups
+#+BEGIN_SRC emacs-lisp
+  (setq ibuffer-saved-filter-groups
+        '(("home"
+           ("Dired" (mode . dired-mode))
+           ("Emacs Config" (or (filename . "config.org")
+                               (filename . "init.el")
+                               (filename . "early-init.el")))
+           ("Magit" (name . "\*magit"))
+           ("Help" (or (name . "\*Help\*")
+                       (name . "\*Apropos\*")
+                       (name . "\*info\*"))))))
+
+  (setq ibuffer-show-empty-filter-groups nil)
+
+  (add-hook 'ibuffer-mode-hook
+            '(lambda ()
+               (ibuffer-auto-mode 1)
+               (ibuffer-switch-to-saved-filter-groups "home")))
+
+#+END_SRC
 * Dired
 
 Set directories to be listed above files.
