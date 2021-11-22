@@ -313,6 +313,7 @@
      ibuffer
      magit
      occur
+     sly
      vterm
      wgrep
      xref)))
@@ -555,13 +556,15 @@
   :mode ("Dockerfile\\'" . dockerfile-mode))
 
 (use-package paredit
-  :hook (emacs-lisp-mode . paredit-mode))
+  :hook ((emacs-lisp-mode . paredit-mode)
+         (lisp-mode . paredit-mode)))
 
 (use-package evil-paredit
-  :hook (emacs-lisp-mode . evil-paredit-mode))
+  :hook ((emacs-lisp-mode . evil-paredit-mode)
+         (lisp-mode . evil-paredit-mode)))
 
-(use-package slime
-  :init
+(use-package sly
+  :config
   (setq inferior-lisp-program "sbcl"))
 
 (use-package banner-comment
