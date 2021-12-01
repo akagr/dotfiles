@@ -450,6 +450,7 @@
 (aa/leader-key-def
 "b"   '(:ignore t :which-key "buffer")
 "bb"  '(switch-to-buffer :which-key "list buffers")
+"bB"  '(ibuffer :which-key "ibuffer")
 "bc"  '(kill-this-buffer :which-key "kill current")
 "bd"  '(aa/close-and-kill-this-pane :which-key "close current"))
 
