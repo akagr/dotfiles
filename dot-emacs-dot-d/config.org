@@ -918,7 +918,9 @@ Create buffer groups
            ("Emacs Config" (or (filename . "config.org")
                                (filename . "init.el")
                                (filename . "early-init.el")))
-           ("Magit" (name . "\*magit"))
+           ("Magit" (or (name . "\*magit")
+                        (name . "magit")))
+           ("Deadgrep" (name . "\*deadgrep"))
            ("Help" (or (name . "\*Help\*")
                        (name . "\*Apropos\*")
                        (name . "\*info\*"))))))
@@ -926,9 +928,9 @@ Create buffer groups
   (setq ibuffer-show-empty-filter-groups nil)
 
   (add-hook 'ibuffer-mode-hook
-            '(lambda ()
-               (ibuffer-auto-mode 1)
-               (ibuffer-switch-to-saved-filter-groups "home")))
+            #'(lambda ()
+                (ibuffer-auto-mode 1)
+                (ibuffer-switch-to-saved-filter-groups "home")))
 
 #+END_SRC
 * Dired
@@ -1083,6 +1085,7 @@ Enable visual line for word wrap and sane navigation.
            (lisp-mode . evil-paredit-mode)))
 
   (use-package sly
+    :commands sly
     :config
     (setq inferior-lisp-program "sbcl"))
 #+END_SRC
