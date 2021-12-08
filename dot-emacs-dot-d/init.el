@@ -626,13 +626,42 @@
  :states 'normal
  "M-t" 'vterm-toggle)
 
-(use-package company
-  :diminish
-  :hook (prog-mode . company-mode)
+(use-package corfu
+  ;; TAB-and-Go customizations
+  :custom
+  (corfu-auto t)
+  (corfu-echo-documentation t)
+  (corfu-auto-prefix 1)
+  (corfu-cycle t)             ;; Enable cycling for `corfu-next/previous'
+  (corfu-preselect-first nil) ;; Disable candidate preselection
+  (corfu-quit-no-match t)
+  (corfu-quit-at-boundary t)
+
+  ;; Use TAB for cycling, default is `corfu-complete'.
+  :bind
+  (:map corfu-map
+        ("TAB" . corfu-next)
+        ([tab] . corfu-next)
+        ("S-TAB" . corfu-previous)
+        ([backtab] . corfu-previous))
+
   :init
-  (setq company-idle-delay 0)
-  (setq company-global-modes '(not org-mode))
-  (setq company-minimum-prefix-length 1))
+  (corfu-global-mode))
+
+(use-package cape
+  :after corfu
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-keyword))
+
+(use-package kind-icon
+  :straight (kind-icon :type git :host github :repo "jdtsmith/kind-icon")
+  :after corfu
+  :custom
+  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (use-package eglot
   :after elixir-mode
