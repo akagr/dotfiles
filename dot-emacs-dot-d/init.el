@@ -594,6 +594,12 @@
   :config
   (setq inferior-lisp-program "sbcl"))
 
+(use-package sly-asdf
+  :after sly)
+
+(use-package sly-quicklisp
+  :after sly)
+
 (use-package banner-comment
   :commands banner-comment)
 

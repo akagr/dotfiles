@@ -1089,6 +1089,12 @@ Enable visual line for word wrap and sane navigation.
     :commands sly
     :config
     (setq inferior-lisp-program "sbcl"))
+
+  (use-package sly-asdf
+    :after sly)
+
+  (use-package sly-quicklisp
+    :after sly)
 #+END_SRC
 
 ** Comments
