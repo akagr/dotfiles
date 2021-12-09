@@ -466,6 +466,8 @@
               (unless (eq ibuffer-sorting-mode 'alphabetic)
                 (ibuffer-do-sort-by-alphabetic)))))
 
+(setq ibuffer-show-empty-filter-groups nil)
+
 (defun aa/dired-sort-directories ()
   "Sort dired listings with directories first."
   (save-excursion

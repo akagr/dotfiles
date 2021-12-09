@@ -921,6 +921,11 @@ Set ediff to use the current frame instead of creating a new one.
                 (unless (eq ibuffer-sorting-mode 'alphabetic)
                   (ibuffer-do-sort-by-alphabetic)))))
 #+END_SRC
+
+*** Do not show empty groups
+#+BEGIN_SRC emacs-lisp
+  (setq ibuffer-show-empty-filter-groups nil)
+#+END_SRC
 * Dired
 
 Set directories to be listed above files.
