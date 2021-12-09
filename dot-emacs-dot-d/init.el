@@ -409,9 +409,9 @@
              (aw-switch-to-window (aw-select nil))
              (call-interactively (symbol-function ',fn)))))))
 
-  (define-key embark-file-keymap     (kbd "o") (aa/embark-ace-action find-file))
-  (define-key embark-buffer-keymap   (kbd "o") (aa/embark-ace-action switch-to-buffer))
-  (define-key embark-bookmark-keymap (kbd "o") (aa/embark-ace-action bookmark-jump)))
+  (define-key embark-file-map     (kbd "o") (aa/embark-ace-action find-file))
+  (define-key embark-buffer-map   (kbd "o") (aa/embark-ace-action switch-to-buffer))
+  (define-key embark-bookmark-map (kbd "o") (aa/embark-ace-action bookmark-jump)))
 
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
@@ -458,25 +458,13 @@
  :states '(normal insert visual)
  "M-o" 'ace-window)
 
-(setq ibuffer-saved-filter-groups
-      '(("home"
-         ("Dired" (mode . dired-mode))
-         ("Emacs Config" (or (filename . "config.org")
-                             (filename . "init.el")
-                             (filename . "early-init.el")))
-         ("Magit" (or (name . "\*magit")
-                      (name . "magit")))
-         ("Deadgrep" (name . "\*deadgrep"))
-         ("Help" (or (name . "\*Help\*")
-                     (name . "\*Apropos\*")
-                     (name . "\*info\*"))))))
-
-(setq ibuffer-show-empty-filter-groups nil)
-
-(add-hook 'ibuffer-mode-hook
-          #'(lambda ()
-              (ibuffer-auto-mode 1)
-              (ibuffer-switch-to-saved-filter-groups "home")))
+(use-package ibuffer-vc
+  :init
+  (add-hook 'ibuffer-hook
+            (lambda ()
+              (ibuffer-vc-set-filter-groups-by-vc-root)
+              (unless (eq ibuffer-sorting-mode 'alphabetic)
+                (ibuffer-do-sort-by-alphabetic)))))
 
 (defun aa/dired-sort-directories ()
   "Sort dired listings with directories first."
