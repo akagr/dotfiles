@@ -1081,11 +1081,19 @@ Enable visual line for word wrap and sane navigation.
     (custom-set-variables
      '(sp-override-key-bindings
        '(("M-(" . sp-wrap-round)
+         ("M-{" . sp-wrap-curly)
+         ("M-[" . sp-wrap-square)
          ("M-r" . sp-raise-sexp)
-         ("C-<right>" . sp-forward-slurp-sexp)
-         ("C-<left>" . sp-backward-slurp-sexp)
-         ("C-M-<right>" . sp-forward-barf-sexp)
-         ("C-M-<left>" . sp-backward-barf-sexp)))))
+         ("M-<right>" . sp-forward-slurp-sexp)
+         ("M-<left>" . sp-backward-slurp-sexp)
+         ("M-S-<right>" . sp-forward-barf-sexp)
+         ("M-S-<left>" . sp-backward-barf-sexp)
+         ("C-<up>" . sp-backward-up-sexp)
+         ("C-S-<up>" . sp-up-sexp)
+         ("C-<down>" . sp-down-sexp)
+         ("C-S-<down>" . sp-backward-down-sexp)
+         ("C-<right>" . sp-forward-sexp)
+         ("C-<left>" . sp-backward-sexp)))))
 
   (use-package evil-smartparens
     :diminish
