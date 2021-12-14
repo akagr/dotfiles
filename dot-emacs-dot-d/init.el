@@ -22,8 +22,6 @@
   (tooltip-mode -1))
 
 (global-so-long-mode) ;; handles really long lines well
-(electric-pair-mode) ;; auto matching brackets, parentheses etc.
-(show-paren-mode) ;; show matching opening/closing parentheses
 (column-number-mode) ;; show column number in mode line
 (global-display-line-numbers-mode) ;; show line numbers in all buffers
 
@@ -571,13 +569,28 @@
 (use-package dockerfile-mode
   :mode ("Dockerfile\\'" . dockerfile-mode))
 
-(use-package paredit
-  :hook ((emacs-lisp-mode . paredit-mode)
-         (lisp-mode . paredit-mode)))
+(use-package smartparens
+  :diminish
+  :init
+  (smartparens-global-mode)
+  (show-smartparens-global-mode)
+  :hook ((emacs-lisp-mode lisp-mode) . smartparens-strict-mode)
+  :config
+  (require 'smartparens-config)
+  (sp-use-smartparens-bindings)
+  (custom-set-variables
+   '(sp-override-key-bindings
+     '(("M-(" . sp-wrap-round)
+       ("M-r" . sp-raise-sexp)
+       ("C-<right>" . sp-forward-slurp-sexp)
+       ("C-<left>" . sp-backward-slurp-sexp)
+       ("C-M-<right>" . sp-forward-barf-sexp)
+       ("C-M-<left>" . sp-backward-barf-sexp)))))
 
-(use-package evil-paredit
-  :hook ((emacs-lisp-mode . evil-paredit-mode)
-         (lisp-mode . evil-paredit-mode)))
+(use-package evil-smartparens
+  :diminish
+  :after (smartparens)
+  :hook ((smartparens-strict-mode) . evil-smartparens-mode))
 
 (use-package sly
   :commands sly
