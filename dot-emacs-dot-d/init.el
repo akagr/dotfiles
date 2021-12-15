@@ -23,6 +23,7 @@
 
 (global-so-long-mode) ;; handles really long lines well
 (column-number-mode) ;; show column number in mode line
+(show-paren-mode) ;; show matching delimiters
 (global-display-line-numbers-mode) ;; show line numbers in all buffers
 
 (when (eq system-type 'darwin)
@@ -573,14 +574,14 @@
   :diminish
   :init
   (smartparens-global-mode)
-  (show-smartparens-global-mode)
   :hook ((emacs-lisp-mode lisp-mode) . smartparens-strict-mode)
   :config
   (require 'smartparens-config)
   (sp-use-smartparens-bindings)
   (custom-set-variables
    '(sp-override-key-bindings
-     '(("M-(" . sp-wrap-round)
+     '(("M-T" . sp-transpose-sexp)
+       ("M-(" . sp-wrap-round)
        ("M-{" . sp-wrap-curly)
        ("M-[" . sp-wrap-square)
        ("M-r" . sp-raise-sexp)
