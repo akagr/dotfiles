@@ -497,10 +497,6 @@
   :config
   (editorconfig-mode 1))
 
-(use-package ruby-end
-  :hook (ruby-mode . ruby-end-mode)
-  :diminish)
-
 (use-package rubocop
   :hook (ruby-mode . rubocop-mode)
   :custom
