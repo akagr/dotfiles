@@ -440,6 +440,15 @@
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
+(use-package with-editor
+  :after magit
+  :config
+  (define-key (current-global-map)
+              [remap async-shell-command] 'with-editor-async-shell-command)
+  (define-key (current-global-map)
+              [remap shell-command] 'with-editor-shell-command)
+  (add-hook 'vterm-mode-hook 'with-editor-export-editor))
+
 (use-package ace-window
   :commands (ace-window)
   :custom

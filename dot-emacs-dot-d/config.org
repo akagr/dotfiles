@@ -883,6 +883,18 @@ Set ediff to use the current frame instead of creating a new one.
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 #+END_SRC
 
+When we use ~emacsclient~, we need to export ~$EDITOR~ environment variable to correctly work with git.
+#+BEGIN_SRC emacs-lisp
+  (use-package with-editor
+    :after magit
+    :config
+    (define-key (current-global-map)
+                [remap async-shell-command] 'with-editor-async-shell-command)
+    (define-key (current-global-map)
+                [remap shell-command] 'with-editor-shell-command)
+    (add-hook 'vterm-mode-hook 'with-editor-export-editor))
+#+END_SRC
+
 * Buffer and window management
 ** Ace window
 ~ace-window~ allows quickly switching between open windows (splits).
