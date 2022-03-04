@@ -23,6 +23,7 @@
 
 (global-so-long-mode) ;; handles really long lines well
 (column-number-mode) ;; show column number in mode line
+(global-auto-revert-mode) ;; reflect changes on disk to file automatically
 (show-paren-mode) ;; show matching delimiters
 (global-display-line-numbers-mode) ;; show line numbers in all buffers
 
