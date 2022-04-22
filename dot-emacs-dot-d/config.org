@@ -509,8 +509,7 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
   (use-package evil-collection
     :init
     (evil-collection-init
-     '(deadgrep
-       dired
+     '(dired
        dired-sidebar
        ediff
        embark
@@ -518,6 +517,7 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
        ibuffer
        magit
        occur
+       rg
        sly
        vterm
        wgrep
@@ -974,6 +974,16 @@ Projectile plays pretty well with the other packages, including magit and dired 
 #+END_SRC
 
 * Programming Languages
+** Tree sitter
+[[https://emacs-tree-sitter.github.io][Tree sitter]] allows incremental parsing of syntax for highlighting. This beats regex based parsing which doesn't work so good.
+#+BEGIN_SRC emacs-lisp
+  (use-package tree-sitter)
+  (use-package tree-sitter-langs
+    :after tree-sitter
+    :config
+    (global-tree-sitter-mode)
+    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+#+END_SRC
 ** Common Config
 #+begin_src emacs-lisp
   (use-package editorconfig
@@ -1258,13 +1268,12 @@ Run ~M-x all-the-icons-install-fonts~ to install the icons.
 
 * General Searching
 #+BEGIN_SRC emacs-lisp
-  (use-package ripgrep)
 
-  (use-package deadgrep
-    :commands deadgrep)
+  (use-package rg
+    :commands rg)
 
   (aa/leader-key-def
-    "s" '(deadgrep :which-key "search"))
+    "s" '(rg :which-key "search"))
 #+END_SRC
 
 * Sources

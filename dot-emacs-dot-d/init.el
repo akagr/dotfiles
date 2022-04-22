@@ -263,8 +263,7 @@
 (use-package evil-collection
   :init
   (evil-collection-init
-   '(deadgrep
-     dired
+   '(dired
      dired-sidebar
      ediff
      embark
@@ -272,6 +271,7 @@
      ibuffer
      magit
      occur
+     rg
      sly
      vterm
      wgrep
@@ -460,6 +460,13 @@
 
 (aa/leader-key-def
   "p"  '(projectile-command-map :which-key "projectile"))
+
+(use-package tree-sitter)
+(use-package tree-sitter-langs
+  :after tree-sitter
+  :config
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 (use-package editorconfig
   :diminish
@@ -686,10 +693,8 @@
   :init
   (setq all-the-icons-dired-monochrome nil))
 
-(use-package ripgrep)
-
-(use-package deadgrep
-  :commands deadgrep)
+(use-package rg
+  :commands rg)
 
 (aa/leader-key-def
-  "s" '(deadgrep :which-key "search"))
+  "s" '(rg :which-key "search"))
