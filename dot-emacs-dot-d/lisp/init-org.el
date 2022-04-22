@@ -96,5 +96,46 @@
 (use-package org-drill
   :commands (org-drill))
 
+(use-package async
+  :demand t)
+
+(defvar *config-file* (expand-file-name "config.org" user-emacs-directory)
+  "The configuration file.")
+
+(defvar *show-async-tangle-results* nil
+  "Keeps *emacs* async buffers around for later inspection.")
+
+(defun aa/async-babel-tangle (org-file)
+  "Tangles the org file asynchronously."
+  (let ((init-tangle-start-time (current-time))
+        (file (buffer-file-name))
+        (async-quiet-switch "-q"))
+    (async-start
+     `(lambda ()
+        (require 'ob-tangle)
+        (org-babel-tangle-file ,org-file))
+     (unless *show-async-tangle-results*
+       `(lambda (result)
+          (if result
+              (message "SUCCESS: %s successfully tangled (%.2fs)."
+                       ,org-file
+                       (float-time
+                        (time-subtract (current-time)
+                                       ',init-tangle-start-time)))
+            (message "ERROR: %s as tangle failed." ,org-file)))))))
+
+(defun aa/config-tangle ()
+  "Tangles the org file asynchronously."
+  (aa/async-babel-tangle *config-file*))
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (when (and buffer-file-truename
+                       (equal (file-name-nondirectory buffer-file-truename)
+                              "config.org"))
+              (add-hook 'after-save-hook
+                        'aa/config-tangle
+                        nil 'make-it-local))))
+
 (org-reload)
 (provide 'init-org)
