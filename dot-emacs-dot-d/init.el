@@ -708,4 +708,7 @@
   :commands rg)
 
 (aa/leader-key-def
-  "s" '(rg :which-key "search"))
+  "s" '(rg-dwim-project-dir :which-key "search"))
+
+(evil-collection-define-key 'normal 'rg-mode-map
+  "?" 'rg-menu)
