@@ -596,23 +596,12 @@
   :after vterm
   :commands (vterm-toggle)
   :config
-  (setq vterm-toggle-hide-method 'reset-window-configration))
-
-(defun aa/toggle-vterm ()
-  "Toggle vterm buffer"
-  (interactive)
-  (if (equal (buffer-name) "*vterm*")
-      (if (not (one-window-p))
-          (delete-window)
-        (switch-to-prev-buffer))
-    (vterm-toggle-show)))
-
+  (setq vterm-toggle-hide-method 'reset-window-configration)
+  (evil-collection-define-key 'insert 'vterm-mode-map
+    (kbd "M-t") 'vterm-toggle))
 (general-define-key
  :states 'normal
- "M-t" 'aa/toggle-vterm)
-
-(evil-collection-define-key 'insert 'vterm-mode-map
-    (kbd "M-t") 'aa/toggle-vterm)
+ "M-t" 'vterm-toggle)
 
 (use-package corfu
   ;; TAB-and-Go customizations
