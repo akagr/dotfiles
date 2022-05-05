@@ -396,7 +396,8 @@
 (aa/leader-key-def
   "g" '(:ignore t :which-key "git")
   "gs" '(magit-status :which-key "status")
-  "gb" '(magit-blame :which-key "blame"))
+  "gb" '(magit-blame :which-key "blame")
+  "gf" '(magit-log-buffer-file :which-key "file history"))
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
