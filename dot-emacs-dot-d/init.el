@@ -260,6 +260,10 @@
   :config
   (global-evil-surround-mode 1))
 
+(use-package evil-mc
+  :config
+  (global-evil-mc-mode 1))
+
 (use-package evil-collection
   :init
   (evil-collection-init
@@ -268,18 +272,16 @@
      ediff
      embark
      grep
+     helpful
      ibuffer
      magit
      occur
      rg
      sly
+     smerge
      vterm
      wgrep
      xref)))
-
-(use-package evil-mc
-  :config
-  (global-evil-mc-mode 1))
 
 (add-hook 'org-mode-hook
           (lambda ()

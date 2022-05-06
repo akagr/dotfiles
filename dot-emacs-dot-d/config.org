@@ -466,7 +466,6 @@ Add undo package to allow branching undos.
 #+end_src
 
 Being a long time (neo)vim user, I use evil mode exclusively for editing. When they say it's impossible to get out of vim, it has a deeper meaning.
-
 I use different colored cursors to depict what mode I'm in. Way easier to work with than looking at minibuffer.
 #+BEGIN_SRC emacs-lisp
   (use-package evil
@@ -504,6 +503,13 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
     (global-evil-surround-mode 1))
 #+end_src
 
+[[https://github.com/gabesoft/evil-mc][evil-mc]] adds an awesome multiple cursor mode.
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-mc
+    :config
+    (global-evil-mc-mode 1))
+#+END_SRC
+
 ~evil-collection~ adds evil bindings for packages and modes not covered by ~evil~.
 #+BEGIN_SRC emacs-lisp
   (use-package evil-collection
@@ -514,21 +520,16 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
        ediff
        embark
        grep
+       helpful
        ibuffer
        magit
        occur
        rg
        sly
+       smerge
        vterm
        wgrep
        xref)))
-#+END_SRC
-
-[[https://github.com/gabesoft/evil-mc][evil-mc]] adds an awesome multiple cursor mode.
-#+BEGIN_SRC emacs-lisp
-  (use-package evil-mc
-    :config
-    (global-evil-mc-mode 1))
 #+END_SRC
 
 * Org Mode
