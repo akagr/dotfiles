@@ -254,7 +254,8 @@
   (diminish 'visual-line-mode)
   (diminish 'eldoc-mode)
   (diminish 'auto-revert-mode)
-  (diminish 'evil-collection-unimpaired-mode))
+  (diminish 'evil-collection-unimpaired-mode)
+  (diminish 'buffer-face-mode))
 
 (use-package moody
   :config
