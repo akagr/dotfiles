@@ -208,14 +208,37 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(setq aa/theme 'doom-one)
+(setq aa/theme 'modus-vivendi)
 
-(use-package doom-themes
+(use-package emacs
+  :init
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs t
+        modus-themes-mixed-fonts t
+        modus-themes-subtle-line-numbers t
+        modus-themes-variable-pitch-ui t
+        modus-themes-fringes 'subtle
+        modus-themes-mode-line '(accented borderless)
+        modus-themes-hl-line '(underline accented)
+        modus-themes-completions '((matches . (extrabold))
+                                   (selection . (semibold accented))
+                                   (popup . (accented intense)))
+        modus-themes-diffs 'desaturated
+        modus-themes-org-blocks 'gray-background ; {nil,'gray-background,'tinted-background}
+
+        modus-themes-org-agenda ; this is an alist: read the manual or its doc string
+        '((header-block . (variable-pitch 1.3))
+          (header-date . (grayscale workaholic bold-today 1.1))
+          (event . (accented varied))
+          (scheduled . uniform)
+          (habit . traffic-light))
+
+        modus-themes-headings ; this is an alist: read the manual or its doc string
+        '((1 . (overline background variable-pitch 1.3))
+          (2 . (rainbow overline 1.1))
+          (t . (semibold))))
   :config
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
-  (load-theme aa/theme t)
-  (doom-themes-org-config))
+  (load-theme aa/theme t))
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
