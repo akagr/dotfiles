@@ -125,7 +125,7 @@ Installing =use-package= now.
 #+begin_src emacs-lisp
   (use-package gcmh
     :demand t
-    :diminish
+    :diminish gcmh-mode
     :config (gcmh-mode 1))
   #+end_src
 ** End early init
@@ -437,7 +437,7 @@ Disable auto composition everywhere outside of prog-mode.
           modus-themes-subtle-line-numbers t
           modus-themes-variable-pitch-ui t
           modus-themes-fringes 'subtle
-          modus-themes-mode-line '(accented borderless)
+          modus-themes-mode-line '(accented moody)
           modus-themes-hl-line '(underline accented)
           modus-themes-completions '((matches . (extrabold))
                                      (selection . (semibold accented))
@@ -480,7 +480,15 @@ Config for mode line:
     (diminish 'buffer-face-mode)
     (diminish 'visual-line-mode)
     (diminish 'eldoc-mode)
-    (diminish 'auto-revert-mode))
+    (diminish 'auto-revert-mode)
+    (diminish 'evil-collection-unimpaired-mode))
+
+  (use-package moody
+    :config
+    (setq x-underline-at-descent-line t)
+    (moody-replace-mode-line-buffer-identification)
+    (moody-replace-vc-mode)
+    (moody-replace-eldoc-minibuffer-message-function))
 #+end_src
 * Evil Mode
 
@@ -530,6 +538,7 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
 [[https://github.com/gabesoft/evil-mc][evil-mc]] adds an awesome multiple cursor mode.
 #+BEGIN_SRC emacs-lisp
   (use-package evil-mc
+    :diminish evil-mc-mode
     :config
     (global-evil-mc-mode 1))
 #+END_SRC
@@ -1003,7 +1012,8 @@ Projectile plays pretty well with the other packages, including magit and dired 
 ** Tree sitter
 [[https://emacs-tree-sitter.github.io][Tree sitter]] allows incremental parsing of syntax for highlighting. This beats regex based parsing which doesn't work so good.
 #+BEGIN_SRC emacs-lisp
-  (use-package tree-sitter)
+  (use-package tree-sitter
+    :diminish)
   (use-package tree-sitter-langs
     :after tree-sitter
     :config
@@ -1021,6 +1031,7 @@ Projectile plays pretty well with the other packages, including magit and dired 
 Rubocop is the de-facto lint and syntax checker for ruby.
 #+BEGIN_SRC emacs-lisp
   (use-package rubocop
+    :diminish
     :hook (ruby-mode . rubocop-mode)
     :custom
     (rubocop-autocorrect-on-save t))

@@ -218,7 +218,7 @@
         modus-themes-subtle-line-numbers t
         modus-themes-variable-pitch-ui t
         modus-themes-fringes 'subtle
-        modus-themes-mode-line '(accented borderless)
+        modus-themes-mode-line '(accented moody)
         modus-themes-hl-line '(underline accented)
         modus-themes-completions '((matches . (extrabold))
                                    (selection . (semibold accented))
@@ -252,7 +252,15 @@
   (diminish 'buffer-face-mode)
   (diminish 'visual-line-mode)
   (diminish 'eldoc-mode)
-  (diminish 'auto-revert-mode))
+  (diminish 'auto-revert-mode)
+  (diminish 'evil-collection-unimpaired-mode))
+
+(use-package moody
+  :config
+  (setq x-underline-at-descent-line t)
+  (moody-replace-mode-line-buffer-identification)
+  (moody-replace-vc-mode)
+  (moody-replace-eldoc-minibuffer-message-function))
 
 (use-package undo-fu)
 
@@ -284,6 +292,7 @@
   (global-evil-surround-mode 1))
 
 (use-package evil-mc
+  :diminish evil-mc-mode
   :config
   (global-evil-mc-mode 1))
 
@@ -487,7 +496,8 @@
 (aa/leader-key-def
   "p"  '(projectile-command-map :which-key "projectile"))
 
-(use-package tree-sitter)
+(use-package tree-sitter
+  :diminish)
 (use-package tree-sitter-langs
   :after tree-sitter
   :config
@@ -500,6 +510,7 @@
   (editorconfig-mode 1))
 
 (use-package rubocop
+  :diminish
   :hook (ruby-mode . rubocop-mode)
   :custom
   (rubocop-autocorrect-on-save t))

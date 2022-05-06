@@ -70,7 +70,7 @@
 
 (use-package gcmh
   :demand t
-  :diminish
+  :diminish gcmh-mode
   :config (gcmh-mode 1))
 
 (provide 'early-init)
