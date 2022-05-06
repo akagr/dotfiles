@@ -210,7 +210,7 @@
 
 (setq aa/theme 'modus-vivendi)
 
-(use-package emacs
+(use-package modus-themes
   :init
   (setq modus-themes-italic-constructs t
         modus-themes-bold-constructs t
@@ -237,8 +237,9 @@
         '((1 . (overline background variable-pitch 1.3))
           (2 . (rainbow overline 1.1))
           (t . (semibold))))
+  (modus-themes-load-themes)
   :config
-  (load-theme aa/theme t))
+  (modus-themes-load-vivendi))
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
@@ -659,7 +660,7 @@
         ([backtab] . corfu-previous))
 
   :init
-  (corfu-global-mode))
+  (global-corfu-mode))
 
 (use-package cape
   :after corfu
