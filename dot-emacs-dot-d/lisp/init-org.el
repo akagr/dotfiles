@@ -137,5 +137,4 @@
                         'aa/config-tangle
                         nil 'make-it-local))))
 
-(org-reload)
 (provide 'init-org)

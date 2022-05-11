@@ -787,7 +787,6 @@ Allows preparing flashcard like interface for spaced repetition and revision. Ch
 
 Provide org package for ~require~.
 #+BEGIN_SRC emacs-lisp
-  (org-reload)
   (provide 'init-org)
 #+END_SRC
 * Better UX for Completions
