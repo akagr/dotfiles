@@ -109,6 +109,7 @@
   "ee" '((lambda () (interactive) (find-file (expand-file-name "config.org" user-emacs-directory))) :which-key "open config")
   "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
   "ek" '(kill-emacs :which-key "kill emacs")
+  "em" '(consult-minor-mode-menu :which-key "modes")
 
   "f"  '(:ignore t :which-key "file")
   "ff" '(find-file :which-key "find")
