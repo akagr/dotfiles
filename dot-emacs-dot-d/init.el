@@ -89,7 +89,6 @@
   (exec-path-from-shell-initialize))
 
 (use-package which-key
-  :diminish
   :config
   (which-key-mode)
   (which-key-setup-side-window-bottom)
@@ -139,132 +138,6 @@
              helpful-macro
              helpful-function))
 
-(add-to-list 'default-frame-alist '(width . 200))
-(add-to-list 'default-frame-alist '(height . 48))
-
-(defun aa/apply-fonts (frame)
-  "Apply selected fonts to emacs."
-
-  ;; Set the font face based on platform
-  (set-face-attribute 'default frame
-                      :font "JetBrains Mono"
-                      :weight 'regular
-                      :height 150)
-
-  ;; Set the fixed pitch face
-  (set-face-attribute 'fixed-pitch frame
-                      :font "JetBrains Mono"
-                      :weight 'regular
-                      :height 150)
-
-  ;; Set the variable pitch face
-  (set-face-attribute 'variable-pitch frame
-                      :font "JetBrains Mono"
-                      :height 150
-                      :weight 'regular))
-
-(add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (with-selected-frame frame
-              (aa/apply-fonts frame))))
-
-(aa/apply-fonts nil)
-
-(let ((ligatures `((?-  . ,(regexp-opt '("-|" "-~" "---" "-<<" "-<" "--" "->" "->>" "-->")))
-                   (?/  . ,(regexp-opt '("/**" "/*" "///" "/=" "/==" "/>" "//")))
-                   (?*  . ,(regexp-opt '("*>" "***" "*/")))
-                   (?<  . ,(regexp-opt '("<-" "<<-" "<=>" "<=" "<|" "<||" "<|||::=" "<|>" "<:" "<>" "<-<"
-                                         "<<<" "<==" "<<=" "<=<" "<==>" "<-|" "<<" "<~>" "<=|" "<~~" "<~"
-                                         "<$>" "<$" "<+>" "<+" "</>" "</" "<*" "<*>" "<->" "<!--")))
-                   (?:  . ,(regexp-opt '(":>" ":<" ":::" "::" ":?" ":?>" ":=")))
-                   (?=  . ,(regexp-opt '("=>>" "==>" "=/=" "=!=" "=>" "===" "=:=" "==")))
-                   (?!  . ,(regexp-opt '("!==" "!!" "!=")))
-                   (?>  . ,(regexp-opt '(">]" ">:" ">>-" ">>=" ">=>" ">>>" ">-" ">=")))
-                   (?&  . ,(regexp-opt '("&&&" "&&")))
-                   (?|  . ,(regexp-opt '("|||>" "||>" "|>" "|]" "|}" "|=>" "|->" "|=" "||-" "|-" "||=" "||")))
-                   (?.  . ,(regexp-opt '(".." ".?" ".=" ".-" "..<" "...")))
-                   (?+  . ,(regexp-opt '("+++" "+>" "++")))
-                   (?\[ . ,(regexp-opt '("[||]" "[<" "[|")))
-                   (?\{ . ,(regexp-opt '("{|")))
-                   (?\? . ,(regexp-opt '("??" "?." "?=" "?:")))
-                   (?#  . ,(regexp-opt '("####" "###" "#[" "#{" "#=" "#!" "#:" "#_(" "#_" "#?" "#(" "##")))
-                   (?\; . ,(regexp-opt '(";;")))
-                   (?_  . ,(regexp-opt '("_|_" "__")))
-                   (?\\ . ,(regexp-opt '("\\" "\\/")))
-                   (?~  . ,(regexp-opt '("~~" "~~>" "~>" "~=" "~-" "~@")))
-                   (?$  . ,(regexp-opt '("$>")))
-                   (?^  . ,(regexp-opt '("^=")))
-                   (?\] . ,(regexp-opt '("]#"))))))
-  (dolist (char-regexp ligatures)
-    (set-char-table-range composition-function-table (car char-regexp)
-                          `([,(cdr char-regexp) 0 font-shape-gstring]))))
-
-(global-auto-composition-mode -1)
-
-(defun aa/enable-auto-composition ()
-  (auto-composition-mode))
-
-(add-hook 'prog-mode-hook #'aa/enable-auto-composition)
-
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
-
-(setq aa/theme 'modus-vivendi)
-
-(use-package modus-themes
-  :init
-  (setq modus-themes-italic-constructs t
-        modus-themes-bold-constructs t
-        modus-themes-mixed-fonts t
-        modus-themes-subtle-line-numbers t
-        modus-themes-variable-pitch-ui t
-        modus-themes-fringes 'subtle
-        modus-themes-mode-line '(accented moody)
-        modus-themes-hl-line '(underline accented)
-        modus-themes-completions '((matches . (extrabold))
-                                   (selection . (semibold accented))
-                                   (popup . (accented intense)))
-        modus-themes-diffs 'desaturated
-        modus-themes-org-blocks 'gray-background ; {nil,'gray-background,'tinted-background}
-
-        modus-themes-org-agenda ; this is an alist: read the manual or its doc string
-        '((header-block . (variable-pitch 1.3))
-          (header-date . (grayscale workaholic bold-today 1.1))
-          (event . (accented varied))
-          (scheduled . uniform)
-          (habit . traffic-light))
-
-        modus-themes-headings ; this is an alist: read the manual or its doc string
-        '((1 . (overline background variable-pitch 1.3))
-          (2 . (rainbow overline 1.1))
-          (t . (semibold))))
-  (modus-themes-load-themes)
-  :config
-  (modus-themes-load-vivendi))
-
-(add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (with-selected-frame frame
-              (load-theme aa/theme t))))
-
-;; Diminish minor modes from mode line
-(use-package diminish
-  :config
-  (diminish 'org-indent-mode)
-  (diminish 'buffer-face-mode)
-  (diminish 'visual-line-mode)
-  (diminish 'eldoc-mode)
-  (diminish 'auto-revert-mode)
-  (diminish 'evil-collection-unimpaired-mode)
-  (diminish 'buffer-face-mode))
-
-(use-package moody
-  :config
-  (setq x-underline-at-descent-line t)
-  (moody-replace-mode-line-buffer-identification)
-  (moody-replace-vc-mode)
-  (moody-replace-eldoc-minibuffer-message-function))
-
 (use-package undo-fu)
 
 (use-package evil
@@ -285,7 +158,6 @@
 
 (use-package evil-commentary
   :after evil
-  :diminish
   :config
   (evil-commentary-mode))
 
@@ -295,7 +167,6 @@
   (global-evil-surround-mode 1))
 
 (use-package evil-mc
-  :diminish evil-mc-mode
   :config
   (global-evil-mc-mode 1))
 
@@ -489,7 +360,6 @@
 
 (use-package projectile
   :after evil
-  :diminish
   :init
   (setq projectile-enable-caching t)
   :config
@@ -499,8 +369,7 @@
 (aa/leader-key-def
   "p"  '(projectile-command-map :which-key "projectile"))
 
-(use-package tree-sitter
-  :diminish)
+(use-package tree-sitter)
 (use-package tree-sitter-langs
   :after tree-sitter
   :config
@@ -508,12 +377,10 @@
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 
 (use-package editorconfig
-  :diminish
   :config
   (editorconfig-mode 1))
 
 (use-package rubocop
-  :diminish
   :hook (ruby-mode . rubocop-mode)
   :custom
   (rubocop-autocorrect-on-save t))
@@ -575,7 +442,6 @@
   :mode ("Dockerfile\\'" . dockerfile-mode))
 
 (use-package smartparens
-  :diminish
   :init
   (smartparens-global-mode)
   :hook ((emacs-lisp-mode lisp-mode) . smartparens-strict-mode)
@@ -601,7 +467,6 @@
        ("C-<left>" . sp-backward-sexp)))))
 
 (use-package evil-smartparens
-  :diminish
   :after (smartparens)
   :hook ((smartparens-strict-mode) . evil-smartparens-mode))
 
@@ -620,7 +485,6 @@
   :commands banner-comment)
 
 (use-package yasnippet
-  :diminish yas-minor-mode
   :hook ((prog-mode org-mode) . yas-minor-mode)
   :config
   (yas-reload-all))
@@ -691,7 +555,6 @@
 (add-hook 'project-find-functions 'aa/find-rails-project nil nil)
 
 (use-package flycheck
-  :diminish
   :hook (prog-mode . flycheck-mode)
   :custom
   (flycheck-emacs-lisp-initialize-packages t)
@@ -741,3 +604,124 @@
 
 (evil-collection-define-key 'normal 'rg-mode-map
   "?" 'rg-menu)
+
+(add-to-list 'default-frame-alist '(width . 200))
+(add-to-list 'default-frame-alist '(height . 48))
+
+(defun aa/apply-fonts (frame)
+  "Apply selected fonts to emacs."
+
+  ;; Set the font face based on platform
+  (set-face-attribute 'default frame
+                      :font "JetBrains Mono"
+                      :weight 'regular
+                      :height 150)
+
+  ;; Set the fixed pitch face
+  (set-face-attribute 'fixed-pitch frame
+                      :font "JetBrains Mono"
+                      :weight 'regular
+                      :height 150)
+
+  ;; Set the variable pitch face
+  (set-face-attribute 'variable-pitch frame
+                      :font "JetBrains Mono"
+                      :height 150
+                      :weight 'regular))
+
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (with-selected-frame frame
+              (aa/apply-fonts frame))))
+
+(aa/apply-fonts nil)
+
+(let ((ligatures `((?-  . ,(regexp-opt '("-|" "-~" "---" "-<<" "-<" "--" "->" "->>" "-->")))
+                   (?/  . ,(regexp-opt '("/**" "/*" "///" "/=" "/==" "/>" "//")))
+                   (?*  . ,(regexp-opt '("*>" "***" "*/")))
+                   (?<  . ,(regexp-opt '("<-" "<<-" "<=>" "<=" "<|" "<||" "<|||::=" "<|>" "<:" "<>" "<-<"
+                                         "<<<" "<==" "<<=" "<=<" "<==>" "<-|" "<<" "<~>" "<=|" "<~~" "<~"
+                                         "<$>" "<$" "<+>" "<+" "</>" "</" "<*" "<*>" "<->" "<!--")))
+                   (?:  . ,(regexp-opt '(":>" ":<" ":::" "::" ":?" ":?>" ":=")))
+                   (?=  . ,(regexp-opt '("=>>" "==>" "=/=" "=!=" "=>" "===" "=:=" "==")))
+                   (?!  . ,(regexp-opt '("!==" "!!" "!=")))
+                   (?>  . ,(regexp-opt '(">]" ">:" ">>-" ">>=" ">=>" ">>>" ">-" ">=")))
+                   (?&  . ,(regexp-opt '("&&&" "&&")))
+                   (?|  . ,(regexp-opt '("|||>" "||>" "|>" "|]" "|}" "|=>" "|->" "|=" "||-" "|-" "||=" "||")))
+                   (?.  . ,(regexp-opt '(".." ".?" ".=" ".-" "..<" "...")))
+                   (?+  . ,(regexp-opt '("+++" "+>" "++")))
+                   (?\[ . ,(regexp-opt '("[||]" "[<" "[|")))
+                   (?\{ . ,(regexp-opt '("{|")))
+                   (?\? . ,(regexp-opt '("??" "?." "?=" "?:")))
+                   (?#  . ,(regexp-opt '("####" "###" "#[" "#{" "#=" "#!" "#:" "#_(" "#_" "#?" "#(" "##")))
+                   (?\; . ,(regexp-opt '(";;")))
+                   (?_  . ,(regexp-opt '("_|_" "__")))
+                   (?\\ . ,(regexp-opt '("\\" "\\/")))
+                   (?~  . ,(regexp-opt '("~~" "~~>" "~>" "~=" "~-" "~@")))
+                   (?$  . ,(regexp-opt '("$>")))
+                   (?^  . ,(regexp-opt '("^=")))
+                   (?\] . ,(regexp-opt '("]#"))))))
+  (dolist (char-regexp ligatures)
+    (set-char-table-range composition-function-table (car char-regexp)
+                          `([,(cdr char-regexp) 0 font-shape-gstring]))))
+
+(global-auto-composition-mode -1)
+
+(defun aa/enable-auto-composition ()
+  (auto-composition-mode))
+
+(add-hook 'prog-mode-hook #'aa/enable-auto-composition)
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(setq aa/theme 'modus-vivendi)
+
+(use-package modus-themes
+  :init
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs t
+        modus-themes-mixed-fonts t
+        modus-themes-subtle-line-numbers t
+        modus-themes-variable-pitch-ui t
+        modus-themes-fringes 'subtle
+        modus-themes-mode-line '(accented moody)
+        modus-themes-hl-line '(underline accented)
+        modus-themes-completions '((matches . (extrabold))
+                                   (selection . (semibold accented))
+                                   (popup . (accented intense)))
+        modus-themes-diffs 'desaturated
+        modus-themes-org-blocks 'gray-background ; {nil,'gray-background,'tinted-background}
+
+        modus-themes-org-agenda ; this is an alist: read the manual or its doc string
+        '((header-block . (variable-pitch 1.3))
+          (header-date . (grayscale workaholic bold-today 1.1))
+          (event . (accented varied))
+          (scheduled . uniform)
+          (habit . traffic-light))
+
+        modus-themes-headings ; this is an alist: read the manual or its doc string
+        '((1 . (overline background variable-pitch 1.3))
+          (2 . (rainbow overline 1.1))
+          (t . (semibold))))
+  (modus-themes-load-themes)
+  :config
+  (modus-themes-load-vivendi))
+
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (with-selected-frame frame
+              (load-theme aa/theme t))))
+
+(use-package moody
+  :config
+  (setq x-underline-at-descent-line t))
+
+(setq-default mode-line-format (list moody-mode-line-front-space
+                                     "%m "
+                                     moody-mode-line-buffer-identification
+                                     " "
+                                     mode-line-position
+                                     moody-vc-mode
+                                     mode-line-misc-info
+                                     mode-line-end-spaces))

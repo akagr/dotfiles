@@ -46,7 +46,6 @@
 (org-bullets-mode)
 
 (use-package evil-org
-  :diminish
   :hook (org-mode . evil-org-mode)
   :init
   (add-hook 'evil-org-mode-hook
