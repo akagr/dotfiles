@@ -18,6 +18,7 @@
   "r"  '(:ignore t :which-key "org mode")
   "ra" '(org-agenda :which-key "agenda")
   "rc" '(org-capture :which-key "capture")
+  "re" '(org-export-dispatch :which-key "export")
   "ri" '((lambda () (interactive) (org-indent-block)) :which-key "indent block")
   "rl" '(org-store-link :which-key "store Link")
   "ro" '((lambda () (interactive) (find-file org-default-notes-file)) :which-key "open notes")
