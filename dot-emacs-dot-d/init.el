@@ -335,6 +335,18 @@
  :states '(normal insert visual)
  "M-o" 'ace-window)
 
+(aa/leader-key-def
+  "w"   '(:ignore t :which-key "window")
+  "ww"  '(evil-window-vsplit :which-key "vertical")
+  "wh"  '(evil-window-split :which-key "horizontal")
+  "wc"  '(evil-window-delete :which-key "close")
+  "wr"  '(evil-window-rotate-upwards :which-key "rotate")
+  "wm"  '(:ignore t :which-key "move")
+  "wmh" '(evil-window-move-far-left :which-key "left")
+  "wmj" '(evil-window-move-very-bottom :which-key "down")
+  "wmk" '(evil-window-move-very-top :which-key "up")
+  "wml" '(evil-window-move-far-right :which-key "right"))
+
 (use-package ibuffer-vc
   :init
   (add-hook 'ibuffer-hook
