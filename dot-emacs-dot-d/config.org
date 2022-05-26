@@ -803,11 +803,17 @@ When we use ~emacsclient~, we need to export ~$EDITOR~ environment variable to c
     "wh"  '(evil-window-split :which-key "horizontal")
     "wc"  '(evil-window-delete :which-key "close")
     "wr"  '(evil-window-rotate-upwards :which-key "rotate")
+    "w="  '(balance-windows :which-key "balance")
+    "w>"  '(evil-window-increase-width :which-key "width+︎")
+    "w<"  '(evil-window-decrease-width :which-key "width-")
+    "w+"  '(evil-window-increase-height :which-key "height+")
+    "w-"  '(evil-window-decrease-height :which-key "height-")
     "wm"  '(:ignore t :which-key "move")
     "wmh" '(evil-window-move-far-left :which-key "left")
     "wmj" '(evil-window-move-very-bottom :which-key "down")
     "wmk" '(evil-window-move-very-top :which-key "up")
     "wml" '(evil-window-move-far-right :which-key "right"))
+
 #+END_SRC
 ** Ibuffer
 
