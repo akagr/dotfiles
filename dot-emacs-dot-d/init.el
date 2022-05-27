@@ -544,7 +544,7 @@
   :commands (eglot eglot-ensure)
   ;; :hook ((elixir-mode ruby-mode) . eglot-ensure)
   :config
-  (add-to-list 'eglot-server-programs '(elixir-mode "/Users/akash/Downloads/elixir-ls/language_server.sh")))
+  (add-to-list 'eglot-server-programs `(elixir-mode ,(expand-file-name "~/Downloads/elixir-ls/language_server.sh"))))
 
 ;; Helps with monorepo project where projects might not be the top level
 (add-hook 'project-find-functions 'aa/find-mix-project nil nil)
