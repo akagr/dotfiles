@@ -182,6 +182,7 @@
      ibuffer
      magit
      occur
+     process-menu
      rg
      sly
      smerge
@@ -406,6 +407,9 @@
 (use-package typescript-mode
   :mode ("\\.tsx?\\'" . typescript-mode))
 
+(use-package prettier
+  :hook (typescript-mode javascript-mode))
+
 (use-package elixir-mode
   :mode "\\.exs?\\'"
   :config
@@ -479,6 +483,9 @@
 
 (use-package banner-comment
   :commands banner-comment)
+
+(use-package terraform-mode
+  :mode "\\.tf\\'")
 
 (use-package yasnippet
   :hook ((prog-mode org-mode) . yas-minor-mode)
@@ -596,7 +603,7 @@
   :commands rg)
 
 (aa/leader-key-def
-  "s" '(rg :which-key "search"))
+  "s" '(rg-project :which-key "search"))
 
 (evil-collection-define-key 'normal 'rg-mode-map
   "?" 'rg-menu)

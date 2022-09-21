@@ -399,6 +399,7 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
        ibuffer
        magit
        occur
+       process-menu
        rg
        sly
        smerge
@@ -896,6 +897,9 @@ Rubocop is the de-facto lint and syntax checker for ruby.
 #+begin_src emacs-lisp
   (use-package typescript-mode
     :mode ("\\.tsx?\\'" . typescript-mode))
+
+  (use-package prettier
+    :hook (typescript-mode javascript-mode))
 #+end_src
 ** Elixir
 #+BEGIN_SRC emacs-lisp
@@ -1000,6 +1004,12 @@ Banner comments allows adding visibility to the comments. Great for headings.
 #+BEGIN_SRC emacs-lisp
   (use-package banner-comment
     :commands banner-comment)
+#+END_SRC
+
+** Terraform
+#+BEGIN_SRC emacs-lisp
+  (use-package terraform-mode
+    :mode "\\.tf\\'")
 #+END_SRC
 * Snippet Support
 Add snippet support. Actual snippets live outside of this file. Custom snippets can be saved in ~~/.emacs.d/snippets~ directory.
@@ -1140,7 +1150,7 @@ Run ~M-x all-the-icons-install-fonts~ to install the icons.
     :commands rg)
 
   (aa/leader-key-def
-    "s" '(rg :which-key "search"))
+    "s" '(rg-project :which-key "search"))
 
   (evil-collection-define-key 'normal 'rg-mode-map
     "?" 'rg-menu)
