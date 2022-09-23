@@ -630,6 +630,17 @@ Provide org package for ~require~.
 #+BEGIN_SRC emacs-lisp
   (provide 'init-org)
 #+END_SRC
+* Code folding
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'prog-mode-hook #'hs-minor-mode)
+
+  ;; Evil bindings to work with folds
+  ;; za - toggle fold
+  ;; zc - close fold
+  ;; zo - open fold
+  ;; zm - close all folds
+  ;; zr - open all folds
+#+END_SRC
 * Better UX for Completions
 
 Add =vertico= to handle all the menu presentation.

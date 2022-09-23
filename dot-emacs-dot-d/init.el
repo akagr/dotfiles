@@ -211,6 +211,15 @@
                         (org-align-tags t))
                       nil t)))
 
+(add-hook 'prog-mode-hook #'hs-minor-mode)
+
+;; Evil bindings to work with folds
+;; za - toggle fold
+;; zc - close fold
+;; zo - open fold
+;; zm - close all folds
+;; zr - open all folds
+
 (use-package vertico
   :init
   (vertico-mode)
