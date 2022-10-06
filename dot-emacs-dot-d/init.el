@@ -426,6 +426,10 @@
   (add-hook 'elixir-mode-hook
             (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
 
+(use-package dart-mode)
+(use-package flutter
+  :after dart-mode)
+
 (use-package web-mode
   :mode "\\.p?html?\\'"
   :mode "\\.eex\\'"
