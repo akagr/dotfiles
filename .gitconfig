@@ -18,6 +18,7 @@
     current = "!git rev-parse --abbrev-ref HEAD"
     pub = "!git push -u origin $(git current)"
     publish = "!git pub"
+    prune-local = "!git-prune-local"
     shoot = push origin --delete
 [color]
     ui = true
@@ -28,9 +29,17 @@
     filemode = false
 [credential]
     helper = cache --timeout=36000
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager-core
 [filter "hawser"]
     clean = git hawser clean %f
     smudge = git hawser smudge %f
     required = true
 [pull]
 	ff = only
+[gitlab]
+	user = akash_agrawal
+[github]
+	user = akagr
+[credential "https://dev.azure.com"]
+	useHttpPath = true
