@@ -227,6 +227,7 @@
               ("C-l" . ivy-alt-done)
               ("C-j" . ivy-next-line)
               ("C-k" . ivy-previous-line)
+              ("M-RET" . ivy-immediate-done)
               :map ivy-switch-buffer-map
               ("C-j" . ivy-next-line)
               ("C-k" . ivy-previous-line)
@@ -266,8 +267,9 @@
   (ivy-rich-mode))
 
 (aa/leader-key-def
-  "b" '(:ignore t :which-key "buffer")
+  "b"  '(:ignore t :which-key "buffer")
   "bb" '(counsel-switch-buffer :which-key "list")
+  "bB" '(ibuffer :which-key "ibuffer")
   "bc" '(kill-this-buffer :which-key "kill current")
   "bd" '(aa/close-and-kill-this-pane :which-key "close current"))
 
