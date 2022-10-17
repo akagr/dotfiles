@@ -701,7 +701,6 @@
         modus-themes-subtle-line-numbers t
         modus-themes-variable-pitch-ui t
         modus-themes-fringes 'subtle
-        modus-themes-mode-line '(accented moody)
         modus-themes-hl-line '(underline accented)
         modus-themes-completions '((matches . (extrabold))
                                    (selection . (semibold accented))
@@ -729,15 +728,7 @@
             (with-selected-frame frame
               (load-theme aa/theme t))))
 
-(use-package moody
+(use-package doom-modeline
+  :demand
   :config
-  (setq x-underline-at-descent-line t))
-
-(setq-default mode-line-format (list moody-mode-line-front-space
-                                     "%m "
-                                     moody-mode-line-buffer-identification
-                                     " "
-                                     mode-line-position
-                                     moody-vc-mode
-                                     mode-line-misc-info
-                                     mode-line-end-spaces))
+  (doom-modeline-mode 1))
