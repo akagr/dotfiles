@@ -303,13 +303,8 @@
  :states 'normal
  "C-s" 'consult-line)
 
-(use-package libgit)
-
 (use-package magit
   :commands (magit magit-status magit-blame))
-
-(use-package magit-libgit
-  :after (magit libgit))
 
 (aa/leader-key-def
   "g" '(:ignore t :which-key "git")
