@@ -108,6 +108,7 @@
   "ee" '((lambda () (interactive) (find-file (expand-file-name "config.org" user-emacs-directory))) :which-key "open config")
   "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
   "ek" '(kill-emacs :which-key "kill emacs")
+  "em" '(consult-minor-mode-menu :which-key "modes")
 
   "f"  '(:ignore t :which-key "file")
   "ff" '(find-file :which-key "find")
@@ -219,63 +220,88 @@
 ;; zm - close all folds
 ;; zr - open all folds
 
-(use-package counsel
-  :diminish
-  :demand
-  :bind (:map ivy-minibuffer-map
-              ("TAB" . ivy-alt-done)
-              ("C-l" . ivy-alt-done)
-              ("C-j" . ivy-next-line)
-              ("C-k" . ivy-previous-line)
-              ("M-RET" . ivy-immediate-done)
-              :map ivy-switch-buffer-map
-              ("C-j" . ivy-next-line)
-              ("C-k" . ivy-previous-line)
-              ("C-l" . ivy-done)
-              ("C-d" . ivy-switch-buffer-kill)
-              :map ivy-reverse-i-search-map
-              ("C-j" . ivy-next-line)
-              ("C-k" . ivy-previous-line)
-              ("C-d" . ivy-reverse-i-search-kill))
-  ("M-x" . counsel-M-x)
-  :config
-  (ivy-mode 1)
-  (counsel-mode 1)
-  (setq ivy-use-virtual-buffers nil)
-  (setq ivy-initial-inputs-alist nil)
-  (setq ivy-count-format "(%d/%d) "))
-
-(use-package prescient
-  :commands prescient-persist-mode
-  :init (prescient-persist-mode 1))
-
-(use-package ivy-prescient
-  :after (counsel prescient)
-  :config
-  (ivy-prescient-mode t)
-  (setq ivy-prescient-sort-commands t))
-
-(use-package ivy-rich
-  :after ivy-prescient
-  :diminish
+(use-package vertico
+  :init
+  (vertico-mode)
   :custom
-  (ivy-virtual-abbreviate 'full)
-  (ivy-rich-switch-buffer-align-virtual-buffer nil)
-  (ivy-rich-path-style 'full)
-  :config
-  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
-  (ivy-rich-mode))
+  (vertico-cycle t))
 
-(aa/leader-key-def
-  "b"  '(:ignore t :which-key "buffer")
-  "bb" '(counsel-switch-buffer :which-key "list")
-  "bB" '(ibuffer :which-key "ibuffer")
-  "bc" '(kill-this-buffer :which-key "kill current")
-  "bd" '(aa/close-and-kill-this-pane :which-key "close current"))
+(use-package savehist
+  :init
+  (savehist-mode))
+
+(use-package marginalia
+  :after vertico
+  :custom
+  (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+  :init
+  (marginalia-mode))
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless))
+  (completion-category-defaults nil)
+  (completion-category-overrides '(file (styles partial-completion))))
+
+(use-package consult
+  :init
+  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+  :config
+  (setq consult-project-root-function #'projectile-project-root))
+
+(use-package embark
+  :bind
+  (("C-." . embark-act)         ;; pick some comfortable binding
+   ("C-;" . embark-dwim)        ;; good alternative: M-.
+   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+
+  :custom
+  ;; This effectively disables the comfirmation for anything not
+  ;; listed.
+  (embark-allow-edit-commands
+   '(shell-command async-shell-command pp-eval-expression))
+
+  :init
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+
+  :config
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none))))
+
+  ;; Add ability to open in another window
+  (eval-when-compile
+    (defmacro aa/embark-ace-action (fn)
+      "Add functions to open objects in other window."
+      `(defun ,(intern (concat "aa/embark-ace-" (symbol-name fn))) ()
+         (interactive)
+         (with-demoted-errors "%s"
+           (require 'ace-window)
+           (let ((aw-dispatch-always t))
+             (aw-switch-to-window (aw-select nil))
+             (call-interactively (symbol-function ',fn)))))))
+
+  (define-key embark-file-map     (kbd "o") (aa/embark-ace-action find-file))
+  (define-key embark-buffer-map   (kbd "o") (aa/embark-ace-action switch-to-buffer))
+  (define-key embark-bookmark-map (kbd "o") (aa/embark-ace-action bookmark-jump)))
+
+;; Consult users will also want the embark-consult package.
+(use-package embark-consult
+  :after (embark consult)
+  :demand t ;; only necessary if you have the hook below
+  ;; if you want to have consult previews as you move around an
+  ;; auto-updating embark collect buffer
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 (general-define-key
  :states 'normal
- "C-s" 'swiper)
+ "C-s" 'consult-line)
 
 (use-package libgit)
 
@@ -307,6 +333,13 @@
   :custom
   (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
   (aw-background nil))
+
+(aa/leader-key-def
+"b"   '(:ignore t :which-key "buffer")
+"bb"  '(consult-buffer :which-key "list buffers")
+"bB"  '(ibuffer :which-key "ibuffer")
+"bc"  '(kill-this-buffer :which-key "kill current")
+"bd"  '(aa/close-and-kill-this-pane :which-key "close current"))
 
 (general-define-key
  :states '(normal insert visual)
@@ -360,9 +393,6 @@
   :config
   (define-key projectile-mode-map (kbd "M-p") 'projectile-command-map)
   (projectile-mode +1))
-
-(use-package counsel-projectile
-  :after (projectile counsel))
 
 (aa/leader-key-def
   "p"  '(projectile-command-map :which-key "projectile"))
