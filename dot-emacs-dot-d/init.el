@@ -108,12 +108,12 @@
   "ee" '((lambda () (interactive) (find-file (expand-file-name "config.org" user-emacs-directory))) :which-key "open config")
   "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
   "ek" '(kill-emacs :which-key "kill emacs")
-  "em" '(consult-minor-mode-menu :which-key "modes")
 
   "f"  '(:ignore t :which-key "file")
   "ff" '(find-file :which-key "find")
 
   "h"  '(help-command :which-key "help")
+  "hm" '(consult-minor-mode-menu :which-key "consult-minor-mode-menu")
 
   "t"  '(:ignore t :which-key "toggle")
   "tt" '(load-theme :which-key "theme")
@@ -301,7 +301,8 @@
 
 (general-define-key
  :states 'normal
- "C-s" 'consult-line)
+ "C-s" 'consult-line
+ "C-h m" 'consult-minor-mode-menu)
 
 (use-package magit
   :commands (magit magit-status magit-blame))
