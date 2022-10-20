@@ -274,21 +274,8 @@
                  nil
                  (window-parameters (mode-line-format . none))))
 
-  ;; Add ability to open in another window
-  (eval-when-compile
-    (defmacro aa/embark-ace-action (fn)
-      "Add functions to open objects in other window."
-      `(defun ,(intern (concat "aa/embark-ace-" (symbol-name fn))) ()
-         (interactive)
-         (with-demoted-errors "%s"
-           (require 'ace-window)
-           (let ((aw-dispatch-always t))
-             (aw-switch-to-window (aw-select nil))
-             (call-interactively (symbol-function ',fn)))))))
-
-  (define-key embark-file-map     (kbd "o") (aa/embark-ace-action find-file))
-  (define-key embark-buffer-map   (kbd "o") (aa/embark-ace-action switch-to-buffer))
-  (define-key embark-bookmark-map (kbd "o") (aa/embark-ace-action bookmark-jump)))
+  (define-key embark-file-map     (kbd "o") #'find-file-other-window)
+  (define-key embark-buffer-map   (kbd "o") #'switch-to-buffer-other-window))
 
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
