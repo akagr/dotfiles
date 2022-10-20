@@ -265,7 +265,9 @@
 
   :init
   ;; Optionally replace the key help with a completing-read interface
-  (setq prefix-help-command #'embark-prefix-help-command)
+  (setq prefix-help-command #'embark-prefix-help-command
+        embark-quit-after-action '((kill-buffer . nil)
+                                   (t . nil)))
 
   :config
   ;; Hide the mode line of the Embark live/completions buffers
