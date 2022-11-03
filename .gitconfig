@@ -1,6 +1,7 @@
 [user]
     name = Akash Agrawal
     email = akagr@outlook.com
+    signingkey = BACB4F00A12E5E57
 [push]
     default = simple
 [alias]
@@ -29,7 +30,7 @@
     filemode = false
 [credential]
     helper = cache --timeout=36000
-	helper = 
+	helper =
 	helper = /usr/local/share/gcm-core/git-credential-manager-core
 [filter "hawser"]
     clean = git hawser clean %f

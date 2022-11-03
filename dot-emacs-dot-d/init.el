@@ -338,6 +338,7 @@
   "w+"  '(evil-window-increase-height :which-key "height+")
   "w-"  '(evil-window-decrease-height :which-key "height-")
   "wc"  '(evil-window-delete :which-key "close")
+  "wq"  '(evil-window-delete :which-key "close")
   "wh"  '(evil-window-split :which-key "horizontal")
   "wo"  '(delete-other-windows :which-key "only")
   "wr"  '(evil-window-rotate-upwards :which-key "rotate")
