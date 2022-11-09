@@ -84,6 +84,18 @@
   (let ((down (downcase str)))
     (replace-regexp-in-string "\\([^A-Za-z]\\)" "-" down)))
 
+(cl-loop for file in '("/usr/local/bin/fish"
+                       "/bin/fish"
+                       "/usr/local/bin/zsh"
+                       "/bin/zsh"
+                       "/usr/local/bin/bash"
+                       "/bin/bash")
+         when (file-exists-p file)
+         do (progn
+              (setq shell-file-name file)
+              (cl-return)))
+(setenv "SHELL" shell-file-name)
+
 (use-package exec-path-from-shell
   :config
   (exec-path-from-shell-initialize))
