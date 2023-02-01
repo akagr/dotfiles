@@ -691,35 +691,7 @@
 
 (setq aa/theme 'modus-vivendi)
 
-(use-package modus-themes
-  :init
-  (setq modus-themes-italic-constructs t
-        modus-themes-bold-constructs t
-        modus-themes-mixed-fonts t
-        modus-themes-subtle-line-numbers t
-        modus-themes-variable-pitch-ui t
-        modus-themes-fringes 'subtle
-        modus-themes-hl-line '(underline accented)
-        modus-themes-completions '((matches . (extrabold))
-                                   (selection . (semibold accented))
-                                   (popup . (accented intense)))
-        modus-themes-diffs 'desaturated
-        modus-themes-org-blocks 'gray-background ; {nil,'gray-background,'tinted-background}
-
-        modus-themes-org-agenda ; this is an alist: read the manual or its doc string
-        '((header-block . (variable-pitch 1.3))
-          (header-date . (grayscale workaholic bold-today 1.1))
-          (event . (accented varied))
-          (scheduled . uniform)
-          (habit . traffic-light))
-
-        modus-themes-headings ; this is an alist: read the manual or its doc string
-        '((1 . (overline background variable-pitch 1.3))
-          (2 . (rainbow overline 1.1))
-          (t . (semibold))))
-  (modus-themes-load-themes)
-  :config
-  (modus-themes-load-vivendi))
+(load-theme aa/theme)
 
 (add-hook 'after-make-frame-functions
           (lambda (frame)
