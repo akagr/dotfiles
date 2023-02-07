@@ -803,7 +803,6 @@ When we use ~emacsclient~, we need to export ~$EDITOR~ environment variable to c
 ** Window Keybindings
 #+BEGIN_SRC emacs-lisp
   (general-define-key
-   :states '(normal insert visual)
    "M-o" 'ace-window)
 
   (aa/leader-key-def

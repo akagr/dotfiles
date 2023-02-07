@@ -339,7 +339,6 @@
 "bd"  '(aa/close-and-kill-this-pane :which-key "close current"))
 
 (general-define-key
- :states '(normal insert visual)
  "M-o" 'ace-window)
 
 (aa/leader-key-def
