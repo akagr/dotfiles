@@ -11,6 +11,14 @@ This is my [[https://www.gnu.org/software/emacs/][Emacs]] config, written using 
 :header-args+: :tangle "./early-init.el"
 :end:
 
+** Check for minimum version
+#+BEGIN_SRC emacs-lisp
+  (let ((min-version "28"))
+    (if (version< emacs-version min-version)
+        (error "Emacs version is %s. Minimum required version is %s."
+               emacs-version
+               min-version)))
+#+END_SRC
 ** Defer Compilation
 #+BEGIN_SRC emacs-lisp
   (defvar comp-deferred-compilation)
@@ -410,6 +418,7 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
        helpful
        ibuffer
        magit
+       man
        occur
        process-menu
        rg

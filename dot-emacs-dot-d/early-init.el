@@ -1,3 +1,9 @@
+(let ((min-version "28"))
+  (if (version< emacs-version min-version)
+      (error "Emacs version is %s. Minimum required version is %s."
+             emacs-version
+             min-version)))
+
 (defvar comp-deferred-compilation)
 (setq comp-deferred-compilation t)
 

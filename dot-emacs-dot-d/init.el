@@ -193,6 +193,7 @@
      helpful
      ibuffer
      magit
+     man
      occur
      process-menu
      rg
