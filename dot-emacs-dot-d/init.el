@@ -84,10 +84,13 @@
   (let ((down (downcase str)))
     (replace-regexp-in-string "\\([^A-Za-z]\\)" "-" down)))
 
-(cl-loop for file in '("/usr/local/bin/fish"
+(cl-loop for file in '("/opt/homebrew/bin/fish"
+                       "/usr/local/bin/fish"
                        "/bin/fish"
+                       "/opt/homebrew/bin/zsh"
                        "/usr/local/bin/zsh"
                        "/bin/zsh"
+                       "/opt/homebrew/bin/bash"
                        "/usr/local/bin/bash"
                        "/bin/bash")
          when (file-exists-p file)
