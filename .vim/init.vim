@@ -1,1 +1,0 @@
-/Users/akash/dotfiles/.vimrc
