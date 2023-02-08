@@ -31,6 +31,7 @@
 [credential]
     helper = cache --timeout=36000
 	helper =
+	helper = /usr/local/share/gcm-core/git-credential-manager
 	helper = /usr/local/share/gcm-core/git-credential-manager-core
 [filter "hawser"]
     clean = git hawser clean %f
@@ -44,3 +45,5 @@
 	user = akagr
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+[commit]
+	gpgSign = true
