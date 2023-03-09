@@ -1,4 +1,4 @@
-(let ((min-version "28"))
+(let ((min-version "29"))
   (if (version< emacs-version min-version)
       (error "Emacs version is %s. Minimum required version is %s."
              emacs-version

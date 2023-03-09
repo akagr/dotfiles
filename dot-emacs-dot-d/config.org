@@ -13,7 +13,7 @@ This is my [[https://www.gnu.org/software/emacs/][Emacs]] config, written using 
 
 ** Check for minimum version
 #+BEGIN_SRC emacs-lisp
-  (let ((min-version "28"))
+  (let ((min-version "29"))
     (if (version< emacs-version min-version)
         (error "Emacs version is %s. Minimum required version is %s."
                emacs-version
@@ -892,12 +892,10 @@ Projectile plays pretty well with the other packages, including magit and dired 
 ** Tree sitter
 [[https://emacs-tree-sitter.github.io][Tree sitter]] allows incremental parsing of syntax for highlighting. This beats regex based parsing which doesn't work so good.
 #+BEGIN_SRC emacs-lisp
-  (use-package tree-sitter)
-  (use-package tree-sitter-langs
-    :after tree-sitter
+  (use-package treesit-auto
     :config
-    (global-tree-sitter-mode)
-    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+    (setq treesit-auto-install 'prompt)
+    (global-treesit-auto-mode))
 #+END_SRC
 ** Common Config
 #+begin_src emacs-lisp

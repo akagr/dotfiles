@@ -398,12 +398,10 @@
 (aa/leader-key-def
   "p"  '(projectile-command-map :which-key "projectile"))
 
-(use-package tree-sitter)
-(use-package tree-sitter-langs
-  :after tree-sitter
+(use-package treesit-auto
   :config
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+  (setq treesit-auto-install 'prompt)
+  (global-treesit-auto-mode))
 
 (use-package editorconfig
   :config
