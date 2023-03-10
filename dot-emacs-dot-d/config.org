@@ -974,6 +974,11 @@ Enable visual line for word wrap and sane navigation.
     :mode ("Dockerfile\\'" . dockerfile-mode))
 #+END_SRC
 
+** Jenkins
+#+BEGIN_SRC emacs-lisp
+  (use-package jenkinsfile-mode
+    :mode ("\\`Jenkinsfile'" . typescript-mode))
+#+END_SRC
 ** Lisp
 
 *** Smartparens - Structured Lisp editing

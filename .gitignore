@@ -18,6 +18,7 @@ dot-emacs-dot-d/projects
 dot-emacs-dot-d/*.html
 dot-emacs-dot-d/var
 dot-emacs-dot-d/eln-cache
+dot-emacs-dot-d/tree-sitter
 
 *#
 *~

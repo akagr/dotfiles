@@ -453,6 +453,9 @@
 (use-package dockerfile-mode
   :mode ("Dockerfile\\'" . dockerfile-mode))
 
+(use-package jenkinsfile-mode
+  :mode ("\\`Jenkinsfile'" . typescript-mode))
+
 (use-package smartparens
   :init
   (smartparens-global-mode)
