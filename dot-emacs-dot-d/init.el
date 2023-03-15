@@ -553,6 +553,12 @@
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-keyword))
 
+(use-package cape-yasnippet
+  :straight (cape-yasnippet :type git :host github :repo "elken/cape-yasnippet")
+  :after cape
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-yasnippet))
+
 (use-package kind-icon
   :straight (kind-icon :type git :host github :repo "jdtsmith/kind-icon")
   :after corfu

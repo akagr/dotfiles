@@ -1096,7 +1096,10 @@ Using ~corfu~ for auto-completion backend. Most modern languages implement LSP (
 
     :init
     (global-corfu-mode))
+#+END_SRC
 
+Cape allows adding various inbuilt completion candidates to the =completion-at-point-functions= which ~corfu~ uses.
+#+BEGIN_SRC emacs-lisp
   (use-package cape
     :after corfu
     :init
@@ -1104,6 +1107,15 @@ Using ~corfu~ for auto-completion backend. Most modern languages implement LSP (
     (add-to-list 'completion-at-point-functions #'cape-dabbrev)
     (add-to-list 'completion-at-point-functions #'cape-keyword))
 
+  (use-package cape-yasnippet
+    :straight (cape-yasnippet :type git :host github :repo "elken/cape-yasnippet")
+    :after cape
+    :init
+    (add-to-list 'completion-at-point-functions #'cape-yasnippet))
+#+END_SRC
+
+=kind-icon= bring icons for completion candidates. It makes it easy to spot the type of completion (function vs variable) at a glance.
+#+BEGIN_SRC emacs-lisp
   (use-package kind-icon
     :straight (kind-icon :type git :host github :repo "jdtsmith/kind-icon")
     :after corfu
@@ -1111,7 +1123,11 @@ Using ~corfu~ for auto-completion backend. Most modern languages implement LSP (
     (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
     :config
     (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+#+END_SRC
 
+Eglot is an awesome LSP (language server protocol) package. It gives IDE intellisense like completions for supporting language stacks.
+Also helps with errors and accessing documentation, as well as visiting definitions and references.
+#+BEGIN_SRC emacs-lisp
   (use-package eglot
     :after elixir-mode
     :commands (eglot eglot-ensure)
