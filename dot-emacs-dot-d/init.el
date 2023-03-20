@@ -1,4 +1,4 @@
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+﻿(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (setq auto-save-default nil
       create-lockfiles nil
@@ -399,6 +399,7 @@
   "p"  '(projectile-command-map :which-key "projectile"))
 
 (use-package treesit-auto
+  :straight (treesit-auto :type git :host github :repo "renzmann/treesit-auto")
   :config
   (setq treesit-auto-install 'prompt)
   (global-treesit-auto-mode))
