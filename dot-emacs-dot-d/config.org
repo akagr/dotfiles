@@ -764,7 +764,7 @@ Add common keybindings for buffer.
 
 * VCS
 
-The primary git interface I use, and also one of the main reasons I use emacs. `libgit` provides native bindings which makes magit faster.
+The primary git interface I use, and also one of the main reasons I use emacs.
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :commands (magit magit-status magit-blame))
@@ -928,12 +928,6 @@ Rubocop is the de-facto lint and syntax checker for ruby.
     ;; Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
     (add-hook 'elixir-mode-hook
               (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
-#+END_SRC
-** Flutter
-#+BEGIN_SRC emacs-lisp
-  (use-package dart-mode)
-  (use-package flutter
-    :after dart-mode)
 #+END_SRC
 ** Web
 #+begin_src emacs-lisp
@@ -1220,24 +1214,25 @@ Set default frame height.
 
 ** Font
 #+BEGIN_SRC emacs-lisp
+  (defvar aa/font "JetBrains Mono")
   (defun aa/apply-fonts (frame)
     "Apply selected fonts to emacs."
 
     ;; Set the font face based on platform
     (set-face-attribute 'default frame
-                        :font "JetBrains Mono"
+                        :font aa/font
                         :weight 'regular
                         :height 150)
 
     ;; Set the fixed pitch face
     (set-face-attribute 'fixed-pitch frame
-                        :font "JetBrains Mono"
+                        :font aa/font
                         :weight 'regular
                         :height 150)
 
     ;; Set the variable pitch face
     (set-face-attribute 'variable-pitch frame
-                        :font "JetBrains Mono"
+                        :font aa/font
                         :height 150
                         :weight 'regular))
 
@@ -1249,7 +1244,7 @@ Set default frame height.
   (aa/apply-fonts nil)
 #+END_SRC
 
-Enable ligature support by using auto composition mode.
+Enable ligature support by using auto composition mode. This is tested working with =Jetbrains Mono=. May or may not work with other fonts.
 #+BEGIN_SRC emacs-lisp
   (let ((ligatures `((?-  . ,(regexp-opt '("-|" "-~" "---" "-<<" "-<" "--" "->" "->>" "-->")))
                      (?/  . ,(regexp-opt '("/**" "/*" "///" "/=" "/==" "/>" "//")))
@@ -1290,6 +1285,7 @@ Disable auto composition everywhere outside of prog-mode.
 
   (add-hook 'prog-mode-hook #'aa/enable-auto-composition)
 #+END_SRC
+
 ** Theme
 
 #+BEGIN_SRC emacs-lisp
@@ -1299,14 +1295,6 @@ Disable auto composition everywhere outside of prog-mode.
   (setq aa/theme 'modus-vivendi)
 
   (load-theme aa/theme)
-#+END_SRC
-
-Load theme after creating a new frame. This is required to work with server/client model. Otherwise, emacs will load theme only once when starting server and all subsequent frames won't get the theme.
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'after-make-frame-functions
-            (lambda (frame)
-              (with-selected-frame frame
-                (load-theme aa/theme t))))
 #+END_SRC
 
 ** Mode line

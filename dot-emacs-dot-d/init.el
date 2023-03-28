@@ -1,4 +1,4 @@
-﻿(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (setq auto-save-default nil
       create-lockfiles nil
@@ -426,10 +426,6 @@
   (add-hook 'elixir-mode-hook
             (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
 
-(use-package dart-mode)
-(use-package flutter
-  :after dart-mode)
-
 (use-package web-mode
   :mode "\\.p?html?\\'"
   :mode "\\.eex\\'"
@@ -636,24 +632,25 @@
 (add-to-list 'default-frame-alist '(width . 200))
 (add-to-list 'default-frame-alist '(height . 48))
 
+(defvar aa/font "JetBrains Mono")
 (defun aa/apply-fonts (frame)
   "Apply selected fonts to emacs."
 
   ;; Set the font face based on platform
   (set-face-attribute 'default frame
-                      :font "JetBrains Mono"
+                      :font aa/font
                       :weight 'regular
                       :height 150)
 
   ;; Set the fixed pitch face
   (set-face-attribute 'fixed-pitch frame
-                      :font "JetBrains Mono"
+                      :font aa/font
                       :weight 'regular
                       :height 150)
 
   ;; Set the variable pitch face
   (set-face-attribute 'variable-pitch frame
-                      :font "JetBrains Mono"
+                      :font aa/font
                       :height 150
                       :weight 'regular))
 
@@ -706,11 +703,6 @@
 (setq aa/theme 'modus-vivendi)
 
 (load-theme aa/theme)
-
-(add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (with-selected-frame frame
-              (load-theme aa/theme t))))
 
 (use-package doom-modeline
   :demand
