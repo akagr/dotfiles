@@ -21,6 +21,7 @@ Clone the repo and symlink the files and directories to respective locations in 
 
   ln -s ~/dotfiles/dot-emacs-dot-d ~/.emacs.d
   ln -s ~/dotfiles/dot-gitconfig ~/.gitconfig
+  ln -s ~/dotfiles/dot-tmux-dot-conf ~/.tmux.conf
   mkdir -p ~/.config/fish
   ln -s ~/dotfiles/config.fish ~/.config/fish/config.fish
 #+end_src
@@ -42,3 +43,7 @@ Additionally, import an existing GPG key with:
 #+end_src
 
 Or, to generate a new key and add it to Github, follow [[https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key][github documentation for generating keys]].
+
+** Why name the files ~dot-tmux-dot-conf~ instead of ~.tmux.conf~
+
+Any file starting with a period (.) is hidden on most *nix systems. All the subject files which I use this repo to backup and share are named so, so that they are always visible. While linking, I use correct names for the symlinks.
