@@ -568,16 +568,19 @@
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
+(use-package eldoc-box
+  :hook (prog-mode . eldoc-box-hover-mode))
+
 (use-package eglot
-  :after elixir-mode
   :commands (eglot eglot-ensure)
   ;; :hook ((elixir-mode ruby-mode) . eglot-ensure)
   :config
-  (add-to-list 'eglot-server-programs `(elixir-mode ,(expand-file-name "~/Downloads/elixir-ls/language_server.sh"))))
+  (add-to-list 'eglot-server-programs
+               '(terraform-mode . ("terraform-ls" "serve"))))
 
 ;; Helps with monorepo project where projects might not be the top level
-(add-hook 'project-find-functions 'aa/find-mix-project nil nil)
-(add-hook 'project-find-functions 'aa/find-rails-project nil nil)
+;; (add-hook 'project-find-functions 'aa/find-mix-project nil nil)
+;; (add-hook 'project-find-functions 'aa/find-rails-project nil nil)
 
 (use-package flycheck
   :hook (prog-mode . flycheck-mode)
