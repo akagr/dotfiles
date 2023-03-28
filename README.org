@@ -4,11 +4,13 @@ This is more a note for future me, but feel free to use anything you like.
 
 ** Requirements
 
-Beyond necessary standards like ~git~, which come installed with most *nix distributions, my current default development setup includes:
+Following is a list of a few things I always install before linking any of the dotfiles. Everything mentioned here is installable via ~homebrew~, once that's set up.
 
 - [[https://brew.sh/][homebrew]] for mac and linux
 - [[https://fishshell.com/][fish]] shell
 - [[https://asdf-vm.com/][asdf]] for versions of various runtimes (languages like ruby, node, sbcl etc.)
+- [[https://github.com/tmux/tmux/wiki][tmux]] mainly for tabbing multiple shell sessions, but detach/attach does come in handy sometimes
+- [[https://www.gnu.org/software/emacs/][emacs]] is my main editor. I use [[https://github.com/d12frosted/homebrew-emacs-plus][emacs-plus]] flavor because I find it works best for my on a mac.
 
 ** Installation
 
