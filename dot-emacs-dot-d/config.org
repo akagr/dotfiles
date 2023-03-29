@@ -429,7 +429,8 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
        smerge
        vterm
        wgrep
-       xref)))
+       xref
+       ztree)))
 #+END_SRC
 
 * Org Mode
@@ -793,6 +794,18 @@ When we use ~emacsclient~, we need to export ~$EDITOR~ environment variable to c
     (add-hook 'vterm-mode-hook 'with-editor-export-editor))
 #+END_SRC
 
+* Diffs
+~ztree~ allows diffing entire directories, instead of buffers or files. Handy when you have multiple projects
+based on same template and are looking for drifts or differences.
+#+BEGIN_SRC emacs-lisp
+  (use-package ztree
+    :config
+    (defun diff-directories ()
+      "Thin wrapper over ztree-diff to be more discoverable"
+      (interactive)
+      (call-interactively 'ztree-diff)))
+
+#+END_SRC
 * Buffer and window management
 ** Ace window
 ~ace-window~ allows quickly switching between open windows (splits).

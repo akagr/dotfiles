@@ -204,7 +204,8 @@
      smerge
      vterm
      wgrep
-     xref)))
+     xref
+     ztree)))
 
 (add-hook 'org-mode-hook
           (lambda ()
@@ -328,6 +329,13 @@
   (define-key (current-global-map)
               [remap shell-command] 'with-editor-shell-command)
   (add-hook 'vterm-mode-hook 'with-editor-export-editor))
+
+(use-package ztree
+  :config
+  (defun diff-directories ()
+    "Thin wrapper over ztree-diff to be more discoverable"
+    (interactive)
+    (call-interactively 'ztree-diff)))
 
 (use-package ace-window
   :commands (ace-window)
