@@ -31,8 +31,8 @@
 [credential]
     helper = cache --timeout=36000
 	helper =
+	helper = /usr/local/bin/git-credential-manager
 	helper = /usr/local/share/gcm-core/git-credential-manager
-	helper = /usr/local/share/gcm-core/git-credential-manager-core
 [filter "hawser"]
     clean = git hawser clean %f
     smudge = git hawser smudge %f
