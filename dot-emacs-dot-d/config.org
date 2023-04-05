@@ -1216,6 +1216,18 @@ Run ~M-x all-the-icons-install-fonts~ to install the icons.
     "?" 'rg-menu)
 #+END_SRC
 
+* Search google
+I wrote this function that lets me quickly search google with thing under point, or selection if it's active. Default browser is used.
+#+BEGIN_SRC emacs-lisp
+  (defun google (text)
+    "Search the text in google using default browser"
+    (interactive (list (read-from-minibuffer
+                        "Search: "
+                        (if (region-active-p)
+                            (buffer-substring (region-beginning) (region-end))
+                          (thing-at-point 'word)))))
+    (browse-url (format "https://google.com/search?q=%s" (url-hexify-string text))))
+#+END_SRC
 * Appearance
 ** Frame dimensions
 

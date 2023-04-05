@@ -637,6 +637,15 @@
 (evil-collection-define-key 'normal 'rg-mode-map
   "?" 'rg-menu)
 
+(defun google (text)
+  "Search the text in google using default browser"
+  (interactive (list (read-from-minibuffer
+                      "Search: "
+                      (if (region-active-p)
+                          (buffer-substring (region-beginning) (region-end))
+                        (thing-at-point 'word)))))
+  (browse-url (format "https://google.com/search?q=%s" (url-hexify-string text))))
+
 (add-to-list 'default-frame-alist '(width . 200))
 (add-to-list 'default-frame-alist '(height . 48))
 
