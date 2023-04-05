@@ -127,9 +127,6 @@
   "f"  '(:ignore t :which-key "file")
   "ff" '(find-file :which-key "find")
 
-  "h"  '(help-command :which-key "help")
-  "hm" '(consult-minor-mode-menu :which-key "consult-minor-mode-menu")
-
   "t"  '(:ignore t :which-key "toggle")
   "tt" '(load-theme :which-key "theme")
   "tw" '(toggle-truncate-lines :which-key "wrap lines")
@@ -141,17 +138,21 @@
   "cr" '(xref-find-references :which-key "find references"))
 
 (use-package helpful
-  :bind
-  (("C-h f" . helpful-callable)
-   ("C-h v" . helpful-variable)
-   ("C-h k" . helpful-key))
   :commands (helpful-callable
              helpful-variable
              helpful-key
              helpful-at-point
              helpful-command
              helpful-macro
-             helpful-function))
+             helpful-function)
+  :config
+  (aa/leader-key-def
+    "h"  '(help-command :which-key "help")
+    "hf" '(helpful-callable :which-key "functions")
+    "hg" '(google :which-key "google")
+    "hk" '(helpful-key :which-key "key-bindings")
+    "hm" '(consult-minor-mode-menu :which-key "consult-minor-mode-menu")
+    "hv" '(helpful-variable :which-key "variables")))
 
 (use-package undo-fu)
 
