@@ -30,7 +30,7 @@ complete --command aws --no-files --arguments '(begin; set --local --export COMP
 # That will generate and store temporary AWS credentials in cache.
 # `aws_load_credentials` is a helper to then load these credentials to standard
 # AWS environment variables like AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY etc.
-function aws_load_credentials -d "load aws credentials from sso cache file to environment variables"
+function aws-load-credentials -d "load aws credentials from sso cache file to environment variables"
     if test (count $argv) != 1
         echo "Example: aws_load_credentials <aws_profile_name>" >&2
         return 1

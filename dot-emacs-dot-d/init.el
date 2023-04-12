@@ -144,15 +144,14 @@
              helpful-at-point
              helpful-command
              helpful-macro
-             helpful-function)
-  :config
-  (aa/leader-key-def
-    "h"  '(help-command :which-key "help")
-    "hf" '(helpful-callable :which-key "functions")
-    "hg" '(google :which-key "google")
-    "hk" '(helpful-key :which-key "key-bindings")
-    "hm" '(consult-minor-mode-menu :which-key "consult-minor-mode-menu")
-    "hv" '(helpful-variable :which-key "variables")))
+             helpful-function))
+(aa/leader-key-def
+  "h"  '(help-command :which-key "help")
+  "hf" '(helpful-callable :which-key "functions")
+  "hg" '(google :which-key "google")
+  "hk" '(helpful-key :which-key "key-bindings")
+  "hm" '(consult-minor-mode-menu :which-key "consult-minor-mode-menu")
+  "hv" '(helpful-variable :which-key "variables"))
 
 (use-package undo-fu)
 
@@ -519,16 +518,16 @@
 (use-package vterm
   :commands (vterm))
 
-(use-package vterm-toggle
-  :after vterm
-  :commands (vterm-toggle)
+(use-package multi-vterm
+  :commands (multi-vterm
+             multi-vterm-dedicated-toggle
+             multi-vterm-dedicated-open)
   :config
-  (setq vterm-toggle-hide-method 'reset-window-configration)
   (evil-collection-define-key 'insert 'vterm-mode-map
-    (kbd "M-t") 'vterm-toggle))
+    (kbd "M-t") 'multi-vterm-dedicated-toggle))
 (general-define-key
  :states 'normal
- "M-t" 'vterm-toggle)
+ "M-t" 'multi-vterm-dedicated-toggle)
 
 (use-package corfu
   ;; TAB-and-Go customizations
