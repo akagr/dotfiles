@@ -516,7 +516,9 @@
   :after (yasnippet))
 
 (use-package vterm
-  :commands (vterm))
+  :commands (vterm)
+  :config
+  (add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode -1))))
 
 (use-package multi-vterm
   :commands (multi-vterm
