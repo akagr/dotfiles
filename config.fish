@@ -24,6 +24,11 @@ alias tf="terraform"
 # Adds completions for aws to fish
 complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \'s/ $//\'; end)'
 
+# Restart gpg agent
+function restart-gpg-agent -d "restart gpg agent to fix common git remote issues when using https"
+  gpgconf --kill gpg-agent
+end
+
 # AWS uses identity center to manage SSO access using CLI
 # If SSO is not configured, run `aws configure sso` first.
 # Then, whenever a session expires or a new one is needed, run `aws sso login`.
