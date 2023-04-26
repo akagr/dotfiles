@@ -906,11 +906,13 @@ Projectile plays pretty well with the other packages, including magit and dired 
 ** Tree sitter
 [[https://emacs-tree-sitter.github.io][Tree sitter]] allows incremental parsing of syntax for highlighting. This beats regex based parsing which doesn't work so good.
 #+BEGIN_SRC emacs-lisp
-  (use-package treesit-auto
-    :straight (treesit-auto :type git :host github :repo "renzmann/treesit-auto")
+  (use-package tree-sitter)
+  (use-package tree-sitter-langs
+    :after tree-sitter
     :config
-    (setq treesit-auto-install 'prompt)
-    (global-treesit-auto-mode))
+    (global-tree-sitter-mode)
+    :hook
+    (tree-sitter-mode . tree-sitter-hl-mode))
 #+END_SRC
 ** Common Config
 #+begin_src emacs-lisp

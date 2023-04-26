@@ -407,11 +407,13 @@
 (aa/leader-key-def
   "p"  '(projectile-command-map :which-key "projectile"))
 
-(use-package treesit-auto
-  :straight (treesit-auto :type git :host github :repo "renzmann/treesit-auto")
+(use-package tree-sitter)
+(use-package tree-sitter-langs
+  :after tree-sitter
   :config
-  (setq treesit-auto-install 'prompt)
-  (global-treesit-auto-mode))
+  (global-tree-sitter-mode)
+  :hook
+  (tree-sitter-mode . tree-sitter-hl-mode))
 
 (use-package editorconfig
   :config
