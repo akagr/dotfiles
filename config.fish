@@ -42,3 +42,7 @@ function aws-load-credentials -d "load aws credentials from sso cache file to en
     end
     eval $(aws configure export-credentials --profile $argv --format env)
 end
+# Turn off file name completions
+complete -c aws-load-credentials -f
+# Turn on completion for profile names
+complete -c aws-load-credentials -a "(aws configure list-profiles)"
