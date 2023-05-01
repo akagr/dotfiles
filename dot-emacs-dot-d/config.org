@@ -1336,6 +1336,12 @@ Config for mode line:
     :config
     (doom-modeline-mode 1))
 #+end_src
+** Natural transparent title bar
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark))
+  (setq ns-use-proxy-icon nil)
+#+END_SRC
 * Sources
 Huge thanks to these amazing people whose configs I borrowed from:
 - [[https://github.com/meatcar/emacs.d/blob/master/config.org][Denys Pavlov]]
