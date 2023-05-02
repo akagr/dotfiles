@@ -132,7 +132,7 @@ Installing =use-package= now.
   #+end_src
 ** Set custom file
 #+BEGIN_SRC emacs-lisp
-  (setq custom-file "./emacs-custom.el")
+  (setq custom-file (expand-file-name "emacs-custom.el" user-emacs-directory))
   (load custom-file t)
 #+END_SRC
 ** End early init
@@ -913,11 +913,9 @@ Projectile plays pretty well with the other packages, including magit and dired 
 #+BEGIN_SRC emacs-lisp
   (use-package tree-sitter)
   (use-package tree-sitter-langs
-    :after tree-sitter
-    :config
-    (global-tree-sitter-mode)
-    :hook
-    (tree-sitter-mode . tree-sitter-hl-mode))
+    :after tree-sitter)
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-mode-hook 'tree-sitter-hl-mode)
 #+END_SRC
 ** Common Config
 #+begin_src emacs-lisp

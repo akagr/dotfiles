@@ -409,11 +409,9 @@
 
 (use-package tree-sitter)
 (use-package tree-sitter-langs
-  :after tree-sitter
-  :config
-  (global-tree-sitter-mode)
-  :hook
-  (tree-sitter-mode . tree-sitter-hl-mode))
+  :after tree-sitter)
+(global-tree-sitter-mode)
+(add-hook 'tree-sitter-mode-hook 'tree-sitter-hl-mode)
 
 (use-package editorconfig
   :config
