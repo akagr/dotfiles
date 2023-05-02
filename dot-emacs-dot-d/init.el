@@ -724,7 +724,7 @@
 
 (use-package doom-themes
   :config
-  (load-theme 'doom-vibrant t))
+  (load-theme 'doom-nord t))
 
 (use-package doom-modeline
   :demand

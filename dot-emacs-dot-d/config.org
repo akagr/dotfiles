@@ -1329,7 +1329,7 @@ Disable auto composition everywhere outside of prog-mode.
 
   (use-package doom-themes
     :config
-    (load-theme 'doom-vibrant t))
+    (load-theme 'doom-nord t))
 #+END_SRC
 
 ** Mode line
