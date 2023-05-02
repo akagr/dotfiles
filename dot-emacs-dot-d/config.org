@@ -130,6 +130,11 @@ Installing =use-package= now.
     :demand t
     :config (gcmh-mode 1))
   #+end_src
+** Set custom file
+#+BEGIN_SRC emacs-lisp
+  (setq custom-file "./emacs-custom.el")
+  (load custom-file t)
+#+END_SRC
 ** End early init
 #+BEGIN_SRC emacs-lisp
   (provide 'early-init)
@@ -1322,9 +1327,9 @@ Disable auto composition everywhere outside of prog-mode.
   (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
 
-  (setq aa/theme 'modus-vivendi)
-
-  (load-theme aa/theme)
+  (use-package doom-themes
+    :config
+    (load-theme 'doom-vibrant t))
 #+END_SRC
 
 ** Mode line

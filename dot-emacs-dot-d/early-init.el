@@ -75,4 +75,7 @@
   :demand t
   :config (gcmh-mode 1))
 
+(setq custom-file "./emacs-custom.el")
+(load custom-file t)
+
 (provide 'early-init)

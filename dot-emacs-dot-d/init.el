@@ -722,9 +722,9 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(setq aa/theme 'modus-vivendi)
-
-(load-theme aa/theme)
+(use-package doom-themes
+  :config
+  (load-theme 'doom-vibrant t))
 
 (use-package doom-modeline
   :demand

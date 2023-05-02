@@ -46,3 +46,15 @@ end
 complete -c aws-load-credentials -f
 # Turn on completion for profile names
 complete -c aws-load-credentials -a "(aws configure list-profiles)"
+
+function vterm_printf;
+    if begin; [  -n "$TMUX" ]  ; and  string match -q -r "screen|tmux" "$TERM"; end
+        # tell tmux to pass the escape sequences through
+        printf "\ePtmux;\e\e]%s\007\e\\" "$argv"
+    else if string match -q -- "screen*" "$TERM"
+        # GNU screen (screen, screen-256color, screen-256color-bce)
+        printf "\eP\e]%s\007\e\\" "$argv"
+    else
+        printf "\e]%s\e\\" "$argv"
+    end
+end
