@@ -519,7 +519,8 @@
 (use-package vterm
   :commands (vterm)
   :config
-  (add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode -1))))
+  (add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode -1)))
+  (add-hook 'vterm-mode-hook (lambda () (setq mode-line-format nil))))
 
 (use-package multi-vterm
   :commands (multi-vterm
