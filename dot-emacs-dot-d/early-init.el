@@ -1,8 +1,10 @@
-(let ((min-version "29"))
+﻿(let ((min-version "29"))
   (if (version< emacs-version min-version)
       (error "Emacs version is %s. Minimum required version is %s."
              emacs-version
              min-version)))
+
+(setq frame-resize-pixelwise t)
 
 (defvar comp-deferred-compilation)
 (setq comp-deferred-compilation t)

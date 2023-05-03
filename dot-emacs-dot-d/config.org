@@ -19,6 +19,10 @@ This is my [[https://www.gnu.org/software/emacs/][Emacs]] config, written using 
                emacs-version
                min-version)))
 #+END_SRC
+** Make emacs occupy full screen
+#+BEGIN_SRC emacs-lisp
+  (setq frame-resize-pixelwise t)
+#+END_SRC
 ** Defer Compilation
 #+BEGIN_SRC emacs-lisp
   (defvar comp-deferred-compilation)
