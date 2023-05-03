@@ -14,6 +14,11 @@ if test -e /opt/homebrew/opt/asdf/libexec/asdf.fish
     source /opt/homebrew/opt/asdf/libexec/asdf.fish
 end
 
+# Adds docker cli if it exists
+if test -e $HOME/.docker/bin
+  fish_add_path $HOME/.docker/bin
+end
+
 #========================== General Aliases ==========================
 alias du="dust -d 1"
 
