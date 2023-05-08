@@ -529,9 +529,13 @@
   :config
   (evil-collection-define-key 'insert 'vterm-mode-map
     (kbd "M-t") 'multi-vterm-dedicated-toggle))
+
 (general-define-key
  :states 'normal
  "M-t" 'multi-vterm-dedicated-toggle)
+
+(aa/leader-key-def
+  "te" '(evil-collection-vterm-toggle-send-escape :which-key "toggle escape in vterm"))
 
 (use-package corfu
   ;; TAB-and-Go customizations
