@@ -121,14 +121,14 @@
 (aa/leader-key-def
   "e"  '(:ignore t :which-key "emacs")
   "ee" '((lambda () (interactive) (find-file (expand-file-name "config.org" user-emacs-directory))) :which-key "open config")
-  "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
   "ek" '(kill-emacs :which-key "kill emacs")
+  "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
+  "et" '(load-theme :which-key "theme")
 
   "f"  '(:ignore t :which-key "file")
   "ff" '(find-file :which-key "find")
 
   "t"  '(:ignore t :which-key "toggle")
-  "tt" '(load-theme :which-key "theme")
   "tw" '(toggle-truncate-lines :which-key "wrap lines")
 
   "c"  '(:ignore t :which-key "code")
@@ -535,7 +535,7 @@
  "M-t" 'multi-vterm-dedicated-toggle)
 
 (aa/leader-key-def
-  "te" '(evil-collection-vterm-toggle-send-escape :which-key "toggle escape in vterm"))
+  "tt" '(evil-collection-vterm-toggle-send-escape :which-key "toggle escape in vterm"))
 
 (use-package corfu
   ;; TAB-and-Go customizations
