@@ -279,6 +279,15 @@ Delete whitespace on save
     (let ((down (downcase str)))
       (replace-regexp-in-string "\\([^A-Za-z]\\)" "-" down)))
 #+END_SRC
+** Format buffer
+#+BEGIN_SRC emacs-lisp
+  (defun aa/format-buffer ()
+    "Formats the buffer"
+    (interactive)
+    (evil-set-marker ?\z)
+    (evil-indent (buffer-end -1) (buffer-end 1))
+    (evil-goto-mark ?\z))
+#+END_SRC
 * Support Packages
 
 Loading emacs from finder or spotlight causes it to not load many environment variables. This package fixes it.
@@ -830,6 +839,7 @@ based on same template and are looking for drifts or differences.
 #+BEGIN_SRC emacs-lisp
   (aa/leader-key-def
   "b"   '(:ignore t :which-key "buffer")
+  "b="  '(aa/format-buffer :which-key "format")
   "bb"  '(consult-buffer :which-key "list buffers")
   "bB"  '(ibuffer :which-key "ibuffer")
   "bc"  '(kill-this-buffer :which-key "kill current")

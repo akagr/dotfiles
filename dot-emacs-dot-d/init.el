@@ -84,6 +84,13 @@
   (let ((down (downcase str)))
     (replace-regexp-in-string "\\([^A-Za-z]\\)" "-" down)))
 
+(defun aa/format-buffer ()
+  "Formats the buffer"
+  (interactive)
+  (evil-set-marker ?\z)
+  (evil-indent (buffer-end -1) (buffer-end 1))
+  (evil-goto-mark ?\z))
+
 (cl-loop for file in '("/opt/homebrew/bin/fish"
                        "/usr/local/bin/fish"
                        "/bin/fish"
@@ -346,6 +353,7 @@
 
 (aa/leader-key-def
 "b"   '(:ignore t :which-key "buffer")
+"b="  '(aa/format-buffer :which-key "format")
 "bb"  '(consult-buffer :which-key "list buffers")
 "bB"  '(ibuffer :which-key "ibuffer")
 "bc"  '(kill-this-buffer :which-key "kill current")
