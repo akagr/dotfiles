@@ -21,6 +21,7 @@ end
 
 #========================== General Aliases ==========================
 alias du="dust -d 1"
+alias t="tmux attach || tmux"
 
 #=============================== DevOps ==============================
 alias k="kubectl"
