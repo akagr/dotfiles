@@ -337,6 +337,8 @@ Simplify leader bindings with general.el.
 
 #+BEGIN_SRC emacs-lisp
   (aa/leader-key-def
+    "<escape>" '(evil-normal-state :which-key "normal")
+
     "e"  '(:ignore t :which-key "emacs")
     "ee" '((lambda () (interactive) (find-file (expand-file-name "config.org" user-emacs-directory))) :which-key "open config")
     "ek" '(kill-emacs :which-key "kill emacs")
@@ -813,6 +815,13 @@ When we use ~emacsclient~, we need to export ~$EDITOR~ environment variable to c
     (add-hook 'vterm-mode-hook 'with-editor-export-editor))
 #+END_SRC
 
+* Bookmarks
+#+BEGIN_SRC emacs-lisp
+  (aa/leader-key-def
+    "m"  '(:ignore t :which-key "bookmark")
+    "mm" '(consult-bookmark :which-key "menu")
+    "mw" '(bookmark-bmenu-save :which-key "write"))
+#+END_SRC
 * Diffs
 ~ztree~ allows diffing entire directories, instead of buffers or files. Handy when you have multiple projects
 based on same template and are looking for drifts or differences.

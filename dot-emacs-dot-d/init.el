@@ -126,6 +126,8 @@
     :global-prefix "C-,"))
 
 (aa/leader-key-def
+  "<escape>" '(evil-normal-state :which-key "normal")
+
   "e"  '(:ignore t :which-key "emacs")
   "ee" '((lambda () (interactive) (find-file (expand-file-name "config.org" user-emacs-directory))) :which-key "open config")
   "ek" '(kill-emacs :which-key "kill emacs")
@@ -337,6 +339,11 @@
   (define-key (current-global-map)
               [remap shell-command] 'with-editor-shell-command)
   (add-hook 'vterm-mode-hook 'with-editor-export-editor))
+
+(aa/leader-key-def
+  "m"  '(:ignore t :which-key "bookmark")
+  "mm" '(consult-bookmark :which-key "menu")
+  "mw" '(bookmark-bmenu-save :which-key "write"))
 
 (use-package ztree
   :config
