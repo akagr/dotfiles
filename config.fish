@@ -64,3 +64,8 @@ function vterm_printf;
         printf "\e]%s\e\\" "$argv"
     end
 end
+
+
+if test -e $HOME/.colima
+    set -x DOCKER_HOST "$HOME/.colima/docker.sock"
+end
