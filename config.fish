@@ -67,5 +67,5 @@ end
 
 
 if test -e $HOME/.colima
-    set -x DOCKER_HOST "$HOME/.colima/docker.sock"
+    set -x DOCKER_HOST "unix://$HOME/.colima/default/docker.sock"
 end
