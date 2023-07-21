@@ -411,6 +411,31 @@
   "Sort dired listings with directories first before adding marks."
   (aa/dired-sort-directories))
 
+(defun aa/insert (text)
+  ;; remove existing text from minibuffer prompt
+  (backward-kill-sentence)
+  (insert text))
+
+(defun aa/dired-do-copy ()
+  (interactive)
+  (let ((file-name (dired-get-filename t)))
+    (minibuffer-with-setup-hook
+        (lambda () (aa/insert file-name))
+      (call-interactively #'dired-do-copy))))
+
+(defun aa/dired-do-rename ()
+  (interactive)
+  (let ((file-name (dired-get-filename t)))
+    (minibuffer-with-setup-hook
+        (lambda () (aa/insert file-name))
+      (call-interactively #'dired-do-rename))))
+
+(evil-collection-define-key 'normal 'dired-mode-map
+  (kbd "C") 'aa/dired-do-copy)
+
+(evil-collection-define-key 'normal 'dired-mode-map
+  (kbd "R") 'aa/dired-do-rename)
+
 (use-package projectile
   :after evil
   :init
