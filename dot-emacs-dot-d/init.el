@@ -430,10 +430,10 @@
         (lambda () (aa/insert file-name))
       (call-interactively #'dired-do-rename))))
 
-(evil-collection-define-key 'normal 'dired-mode-map
+(evil-collection-define-key 'normal 'dired-sidebar-mode-map
   (kbd "C") 'aa/dired-do-copy)
 
-(evil-collection-define-key 'normal 'dired-mode-map
+(evil-collection-define-key 'normal 'dired-sidebar-mode-map
   (kbd "R") 'aa/dired-do-rename)
 
 (use-package projectile
