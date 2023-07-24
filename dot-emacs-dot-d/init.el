@@ -125,43 +125,6 @@
     :prefix ","
     :global-prefix "C-,"))
 
-(aa/leader-key-def
-  "<escape>" '(evil-normal-state :which-key "normal")
-
-  "e"  '(:ignore t :which-key "emacs")
-  "ee" '((lambda () (interactive) (find-file (expand-file-name "config.org" user-emacs-directory))) :which-key "open config")
-  "ek" '(kill-emacs :which-key "kill emacs")
-  "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
-  "et" '(load-theme :which-key "theme")
-
-  "f"  '(:ignore t :which-key "file")
-  "ff" '(find-file :which-key "find")
-
-  "t"  '(:ignore t :which-key "toggle")
-  "tw" '(toggle-truncate-lines :which-key "wrap lines")
-
-  "c"  '(:ignore t :which-key "code")
-  "ca" '(align-regexp :which-key "align regex")
-  "cc" '(xref-find-definitions :which-key "find definitions")
-  "ce" '(eval-last-sexp :which-key "eval last sexp")
-  "cr" '(xref-find-references :which-key "find references"))
-
-(use-package helpful
-  :commands (helpful-callable
-             helpful-variable
-             helpful-key
-             helpful-at-point
-             helpful-command
-             helpful-macro
-             helpful-function))
-(aa/leader-key-def
-  "h"  '(help-command :which-key "help")
-  "hf" '(helpful-callable :which-key "functions")
-  "hg" '(google :which-key "google")
-  "hk" '(helpful-key :which-key "key-bindings")
-  "hm" '(consult-minor-mode-menu :which-key "consult-minor-mode-menu")
-  "hv" '(helpful-variable :which-key "variables"))
-
 (use-package undo-fu)
 
 (use-package evil
@@ -216,9 +179,32 @@
      xref
      ztree)))
 
+(aa/leader-key-def
+  "<escape>" '(evil-normal-state :which-key "normal")
+
+  "e"  '(:ignore t :which-key "emacs")
+  "ee" '((lambda () (interactive) (find-file (expand-file-name "config.org" user-emacs-directory))) :which-key "open config")
+  "ek" '(kill-emacs :which-key "kill emacs")
+  "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
+  "et" '(load-theme :which-key "theme")
+
+  "f"  '(:ignore t :which-key "file")
+  "ff" '(find-file :which-key "find")
+
+  "t"  '(:ignore t :which-key "toggle")
+  "tw" '(toggle-truncate-lines :which-key "wrap lines")
+
+  "c"  '(:ignore t :which-key "code")
+  "ca" '(align-regexp :which-key "align regex")
+  "cc" '(xref-find-definitions :which-key "find definitions")
+  "ce" '(eval-last-sexp :which-key "eval last sexp")
+  "cr" '(xref-find-references :which-key "find references"))
+
 (add-hook 'org-mode-hook
           (lambda ()
             (require 'init-org)))
+
+(use-package org)
 
 (with-eval-after-load 'org
   (setq org-startup-indented t
@@ -236,6 +222,22 @@
                       (lambda ()
                         (org-align-tags t))
                       nil t)))
+
+(use-package helpful
+  :commands (helpful-callable
+             helpful-variable
+             helpful-key
+             helpful-at-point
+             helpful-command
+             helpful-macro
+             helpful-function))
+(aa/leader-key-def
+  "h"  '(help-command :which-key "help")
+  "hf" '(helpful-callable :which-key "functions")
+  "hg" '(google :which-key "google")
+  "hk" '(helpful-key :which-key "key-bindings")
+  "hm" '(consult-minor-mode-menu :which-key "consult-minor-mode-menu")
+  "hv" '(helpful-variable :which-key "variables"))
 
 (add-hook 'prog-mode-hook #'hs-minor-mode)
 

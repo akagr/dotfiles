@@ -1,6 +1,6 @@
-(setq org-directory "~/Dropbox/org"
+(setq org-directory (expand-file-name "org" user-emacs-directory)
       org-default-notes-file (concat org-directory "/notes.org")
-      org-agenda-files '("~/Dropbox/org/")
+      org-agenda-files (list org-directory)
       org-archive-location (concat org-directory "/archive/%s::"))
 
 (use-package org-appear

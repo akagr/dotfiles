@@ -333,50 +333,6 @@ Simplify leader bindings with general.el.
       :prefix ","
       :global-prefix "C-,"))
 #+end_src
-* Common Keybindings
-
-#+BEGIN_SRC emacs-lisp
-  (aa/leader-key-def
-    "<escape>" '(evil-normal-state :which-key "normal")
-
-    "e"  '(:ignore t :which-key "emacs")
-    "ee" '((lambda () (interactive) (find-file (expand-file-name "config.org" user-emacs-directory))) :which-key "open config")
-    "ek" '(kill-emacs :which-key "kill emacs")
-    "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
-    "et" '(load-theme :which-key "theme")
-
-    "f"  '(:ignore t :which-key "file")
-    "ff" '(find-file :which-key "find")
-
-    "t"  '(:ignore t :which-key "toggle")
-    "tw" '(toggle-truncate-lines :which-key "wrap lines")
-
-    "c"  '(:ignore t :which-key "code")
-    "ca" '(align-regexp :which-key "align regex")
-    "cc" '(xref-find-definitions :which-key "find definitions")
-    "ce" '(eval-last-sexp :which-key "eval last sexp")
-    "cr" '(xref-find-references :which-key "find references"))
-#+END_SRC
-* Helpful Instrospection
-
-[[https://github.com/Wilfred/helpful][Helpful]] allows much better help (introspection) pages. For example, when showing help for functions, it shows references, source code etc. all on single page. This reduces jumping to different locations frequently.
-#+BEGIN_SRC emacs-lisp
-  (use-package helpful
-    :commands (helpful-callable
-               helpful-variable
-               helpful-key
-               helpful-at-point
-               helpful-command
-               helpful-macro
-               helpful-function))
-  (aa/leader-key-def
-    "h"  '(help-command :which-key "help")
-    "hf" '(helpful-callable :which-key "functions")
-    "hg" '(google :which-key "google")
-    "hk" '(helpful-key :which-key "key-bindings")
-    "hm" '(consult-minor-mode-menu :which-key "consult-minor-mode-menu")
-    "hv" '(helpful-variable :which-key "variables"))
-#+END_SRC
 * Evil Mode
 
 Add undo package to allow branching undos.
@@ -453,6 +409,30 @@ Evil surround for adding quotes, parenthesis etc. Another takeaway from vim.
        ztree)))
 #+END_SRC
 
+* Common Keybindings
+
+#+BEGIN_SRC emacs-lisp
+  (aa/leader-key-def
+    "<escape>" '(evil-normal-state :which-key "normal")
+
+    "e"  '(:ignore t :which-key "emacs")
+    "ee" '((lambda () (interactive) (find-file (expand-file-name "config.org" user-emacs-directory))) :which-key "open config")
+    "ek" '(kill-emacs :which-key "kill emacs")
+    "er" '((lambda () (interactive) (load-file user-init-file)) :which-key "reload config")
+    "et" '(load-theme :which-key "theme")
+
+    "f"  '(:ignore t :which-key "file")
+    "ff" '(find-file :which-key "find")
+
+    "t"  '(:ignore t :which-key "toggle")
+    "tw" '(toggle-truncate-lines :which-key "wrap lines")
+
+    "c"  '(:ignore t :which-key "code")
+    "ca" '(align-regexp :which-key "align regex")
+    "cc" '(xref-find-definitions :which-key "find definitions")
+    "ce" '(eval-last-sexp :which-key "eval last sexp")
+    "cr" '(xref-find-references :which-key "find references"))
+#+END_SRC
 * Org Mode
 :properties:
 :header-args+: :tangle "./lisp/init-org.el"
@@ -464,6 +444,8 @@ This gets placed in ~init.el~ and requires all the code following it related to 
   (add-hook 'org-mode-hook
             (lambda ()
               (require 'init-org)))
+
+  (use-package org)
 
   (with-eval-after-load 'org
     (setq org-startup-indented t
@@ -489,9 +471,9 @@ This gets placed in ~init.el~ and requires all the code following it related to 
 ** Set up org default files and directories:
 
 #+begin_src emacs-lisp
-  (setq org-directory "~/Dropbox/org"
+  (setq org-directory (expand-file-name "org" user-emacs-directory)
         org-default-notes-file (concat org-directory "/notes.org")
-        org-agenda-files '("~/Dropbox/org/")
+        org-agenda-files (list org-directory)
         org-archive-location (concat org-directory "/archive/%s::"))
 #+end_src
 
@@ -510,7 +492,7 @@ This gets placed in ~init.el~ and requires all the code following it related to 
 #+END_SRC
 ** Keybindings for org mode.
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
   (aa/leader-key-def
     "r"  '(:ignore t :which-key "org mode")
     "ra" '(org-agenda :which-key "agenda")
@@ -674,6 +656,26 @@ Allows preparing flashcard like interface for spaced repetition and revision. Ch
 Provide org package for ~require~.
 #+BEGIN_SRC emacs-lisp
   (provide 'init-org)
+#+END_SRC
+* Helpful Instrospection
+
+[[https://github.com/Wilfred/helpful][Helpful]] allows much better help (introspection) pages. For example, when showing help for functions, it shows references, source code etc. all on single page. This reduces jumping to different locations frequently.
+#+BEGIN_SRC emacs-lisp
+  (use-package helpful
+    :commands (helpful-callable
+               helpful-variable
+               helpful-key
+               helpful-at-point
+               helpful-command
+               helpful-macro
+               helpful-function))
+  (aa/leader-key-def
+    "h"  '(help-command :which-key "help")
+    "hf" '(helpful-callable :which-key "functions")
+    "hg" '(google :which-key "google")
+    "hk" '(helpful-key :which-key "key-bindings")
+    "hm" '(consult-minor-mode-menu :which-key "consult-minor-mode-menu")
+    "hv" '(helpful-variable :which-key "variables"))
 #+END_SRC
 * Code folding
 #+BEGIN_SRC emacs-lisp

@@ -19,6 +19,8 @@ dot-emacs-dot-d/*.html
 dot-emacs-dot-d/var
 dot-emacs-dot-d/eln-cache
 dot-emacs-dot-d/tree-sitter
+dot-emacs-dot-d/org
+dot-emacs-dot-d/multisession
 
 *#
 *~
