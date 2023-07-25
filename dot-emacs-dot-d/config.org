@@ -651,6 +651,15 @@ Allows preparing flashcard like interface for spaced repetition and revision. Ch
                           nil 'make-it-local))))
 #+END_SRC
 
+** Mark parent todo done when completing children
+#+BEGIN_SRC emacs-lisp
+  (defun org-summary-todo (n-done n-not-done)
+    "Switch entry to DONE when all subentries are done, to TODO otherwise."
+    (let (org-log-done org-log-states)   ; turn off logging
+      (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+
+  (add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
+#+END_SRC
 ** Provide org package
 
 Provide org package for ~require~.
