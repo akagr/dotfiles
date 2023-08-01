@@ -703,7 +703,7 @@
 (add-to-list 'default-frame-alist '(width . 200))
 (add-to-list 'default-frame-alist '(height . 48))
 
-(defvar aa/font "JetBrains Mono")
+(defvar aa/font "JetBrainsMono Nerd Font")
 (defun aa/apply-fonts (frame)
   "Apply selected fonts to emacs."
 

@@ -1317,7 +1317,7 @@ Set default frame height.
 
 ** Font
 #+BEGIN_SRC emacs-lisp
-  (defvar aa/font "JetBrains Mono")
+  (defvar aa/font "JetBrainsMono Nerd Font")
   (defun aa/apply-fonts (frame)
     "Apply selected fonts to emacs."
 
