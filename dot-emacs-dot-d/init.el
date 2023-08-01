@@ -239,7 +239,11 @@
   "hm" '(consult-minor-mode-menu :which-key "consult-minor-mode-menu")
   "hv" '(helpful-variable :which-key "variables"))
 
-(add-hook 'prog-mode-hook #'hs-minor-mode)
+(use-package ts-fold
+  :straight (ts-fold :type git :host github :repo "emacs-tree-sitter/ts-fold")
+  :config
+  (global-ts-fold-mode)
+  (global-ts-fold-indicators-mode))
 
 ;; Evil bindings to work with folds
 ;; za - toggle fold
