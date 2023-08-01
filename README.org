@@ -11,8 +11,13 @@ Following is a list of a few things I always install before linking any of the d
 - [[https://asdf-vm.com/][asdf]] for versions of various runtimes (languages like ruby, node, sbcl etc.)
 - [[https://github.com/tmux/tmux/wiki][tmux]] mainly for tabbing multiple shell sessions, but detach/attach does come in handy sometimes
 - [[https://www.gnu.org/software/emacs/][emacs]] is my main editor. I use [[https://github.com/d12frosted/homebrew-emacs-plus][emacs-plus]] flavor because I find it works best for my on a mac.
-- [[https://neovim.io/][neovim]] is a secondary editor I sometimes use, and have riced up a bit.
 - [[https://github.com/Homebrew/homebrew-cask-fonts][homebrew fonts]] is a repository for all the nerd fonts
+
+*** Optional
+
+The optional packages aren't mandatory for me to get a productive environment. I've worked on these, but don't always set them up on all my machines.
+
+- [[https://neovim.io/][neovim]] is a secondary editor I sometimes use, and have riced up a bit.
 
 ** Installation
 
