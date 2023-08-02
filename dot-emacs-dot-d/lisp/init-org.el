@@ -3,17 +3,6 @@
       org-agenda-files (list org-directory)
       org-archive-location (concat org-directory "/archive/%s::"))
 
-(use-package org-appear
-  :custom
-  (org-appear-autolinks t)
-  (org-appear-submarkers t)
-  (org-appear-delay 0.5)
-  :hook (org-mode . org-appear-mode))
-
-;; Start once on initial org load.
-;; The hook above takes care of starting it on subsequent loads.
-(org-appear-mode)
-
 (aa/leader-key-def
   "r"  '(:ignore t :which-key "org mode")
   "ra" '(org-agenda :which-key "agenda")

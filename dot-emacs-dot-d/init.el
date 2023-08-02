@@ -208,7 +208,6 @@
 
 (with-eval-after-load 'org
   (setq org-startup-indented t
-        org-hide-emphasis-markers t
         org-fontify-done-headline t
         org-hide-leading-stars t
         org-pretty-entities t
@@ -772,7 +771,8 @@
 
 (use-package doom-themes
   :config
-  (load-theme 'doom-nord t))
+  (load-theme 'doom-nord t)
+  (doom-themes-org-config))
 
 (use-package doom-modeline
   :demand

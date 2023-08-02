@@ -449,7 +449,6 @@ This gets placed in ~init.el~ and requires all the code following it related to 
 
   (with-eval-after-load 'org
     (setq org-startup-indented t
-          org-hide-emphasis-markers t
           org-fontify-done-headline t
           org-hide-leading-stars t
           org-pretty-entities t
@@ -477,19 +476,6 @@ This gets placed in ~init.el~ and requires all the code following it related to 
         org-archive-location (concat org-directory "/archive/%s::"))
 #+end_src
 
-** Show hidden elements under point
-#+BEGIN_SRC emacs-lisp
-  (use-package org-appear
-    :custom
-    (org-appear-autolinks t)
-    (org-appear-submarkers t)
-    (org-appear-delay 0.5)
-    :hook (org-mode . org-appear-mode))
-
-  ;; Start once on initial org load.
-  ;; The hook above takes care of starting it on subsequent loads.
-  (org-appear-mode)
-#+END_SRC
 ** Keybindings for org mode.
 
 #+BEGIN_SRC emacs-lisp
@@ -1396,7 +1382,8 @@ Disable auto composition everywhere outside of prog-mode.
 
   (use-package doom-themes
     :config
-    (load-theme 'doom-nord t))
+    (load-theme 'doom-nord t)
+    (doom-themes-org-config))
 #+END_SRC
 
 ** Mode line
@@ -1426,6 +1413,7 @@ Huge thanks to these amazing people whose configs I borrowed from:
 | C-c C-c    | Execute code block                          |
 | C-c C-o    | Open source block result                    |
 | C-c C-,    | Insert structure template (Eg: Code blocks) |
+| C-c C-l    | Insert or edit a link                       |
 | C-c '      | Edit the current source code block          |
 | srcel<TAB> | Insert elisp code block                     |
 |------------+---------------------------------------------|
