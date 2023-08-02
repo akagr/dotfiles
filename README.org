@@ -34,6 +34,14 @@ Clone the repo and symlink the files and directories to respective locations in 
   ln -s ~/dotfiles/config.fish ~/.config/fish/config.fish
 #+end_src
 
+*** Emacs setup
+After linking the dotfiles and starting emacs, all the package installation happens automatically. Once it settles, we need to run two lisp expressions.
+=Note=: These can also be run interactively using ~M-x~.
+
+#+BEGIN_SRC emacs-lisp
+  (all-the-icons-install-fonts)
+  (nerd-icons-install-fonts)
+#+END_SRC
 *** Git setup
 
 Linking ~.gitconfig~ brings most of my customisations, but we need to install ~gnupg~ and ~pinentry-mac~ to sign commits. Once both of these are install, inform ~git~
