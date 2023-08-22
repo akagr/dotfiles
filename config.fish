@@ -19,6 +19,16 @@ if test -e $HOME/.docker/bin
   fish_add_path $HOME/.docker/bin
 end
 
+# Add GNU sed if it exists
+# The default macOS sed doesn't work with standard flags
+if test -e /opt/homebrew/opt/gnu-sed/libexec/gnubin
+  fish_add_path /opt/homebrew/opt/gnu-sed/libexec/gnubin
+end
+
+if test -e /opt/homebrew/bin/zoxide
+    zoxide init fish | source
+end
+
 #========================== General Aliases ==========================
 alias du="dust -d 1"
 alias t="tmux attach || tmux"
