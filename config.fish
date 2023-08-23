@@ -25,10 +25,6 @@ if test -e /opt/homebrew/opt/gnu-sed/libexec/gnubin
   fish_add_path /opt/homebrew/opt/gnu-sed/libexec/gnubin
 end
 
-if test -e /opt/homebrew/bin/zoxide
-    zoxide init fish | source
-end
-
 #========================== General Aliases ==========================
 alias du="dust -d 1"
 alias t="tmux attach || tmux"
