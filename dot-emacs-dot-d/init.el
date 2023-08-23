@@ -769,10 +769,10 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package catppuccin-theme
+(use-package doom-themes
   :config
-  (setq catppuccin-flavor 'macchiato)
-  (load-theme 'catppuccin :no-confirm))
+  (load-theme 'doom-nord t)
+  (doom-themes-org-config))
 
 (use-package doom-modeline
   :demand
