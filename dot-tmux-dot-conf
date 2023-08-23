@@ -1,51 +1,27 @@
-# remap prefix to Control + a
+# Prefix key
+unbind C-b
 set -g prefix C-a
 bind C-a send-prefix
-set -g default-terminal "screen-256color"
-# force a reload of the config file
-unbind r
-bind r source-file ~/.tmux.conf
 
-# set numbering
-set -g base-index 1
-set -g pane-base-index 1
-set-option -g renumber-windows on
-
-# prevent wait for escape sequence
-set-option -s escape-time 10
-
-# start new window in same directory
+# Window and pane management
 bind c neww -c '#{pane_current_path}'
-
-# splitting
 unbind %
 bind v split-window -h -c "#{pane_current_path}"
 unbind '"'
 bind h split-window -v -c "#{pane_current_path}"
 
-# --- colors (solarized dark)
-# default statusbar colors
-set -g status-style fg=black,bg=blue
+# Window numbering
+set -g base-index 1
+set -g pane-base-index 1
+set-window-option -g pane-base-index 1
+set-option -g renumber-windows on
 
-# default window title colors
-setw -g window-status-style fg=black,bg=blue
+# Fix colors
+set-option -sa terminal-overrides ",xterm*:Tc"
 
-# active window title colors
-setw -g window-status-current-style fg=black,bg=white,dim
+# Packages
+set -g @plugin 'dreamsofcode-io/catppuccin-tmux'
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
 
-# pane border
-set -g pane-border-style fg=blue,bg=default
-
-# command line/message text
-set -g message-style fg=yellow,bg=black
-
-# pane number display
-set -g display-panes-active-colour yellow
-set -g display-panes-colour brightblue
-
-# clock
-setw -g clock-mode-colour yellow
-# --- end colors
-
-#status bar
-set -g status-justify centre
+run '~/.tmux/plugins/tpm/tpm'
