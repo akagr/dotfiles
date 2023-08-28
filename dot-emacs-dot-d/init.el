@@ -94,8 +94,14 @@
 (defun aa/open-scratch-buffer ()
   (interactive)
   (let* ((scratch-buffer-name "*scratch*")
-         (scratch-buffer (get-buffer-create scratch-buffer-name)))
-    (switch-to-buffer scratch-buffer)))
+         (scratch-buffer (get-buffer scratch-buffer-name)))
+    (if scratch-buffer
+        (switch-to-buffer scratch-buffer)
+      (let ((new-scratch-buffer (get-buffer-create scratch-buffer-name)))
+        (with-current-buffer new-scratch-buffer
+          (lisp-interaction-mode)
+          (insert initial-scratch-message))
+        (switch-to-buffer new-scratch-buffer)))))
 
 (cl-loop for file in '("/opt/homebrew/bin/fish"
                        "/usr/local/bin/fish"
