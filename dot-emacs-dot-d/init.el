@@ -91,6 +91,12 @@
   (evil-indent (buffer-end -1) (buffer-end 1))
   (evil-goto-mark ?\z))
 
+(defun aa/open-scratch-buffer ()
+  (interactive)
+  (let* ((scratch-buffer-name "*scratch*")
+         (scratch-buffer (get-buffer-create scratch-buffer-name)))
+    (switch-to-buffer scratch-buffer)))
+
 (cl-loop for file in '("/opt/homebrew/bin/fish"
                        "/usr/local/bin/fish"
                        "/bin/fish"
@@ -368,7 +374,8 @@
 "bb"  '(consult-buffer :which-key "list buffers")
 "bB"  '(ibuffer :which-key "ibuffer")
 "bc"  '(kill-this-buffer :which-key "kill current")
-"bd"  '(aa/close-and-kill-this-pane :which-key "close current"))
+"bd"  '(aa/close-and-kill-this-pane :which-key "close current")
+"bs"  '(aa/open-scratch-buffer :which-key "scratch"))
 
 (general-define-key
  "M-o" 'ace-window)

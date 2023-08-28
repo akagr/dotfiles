@@ -288,6 +288,14 @@ Delete whitespace on save
     (evil-indent (buffer-end -1) (buffer-end 1))
     (evil-goto-mark ?\z))
 #+END_SRC
+** Open or create a scratch buffer
+#+BEGIN_SRC emacs-lisp
+  (defun aa/open-scratch-buffer ()
+    (interactive)
+    (let* ((scratch-buffer-name "*scratch*")
+           (scratch-buffer (get-buffer-create scratch-buffer-name)))
+      (switch-to-buffer scratch-buffer)))
+#+END_SRC
 * Support Packages
 
 Loading emacs from finder or spotlight causes it to not load many environment variables. This package fixes it.
@@ -852,7 +860,8 @@ based on same template and are looking for drifts or differences.
   "bb"  '(consult-buffer :which-key "list buffers")
   "bB"  '(ibuffer :which-key "ibuffer")
   "bc"  '(kill-this-buffer :which-key "kill current")
-  "bd"  '(aa/close-and-kill-this-pane :which-key "close current"))
+  "bd"  '(aa/close-and-kill-this-pane :which-key "close current")
+  "bs"  '(aa/open-scratch-buffer :which-key "scratch"))
 #+END_SRC
 ** Window Keybindings
 #+BEGIN_SRC emacs-lisp
