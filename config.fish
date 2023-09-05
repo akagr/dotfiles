@@ -71,6 +71,10 @@ function vterm_printf;
     end
 end
 
+function speedtest;
+    curl -s "https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py" | python -
+end
+
 
 if test -e $HOME/.colima
     set -x DOCKER_HOST "unix://$HOME/.colima/default/docker.sock"
