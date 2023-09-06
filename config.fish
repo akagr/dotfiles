@@ -72,7 +72,7 @@ function vterm_printf;
 end
 
 function speedtest;
-    curl -s "https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py" | python -
+    curl -s "https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py" | python3 -
 end
 
 
