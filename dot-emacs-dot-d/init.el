@@ -645,7 +645,11 @@
   ;; :hook ((elixir-mode ruby-mode) . eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs
-               '(terraform-mode . ("terraform-ls" "serve"))))
+               '(terraform-mode . ("terraform-ls" "serve")))
+  (fset #'jsonrpc--log-event #'ignore)
+  (setq eglot-events-buffer-size 0)
+  (setq eglot-sync-connect nil)
+  (setq eglot-connect-timeout nil))
 
 ;; Helps with monorepo project where projects might not be the top level
 ;; (add-hook 'project-find-functions 'aa/find-mix-project nil nil)
