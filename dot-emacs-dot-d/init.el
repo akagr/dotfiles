@@ -25,6 +25,7 @@
 (column-number-mode) ;; show column number in mode line
 (global-auto-revert-mode) ;; reflect changes on disk to file automatically
 (show-paren-mode) ;; show matching delimiters
+(global-hl-line-mode) ;; highlight current line
 (global-display-line-numbers-mode) ;; show line numbers in all buffers
 
 (when (eq system-type 'darwin)
