@@ -58,6 +58,7 @@ end
 complete -c aws-load-credentials -f
 # Turn on completion for profile names
 complete -c aws-load-credentials -a "(aws configure list-profiles)"
+alias alc="aws-load-credentials"
 
 function vterm_printf;
     if begin; [  -n "$TMUX" ]  ; and  string match -q -r "screen|tmux" "$TERM"; end
