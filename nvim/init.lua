@@ -28,7 +28,7 @@ require('lazy').setup({
     'tpope/vim-sleuth',
 
     -- Shows possible key combinations after pressing a key
-    'folke/which-key.nvim',
+    { 'folke/which-key.nvim', opts = {} },
 
     -- Add documentation for vim's lua api
     'folke/neodev.nvim',
@@ -73,5 +73,3 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- Need xterm-256color terminal to support this
 vim.o.termguicolors = true
-
-
