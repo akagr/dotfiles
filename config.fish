@@ -28,6 +28,8 @@ end
 #========================== General Aliases ==========================
 alias du="dust -d 1"
 alias t="tmux attach || tmux"
+alias vim="nvim"
+alias vi="nvim"
 
 #=============================== DevOps ==============================
 alias k="kubectl"
