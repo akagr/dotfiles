@@ -43,7 +43,7 @@
 (defun aa/copy-file-path ()
   "Copy file path of current buffer relative to project root."
   (interactive)
-  (kill-new (file-relative-name buffer-file-name (project-root))))
+  (kill-new (buffer-file-name)))
 
 (defalias 'copy-file-path 'aa/copy-file-path)
 
