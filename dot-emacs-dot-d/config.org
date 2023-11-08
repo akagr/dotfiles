@@ -226,7 +226,7 @@ Delete whitespace on save
   (defun aa/copy-file-path ()
     "Copy file path of current buffer relative to project root."
     (interactive)
-    (kill-new (file-relative-name buffer-file-name (projectile-project-root))))
+    (kill-new (file-relative-name buffer-file-name (project-root))))
 
   (defalias 'copy-file-path 'aa/copy-file-path)
 #+END_SRC
@@ -745,9 +745,7 @@ Add extra completion commands ala =consult=.
   (use-package consult
     :init
     (setq xref-show-xrefs-function #'consult-xref
-          xref-show-definitions-function #'consult-xref)
-    :config
-    (setq consult-project-root-function #'projectile-project-root))
+          xref-show-definitions-function #'consult-xref))
 #+END_SRC
 
 =embark= allows 'right-click' behaviour. i.e. it allows adding contextual actions to things.
@@ -897,7 +895,7 @@ based on same template and are looking for drifts or differences.
 #+END_SRC
 ** Ibuffer
 
-*** Ibuffer projectile integration
+*** Ibuffer VC project integration
 #+BEGIN_SRC emacs-lisp
   (use-package ibuffer-vc
     :init
@@ -959,18 +957,13 @@ Set directories to be listed above files.
 #+END_SRC
 * Project Management
 
-Projectile plays pretty well with the other packages, including magit and dired sidebar.
 #+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :after evil
-    :init
-    (setq projectile-enable-caching t)
-    :config
-    (define-key projectile-mode-map (kbd "M-p") 'projectile-command-map)
-    (projectile-mode +1))
-
   (aa/leader-key-def
-    "p"  '(projectile-command-map :which-key "projectile"))
+    "p"  '(:ignore t :which-key "project")
+    "pp" '(project-switch-project :which-key "switch project")
+    "pb" '(consult-project-buffer :which-key "list buffers")
+    "pf" '(project-find-file :which-key "find file")
+    "pk" '(project-kill-buffers :which-key "kill buffers"))
 #+END_SRC
 
 * Programming Languages

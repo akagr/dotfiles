@@ -43,7 +43,7 @@
 (defun aa/copy-file-path ()
   "Copy file path of current buffer relative to project root."
   (interactive)
-  (kill-new (file-relative-name buffer-file-name (projectile-project-root))))
+  (kill-new (file-relative-name buffer-file-name (project-root))))
 
 (defalias 'copy-file-path 'aa/copy-file-path)
 
@@ -290,9 +290,7 @@
 (use-package consult
   :init
   (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
-  :config
-  (setq consult-project-root-function #'projectile-project-root))
+        xref-show-definitions-function #'consult-xref))
 
 (use-package embark
   :bind
@@ -454,16 +452,12 @@
 (evil-collection-define-key 'normal 'dired-sidebar-mode-map
   (kbd "R") 'aa/dired-do-rename)
 
-(use-package projectile
-  :after evil
-  :init
-  (setq projectile-enable-caching t)
-  :config
-  (define-key projectile-mode-map (kbd "M-p") 'projectile-command-map)
-  (projectile-mode +1))
-
 (aa/leader-key-def
-  "p"  '(projectile-command-map :which-key "projectile"))
+  "p"  '(:ignore t :which-key "project")
+  "pp" '(project-switch-project :which-key "switch project")
+  "pb" '(consult-project-buffer :which-key "list buffers")
+  "pf" '(project-find-file :which-key "find file")
+  "pk" '(project-kill-buffers :which-key "kill buffers"))
 
 (use-package tree-sitter)
 (use-package tree-sitter-langs
