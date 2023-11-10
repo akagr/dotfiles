@@ -40,70 +40,6 @@
           (lambda ()
             (modify-syntax-entry ?_ "w")))
 
-(defun aa/copy-file-path ()
-  "Copy file path of current buffer relative to project root."
-  (interactive)
-  (kill-new (buffer-file-name)))
-
-(defalias 'copy-file-path 'aa/copy-file-path)
-
-(defun aa/close-and-kill-this-pane ()
-  "If there are multiple windows, then close this one and kill its buffer"
-  (interactive)
-  (kill-this-buffer)
-  (if (not (one-window-p))
-      (delete-window)))
-
-(defun aa/find-mix-project (dir)
-  "Try to locate a Elixir project root by 'mix.exs' above DIR."
-  (let ((mix_root (locate-dominating-file dir "mix.exs")))
-    (message "Found Elixir project root in '%s' starting from '%s'" mix_root dir)
-    (if (stringp mix_root) `(transient . ,mix_root) nil)))
-
-(defun aa/find-rails-project (dir)
-  "Try to locate a Rails project root by 'Gemfile' above DIR."
-  (let ((rails_root (locate-dominating-file dir "Gemfile")))
-    (message "Found Rails project root in '%s' starting from '%s'" rails_root dir)
-    (if (stringp rails_root) `(transient . ,rails_root) nil)))
-
-(defun aa/print-startup-time ()
-  "Log emacs startup time"
-  (interactive)
-  (message "Emacs started in %s with %d garbage collections."
-           (format
-            "%.2f seconds"
-            (float-time
-             (time-subtract after-init-time before-init-time)))
-           gcs-done))
-
-(defun aa/dashcase (str)
-  "Converts a string to dash case.
-
-   Example:
-   (aa/dashcase \"Hello World\")
-   => \"hello-world\" "
-  (let ((down (downcase str)))
-    (replace-regexp-in-string "\\([^A-Za-z]\\)" "-" down)))
-
-(defun aa/format-buffer ()
-  "Formats the buffer"
-  (interactive)
-  (evil-set-marker ?\z)
-  (evil-indent (buffer-end -1) (buffer-end 1))
-  (evil-goto-mark ?\z))
-
-(defun aa/open-scratch-buffer ()
-  (interactive)
-  (let* ((scratch-buffer-name "*scratch*")
-         (scratch-buffer (get-buffer scratch-buffer-name)))
-    (if scratch-buffer
-        (switch-to-buffer scratch-buffer)
-      (let ((new-scratch-buffer (get-buffer-create scratch-buffer-name)))
-        (with-current-buffer new-scratch-buffer
-          (lisp-interaction-mode)
-          (insert initial-scratch-message))
-        (switch-to-buffer new-scratch-buffer)))))
-
 (cl-loop for file in '("/opt/homebrew/bin/fish"
                        "/usr/local/bin/fish"
                        "/bin/fish"
@@ -413,6 +349,23 @@
                 (ibuffer-do-sort-by-alphabetic)))))
 
 (setq ibuffer-show-empty-filter-groups nil)
+
+;; (use-package popper
+;;   :bind (("C-`"   . popper-toggle)
+;;          ("M-`"   . popper-cycle)
+;;          ("C-M-`" . popper-toggle-type))
+;;   :init
+;;   (setq popper-reference-buffers
+;;         '("\\*Messages\\*"
+;;           "Output\\*$"
+;;           "\\*Async Shell Command\\*"
+;;           help-mode
+;;           vterm-mode
+;;           helpful-mode
+;;           compilation-mode))
+;;   (popper-mode -1)
+;;   (popper-mode +1)
+;;   (popper-echo-mode +1))
 
 (defun aa/dired-sort-directories ()
   "Sort dired listings with directories first."
@@ -794,3 +747,79 @@
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 (setq ns-use-proxy-icon nil)
+
+(defun aa/copy-file-path ()
+  "Copy file path of current buffer relative to project root."
+  (interactive)
+  (kill-new (buffer-file-name)))
+
+(defalias 'copy-file-path 'aa/copy-file-path)
+
+(defun aa/close-and-kill-this-pane ()
+  "If there are multiple windows, then close this one and kill its buffer"
+  (interactive)
+  (kill-this-buffer)
+  (if (not (one-window-p))
+      (delete-window)))
+
+(defun aa/find-mix-project (dir)
+  "Try to locate a Elixir project root by 'mix.exs' above DIR."
+  (let ((mix_root (locate-dominating-file dir "mix.exs")))
+    (message "Found Elixir project root in '%s' starting from '%s'" mix_root dir)
+    (if (stringp mix_root) `(transient . ,mix_root) nil)))
+
+(defun aa/find-rails-project (dir)
+  "Try to locate a Rails project root by 'Gemfile' above DIR."
+  (let ((rails_root (locate-dominating-file dir "Gemfile")))
+    (message "Found Rails project root in '%s' starting from '%s'" rails_root dir)
+    (if (stringp rails_root) `(transient . ,rails_root) nil)))
+
+(defun aa/print-startup-time ()
+  "Log emacs startup time"
+  (interactive)
+  (message "Emacs started in %s with %d garbage collections."
+           (format
+            "%.2f seconds"
+            (float-time
+             (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(defun aa/dashcase (str)
+  "Converts a string to dash case.
+
+   Example:
+   (aa/dashcase \"Hello World\")
+   => \"hello-world\" "
+  (let ((down (downcase str)))
+    (replace-regexp-in-string "\\([^A-Za-z]\\)" "-" down)))
+
+(defun aa/format-buffer ()
+  "Formats the buffer"
+  (interactive)
+  (evil-set-marker ?\z)
+  (evil-indent (buffer-end -1) (buffer-end 1))
+  (evil-goto-mark ?\z))
+
+(defun aa/open-scratch-buffer ()
+  (interactive)
+  (let* ((scratch-buffer-name "*scratch*")
+         (scratch-buffer (get-buffer scratch-buffer-name)))
+    (if scratch-buffer
+        (switch-to-buffer scratch-buffer)
+      (let ((new-scratch-buffer (get-buffer-create scratch-buffer-name)))
+        (with-current-buffer new-scratch-buffer
+          (lisp-interaction-mode)
+          (insert initial-scratch-message))
+        (switch-to-buffer new-scratch-buffer)))))
+
+(defun aa/shell-command (text)
+  "Search the text in google using default browser"
+  (interactive (list (read-from-minibuffer
+                      "> "
+                      (if (region-active-p)
+                          (buffer-substring (region-beginning) (region-end))
+                        (thing-at-point 'word)))))
+  (shell-command text))
+
+(aa/leader-key-def
+  "es" '(aa/shell-command :which-key "shell command"))
