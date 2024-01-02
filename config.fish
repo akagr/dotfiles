@@ -5,13 +5,13 @@ end
 #================================ Path ===============================
 
 # Adds homebrew and installed packages to the path
-if test -e /opt/homebrew/bin/brew
-    eval (/opt/homebrew/bin/brew shellenv)
+if test -e /usr/local/bin/brew
+    eval (/usr/local/bin/brew shellenv)
 end
 
 # Adds completions for asdf version manager to fish
-if test -e /opt/homebrew/opt/asdf/libexec/asdf.fish
-    source /opt/homebrew/opt/asdf/libexec/asdf.fish
+if test -e /usr/local/opt/asdf/libexec/asdf.fish
+    source /usr/local/opt/asdf/libexec/asdf.fish
 end
 
 # Adds docker cli if it exists
@@ -21,8 +21,8 @@ end
 
 # Add GNU sed if it exists
 # The default macOS sed doesn't work with standard flags
-if test -e /opt/homebrew/opt/gnu-sed/libexec/gnubin
-  fish_add_path /opt/homebrew/opt/gnu-sed/libexec/gnubin
+if test -e /usr/local/opt/gnu-sed/libexec/gnubin
+  fish_add_path /usr/local/opt/gnu-sed/libexec/gnubin
 end
 
 #========================== General Aliases ==========================
