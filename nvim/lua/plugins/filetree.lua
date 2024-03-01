@@ -28,6 +28,6 @@ return {
     })
   end,
   keys = {
-    { "<leader>n", "<cmd>Neotree toggle<cr>", desc = "[N]eoTree" },
+    { "<leader>n", "<cmd>Neotree toggle<cr>", desc = "[n]eoTree" },
   },
 }

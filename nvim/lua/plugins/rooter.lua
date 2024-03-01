@@ -19,7 +19,7 @@ return {
       function()
         require 'telescope'.extensions.projects.projects {}
       end,
-      desc = "[P]rojects",
+      desc = "[p]rojects",
     },
   },
 }
