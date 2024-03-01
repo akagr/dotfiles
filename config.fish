@@ -82,3 +82,6 @@ end
 if test -e $HOME/.colima
     set -x DOCKER_HOST "unix://$HOME/.colima/default/docker.sock"
 end
+
+# Suppress CDK warning for new/unsupported node version
+set -x JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION true
