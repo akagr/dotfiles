@@ -1,33 +1,20 @@
--- Unless you are still migrating, remove the deprecated commands from v1.x
-vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-
 return {
-  "nvim-neo-tree/neo-tree.nvim",
-  branch = "v3.x",
+  'nvim-tree/nvim-tree.lua',
+  version = '*',
+  lazy = false,
   dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-    "MunifTanjim/nui.nvim",
+    'nvim-tree/nvim-web-devicons',
+    'nvim-lua/plenary.nvim'
   },
   config = function()
-    require('neo-tree').setup({
-      buffers = {
-        follow_current_file = { enabled = true },
-      },
-      filesystem = {
-        follow_current_file = { enabled = true },
-        use_libuv_file_watcher = true,
-        filtered_items = {
-          hide_dotfiles = false,
-          never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
-            ".DS_Store",
-            "thumbs.db"
-          },
-        },
-      },
+    require('nvim-tree').setup({
+      update_focused_file = {
+        enable = true,
+        update_root = true
+      }
     })
   end,
   keys = {
-    { "<leader>n", "<cmd>Neotree toggle<cr>", desc = "[n]eoTree" },
-  },
+    { '<leader>n', '<cmd>NvimTreeToggle<cr>', desc = '[n]vim tree' }
+  }
 }
