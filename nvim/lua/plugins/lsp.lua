@@ -8,21 +8,24 @@ return {
   branch = 'v3.x',
   dependencies = {
     'neovim/nvim-lspconfig',
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/nvim-cmp',
-    'L3MON4D3/LuaSnip',
     'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim'
+    'williamboman/mason-lspconfig.nvim',
+    'hrsh7th/nvim-cmp',
+    'hrsh7th/cmp-nvim-lsp',
+    'L3MON4D3/LuaSnip',
   },
   event = { 'BufReadPre', 'BufNewFile' },
   cmd = 'Mason',
   config = function()
+    -- lsp zero --
     local lsp_zero = require('lsp-zero')
     lsp_zero.on_attach(function(_, bufnr)
       -- see :help lsp-zero-keybindings
       -- to learn the available actions
       lsp_zero.default_keymaps({buffer = bufnr})
     end)
+
+    -- mason --
     require('mason').setup()
     require('mason-lspconfig').setup({
       ensure_installed = {},
@@ -31,6 +34,7 @@ return {
       },
     })
 
+    -- nvim-cmp --
     local cmp = require('cmp')
     local cmp_action = require('lsp-zero').cmp_action()
     cmp.setup({

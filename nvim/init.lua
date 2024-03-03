@@ -30,9 +30,6 @@ require('lazy').setup({
     -- Detects tabstops and shiftwidth automatically
     'tpope/vim-sleuth',
 
-    -- Shows possible key combinations after pressing a key
-    { 'folke/which-key.nvim', opts = {} },
-
     -- Add documentation for vim's lua api
     'folke/neodev.nvim',
 
