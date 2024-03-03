@@ -18,6 +18,7 @@ return {
       b = {
         name = "+buffer",
         b = { "<cmd>Telescope buffers<cr>", "list [b]uffers" },
+        p = { "<cmd>Telescope buffers only_cwd=true<cr>", "list [p]roject buffers" },
         d = { "<cmd>bd<cr>", "[d]elete buffer" },
       },
     }, { prefix = '<leader>', silent = false })
