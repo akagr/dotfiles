@@ -13,6 +13,7 @@ return {
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-nvim-lsp',
     'L3MON4D3/LuaSnip',
+    'folke/which-key.nvim',
   },
   event = { 'BufReadPre', 'BufNewFile' },
   cmd = 'Mason',
@@ -24,6 +25,35 @@ return {
       -- to learn the available actions
       lsp_zero.default_keymaps({buffer = bufnr})
     end)
+
+    -- lsp keybindings --
+    vim.api.nvim_create_autocmd('LspAttach', {
+      group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+      callback = function(ev)
+        -- Enable completion triggered by <c-x><c-o>
+        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+        local wk = require('which-key')
+        wk.register({
+          c = {
+            name = "+code",
+            d = { vim.lsp.buf.declaration, '[d]eclaration'},
+            D = { vim.lsp.buf.definition, '[D]efinition'},
+            h = { vim.lsp.buf.hover, '[h]elp'},
+            i = { vim.lsp.buf.implementation, '[i]mplementation'},
+            s = { vim.lsp.buf.signature_help, '[s]ignature'},
+            t = { vim.lsp.buf.type_definition, '[t]ype definition'},
+            n = { vim.lsp.buf.rename, 're[n]ame'},
+            r = { vim.lsp.buf.references, '[r]eferences'},
+            f = { function() vim.lsp.buf.format({async = true}) end, '[r]eferences'},
+          },
+        }, { prefix = '<leader>', silent = false, buffer = ev.buf })
+
+        wk.register({
+          ["ca"] = { vim.lsp.buf.code_action, '[a]ction'}
+        }, { prefix = '<leader>', silent = false, buffer = ev.buf, mode = {'n', 'v'} })
+      end,
+    })
 
     -- mason --
     require('mason').setup()
