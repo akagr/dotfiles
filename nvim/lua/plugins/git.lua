@@ -18,7 +18,8 @@ return {
       integrations = {
         telescope = true,
         diffview = true,
-      }
+      },
+      console_timeout = 15000,
     })
     local wk = require('which-key')
     wk.register({
