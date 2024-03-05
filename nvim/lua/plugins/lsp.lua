@@ -14,6 +14,7 @@ return {
     'hrsh7th/cmp-nvim-lsp',
     'L3MON4D3/LuaSnip',
     'folke/which-key.nvim',
+    'nvimtools/none-ls.nvim'
   },
   event = { 'BufReadPre', 'BufNewFile' },
   cmd = 'Mason',
@@ -63,6 +64,34 @@ return {
         lsp_zero.default_setup,
       },
     })
+
+    require'lspconfig'.yamlls.setup{
+      -- on_attach = require'lsp'.common_on_attach,
+      settings = {
+        yaml = {
+          format = {
+            enable = true,
+          },
+          hover = true,
+          completion = true,
+
+          customTags = {
+            "!fn", "!And", "!If", "!Not", "!Equals", "!Or", "!FindInMap sequence",
+            "!Base64", "!Cidr", "!Ref", "!Ref Scalar", "!Sub", "!Sub sequence", "!GetAtt",
+            "!GetAZs", "!ImportValue", "!Select", "!Split", "!Join sequence"
+          },
+        },
+      },
+    }
+
+    -- none-ls --
+    local null_ls = require("null-ls")
+    null_ls.setup({
+      sources = {
+        null_ls.builtins.diagnostics.cfn_lint,
+      }
+    })
+
 
     -- nvim-cmp --
     local cmp = require('cmp')
