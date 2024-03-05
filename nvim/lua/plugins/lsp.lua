@@ -14,6 +14,7 @@ return {
     'hrsh7th/cmp-nvim-lsp',
     'L3MON4D3/LuaSnip',
     'folke/which-key.nvim',
+    'folke/trouble.nvim',
     'nvimtools/none-ls.nvim'
   },
   event = { 'BufReadPre', 'BufNewFile' },
@@ -43,7 +44,8 @@ return {
             h = { vim.lsp.buf.hover, '[h]elp'},
             i = { vim.lsp.buf.implementation, '[i]mplementation'},
             s = { vim.lsp.buf.signature_help, '[s]ignature'},
-            t = { vim.lsp.buf.type_definition, '[t]ype definition'},
+            T = { vim.lsp.buf.type_definition, '[T]ype definition'},
+            t = { require('trouble').toggle, '[t]rouble'},
             n = { vim.lsp.buf.rename, 're[n]ame'},
             r = { vim.lsp.buf.references, '[r]eferences'},
             f = { function() vim.lsp.buf.format({async = true}) end, '[r]eferences'},
@@ -65,7 +67,7 @@ return {
       },
     })
 
-    require'lspconfig'.yamlls.setup{
+    require'lspconfig'.yamlls.setup({
       -- on_attach = require'lsp'.common_on_attach,
       settings = {
         yaml = {
@@ -78,11 +80,12 @@ return {
           customTags = {
             "!fn", "!And", "!If", "!Not", "!Equals", "!Or", "!FindInMap sequence",
             "!Base64", "!Cidr", "!Ref", "!Ref Scalar", "!Sub", "!Sub sequence", "!GetAtt",
-            "!GetAZs", "!ImportValue", "!Select", "!Split", "!Join sequence"
+            "!GetAZs", "!ImportValue", "!Select", "!Split", "!Join sequence",
+            "!Select sequence", "!Split sequence"
           },
         },
       },
-    }
+    })
 
     -- none-ls --
     local null_ls = require("null-ls")
