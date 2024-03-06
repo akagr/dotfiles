@@ -20,6 +20,13 @@ return {
         diffview = true,
       },
       console_timeout = 15000,
+      mappings = {
+        popup = {
+          ["p"] = "PushPopup",
+          ["F"] = "PullPopup",
+          ["P"] = false
+        }
+      }
     })
     local wk = require('which-key')
     wk.register({
