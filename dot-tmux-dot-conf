@@ -20,8 +20,9 @@ set-option -g renumber-windows on
 set-option -sa terminal-overrides ",xterm*:Tc"
 
 # Packages
-set -g @plugin 'dreamsofcode-io/catppuccin-tmux'
 set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'dreamsofcode-io/catppuccin-tmux'
 set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'christoomey/vim-tmux-navigator'
 
 run '~/.tmux/plugins/tpm/tpm'
