@@ -5,8 +5,9 @@ end
 #================================ Path ===============================
 
 # Adds homebrew and installed packages to the path
-if test -e /usr/local/bin/brew
-    eval (/usr/local/bin/brew shellenv)
+if test -e /opt/homebrew/bin/brew
+    fish_add_path /opt/homebrew/bin
+    eval (/opt/homebrew/bin/brew shellenv)
 end
 
 # Adds completions for asdf version manager to fish
