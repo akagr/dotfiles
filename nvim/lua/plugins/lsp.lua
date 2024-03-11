@@ -119,7 +119,7 @@ return {
           ['<C-b>'] = cmp_action.luasnip_jump_backward(),
       },
       completion = {
-        completeopt = 'menu,menuone,longest'
+        completeopt = 'menu,menuone,longest,noselect,popup'
       },
       window = {
           completion = cmp.config.window.bordered(),
