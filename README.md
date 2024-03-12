@@ -15,8 +15,8 @@ of the dotfiles. Everything mentioned here is installable via
 - [tmux](https://github.com/tmux/tmux/wiki) mainly for tabbing multiple shell sessions, but detach/attach does come in handy sometimes
   - Current config depends on [tmux plugin manager](https://github.com/tmux-plugins/tpm).
 - [neovim](https://neovim.io/) is my primary way to consume and produce code
-  - `brew install ripgrep` is needed to make project search work
 - [homebrew fonts](https://github.com/Homebrew/homebrew-cask-fonts) is a repository for all the nerd fonts
+  - I use Jetbrains Mono Nerd Font in my terminal, editor etc. The homebrew package is called `font-jetbrains-mono-nerd-font`.
 
 ### Optional
 
@@ -31,15 +31,26 @@ The optional packages aren't mandatory for me to get a productive environment. I
 Clone the repo and symlink the files and directories to respective
 locations in home. For example:
 
-``` bash
+```fish
 git clone git@github.com:akagr/dotfiles.git ~/dotfiles
 
-ln -s ~/dotfiles/dot-emacs-dot-d ~/.emacs.d
 ln -s ~/dotfiles/dot-gitconfig ~/.gitconfig
 ln -s ~/dotfiles/dot-tmux-dot-conf ~/.tmux.conf
 ln -s ~/dotfiles/nvim ~/.config/nvim
 mkdir -p ~/.config/fish
 ln -s ~/dotfiles/config.fish ~/.config/fish/config.fish
+
+# Optional
+ln -s ~/dotfiles/dot-emacs-dot-d ~/.emacs.d
+```
+
+### Neovim setup
+
+We need a few binaries that some functionality I use depends on but isn't automatically installed.
+
+```fish
+brew install fzf ripgrep
+fzf install
 ```
 
 ### Emacs setup
@@ -49,7 +60,7 @@ installation happens automatically. Once it settles, we need to run two
 lisp expressions. `Note`{.verbatim}: These can also be run interactively
 using `M-x`.
 
-``` {.commonlisp org-language="emacs-lisp"}
+```lisp
 (all-the-icons-install-fonts)
 (nerd-icons-install-fonts)
 ```
@@ -60,14 +71,14 @@ Linking `.gitconfig` brings most of my customisations, but we need to
 install `gnupg` and `pinentry-mac` to sign commits. Once both of these
 are install, inform `git` of `pinentry-mac` with:
 
-``` bash
+```fish
 echo "pinentry-program $(which pinentry-mac)" >> ~/.gnupg/gpg-agent.conf
 gpgconf --kill gpg-agent
 ```
 
 Additionally, import an existing GPG key with:
 
-``` bash
+```fish
 gpg --import private.key
 ```
 
