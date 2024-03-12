@@ -21,6 +21,14 @@ return {
         p = { "<cmd>Telescope buffers only_cwd=true<cr>", "list [p]roject buffers" },
         d = { ":bp<bar>sp<bar>bn<bar>bd<cr>", "[d]elete buffer" },
       },
+      s = {
+        name = "+search",
+        s = { "<cmd>Telescope live_grep<cr>", "[s]earch cwd"}
+      },
+      t = {
+        name = "+telescope",
+        t = { "<cmd>Telescope resume<cr>", "resume [t]elescope" },
+      },
     }, { prefix = '<leader>', silent = false })
 
     wk.register({
