@@ -50,6 +50,7 @@ vim.o.hlsearch = false
 
 -- Turn on line numbers
 vim.wo.number = true
+vim.wo.relativenumber = true
 
 -- Sync clipboard between OS and Neovim.
 --  See `:help 'clipboard'`
@@ -57,6 +58,7 @@ vim.o.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.o.breakindent = true
+vim.o.wrap = false
 
 -- Save undo history
 vim.o.undofile = true
