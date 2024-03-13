@@ -13,10 +13,11 @@ of the dotfiles. Everything mentioned here is installable via
 - [fish](https://fishshell.com/) shell
 - [asdf](https://asdf-vm.com/) for versions of various runtimes (languages like ruby, node, sbcl etc.)
 - [tmux](https://github.com/tmux/tmux/wiki) mainly for tabbing multiple shell sessions, but detach/attach does come in handy sometimes
-  - Current config depends on [tmux plugin manager](https://github.com/tmux-plugins/tpm).
+  - Current config depends on [tmux plugin manager](https://github.com/tmux-plugins/tpm)
 - [neovim](https://neovim.io/) is my primary way to consume and produce code
 - [homebrew fonts](https://github.com/Homebrew/homebrew-cask-fonts) is a repository for all the nerd fonts
-  - I use Jetbrains Mono Nerd Font in my terminal, editor etc. The homebrew package is called `font-jetbrains-mono-nerd-font`.
+  - I use Jetbrains Mono Nerd Font in my terminal, editor etc. The homebrew package is called `font-jetbrains-mono-nerd-font`
+- [alacritty](https://github.com/alacritty/alacritty) is my primary terminal emulator
 
 ### Optional
 
@@ -39,6 +40,7 @@ ln -s ~/dotfiles/dot-tmux-dot-conf ~/.tmux.conf
 ln -s ~/dotfiles/nvim ~/.config/nvim
 mkdir -p ~/.config/fish
 ln -s ~/dotfiles/config.fish ~/.config/fish/config.fish
+ln -s ~/dotfiles/alacritty ~/.config/alacritty
 
 # Optional
 ln -s ~/dotfiles/dot-emacs-dot-d ~/.emacs.d
