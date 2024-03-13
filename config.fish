@@ -11,8 +11,8 @@ if test -e /opt/homebrew/bin/brew
 end
 
 # Adds completions for asdf version manager to fish
-if test -e /usr/local/opt/asdf/libexec/asdf.fish
-    source /usr/local/opt/asdf/libexec/asdf.fish
+if test -e /opt/homebrew/opt/asdf/libexec/asdf.fish
+    source /opt/homebrew/opt/asdf/libexec/asdf.fish
 end
 
 # Adds docker cli if it exists
