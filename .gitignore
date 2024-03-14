@@ -28,3 +28,5 @@ dot-emacs-dot-d/org-persist
 /dot-emacs-dot-d/persist/
 /dot-emacs-dot-d/.org-id-locations
 emacs-custom.el
+
+alacritty/themes
