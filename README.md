@@ -51,7 +51,7 @@ ln -s ~/dotfiles/dot-emacs-dot-d ~/.emacs.d
 We need a few binaries that some functionality I use depends on but isn't automatically installed.
 
 ```fish
-brew install fzf ripgrep
+brew install fzf ripgrep gnu-sed
 fzf install
 ```
 
