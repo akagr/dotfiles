@@ -17,7 +17,7 @@ of the dotfiles. Everything mentioned here is installable via
 - [neovim](https://neovim.io/) is my primary way to consume and produce code
 - [homebrew fonts](https://github.com/Homebrew/homebrew-cask-fonts) is a repository for all the nerd fonts
   - I use Jetbrains Mono Nerd Font in my terminal, editor etc. The homebrew package is called `font-jetbrains-mono-nerd-font`
-- [alacritty](https://github.com/alacritty/alacritty) is my primary terminal emulator
+- [iTerm2](https://iterm2.com) is my primary terminal emulator
 
 ### Optional
 
@@ -40,7 +40,6 @@ ln -s ~/dotfiles/dot-tmux-dot-conf ~/.tmux.conf
 ln -s ~/dotfiles/nvim ~/.config/nvim
 mkdir -p ~/.config/fish
 ln -s ~/dotfiles/config.fish ~/.config/fish/config.fish
-ln -s ~/dotfiles/alacritty ~/.config/alacritty
 
 # Optional
 ln -s ~/dotfiles/dot-emacs-dot-d ~/.emacs.d
