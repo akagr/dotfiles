@@ -10,9 +10,18 @@ if test -e /opt/homebrew/bin/brew
     eval (/opt/homebrew/bin/brew shellenv)
 end
 
+if test -e /usr/local/bin/brew
+    fish_add_path /usr/local/bin
+    eval (/usr/local/bin/brew shellenv)
+end
+
 # Adds completions for asdf version manager to fish
 if test -e /opt/homebrew/opt/asdf/libexec/asdf.fish
     source /opt/homebrew/opt/asdf/libexec/asdf.fish
+end
+
+if test -e /usr/local/opt/asdf/libexec/asdf.fish
+    source /usr/local/opt/asdf/libexec/asdf.fish
 end
 
 # Adds docker cli if it exists
