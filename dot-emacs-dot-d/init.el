@@ -734,10 +734,19 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package doom-themes
+(use-package modus-themes
+  :ensure t
   :config
-  (load-theme 'doom-nord t)
-  (doom-themes-org-config))
+  ;; Add all your customizations prior to loading the themes
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs t)
+
+  ;; Maybe define some palette overrides, such as by using our presets
+  (setq modus-themes-common-palette-overrides
+        modus-themes-preset-overrides-intense)
+
+  ;; Load the theme of your choice.
+  (load-theme 'modus-vivendi-tinted :no-confirm))
 
 (use-package doom-modeline
   :demand
