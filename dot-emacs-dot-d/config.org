@@ -1068,8 +1068,10 @@ Add ~vterm~, the most complete terminal emulator for emacs, and supporting packa
   (use-package vterm
     :commands (vterm)
     :config
-    (add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode -1)))
-    (add-hook 'vterm-mode-hook (lambda () (setq mode-line-format nil))))
+    (add-hook 'vterm-mode-hook (lambda ()
+                                 (display-line-numbers-mode -1)
+                                 (setq-local global-hl-line-mode nil
+                                             mode-line-format nil))))
 
   (use-package multi-vterm
     :commands (multi-vterm
