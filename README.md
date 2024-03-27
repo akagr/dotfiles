@@ -14,17 +14,12 @@ of the dotfiles. Everything mentioned here is installable via
 - [asdf](https://asdf-vm.com/) for versions of various runtimes (languages like ruby, node, sbcl etc.)
 - [tmux](https://github.com/tmux/tmux/wiki) mainly for tabbing multiple shell sessions, but detach/attach does come in handy sometimes
   - Current config depends on [tmux plugin manager](https://github.com/tmux-plugins/tpm)
-- [neovim](https://neovim.io/) is my primary way to consume and produce code
+- [emacs](https://www.gnu.org/software/emacs/) and [neovim](https://neovim.io/) are the two editors I use the most. I switch between them
+    sometimes but generally stick to emacs.
+  - I use [emacs-plus](https://github.com/d12frosted/homebrew-emacs-plus) flavor because I find it works best for my on a mac.
 - [homebrew fonts](https://github.com/Homebrew/homebrew-cask-fonts) is a repository for all the nerd fonts
   - I use Jetbrains Mono Nerd Font in my terminal, editor etc. The homebrew package is called `font-jetbrains-mono-nerd-font`
 - [iTerm2](https://iterm2.com) is my primary terminal emulator
-
-### Optional
-
-- [emacs](https://www.gnu.org/software/emacs/) used to be my main editor. I still keep it around and use it sparingly.
-  I use [emacs-plus](https://github.com/d12frosted/homebrew-emacs-plus) flavor because I find it works best for my on a mac. 
-
-The optional packages aren't mandatory for me to get a productive environment. I've worked on these, but don't always set them up on all my machines.
 
 
 ## Installation
@@ -37,21 +32,10 @@ git clone git@github.com:akagr/dotfiles.git ~/dotfiles
 
 ln -s ~/dotfiles/dot-gitconfig ~/.gitconfig
 ln -s ~/dotfiles/dot-tmux-dot-conf ~/.tmux.conf
+ln -s ~/dotfiles/dot-emacs-dot-d ~/.emacs.d
 ln -s ~/dotfiles/nvim ~/.config/nvim
 mkdir -p ~/.config/fish
 ln -s ~/dotfiles/config.fish ~/.config/fish/config.fish
-
-# Optional
-ln -s ~/dotfiles/dot-emacs-dot-d ~/.emacs.d
-```
-
-### Neovim setup
-
-We need a few binaries that some functionality I use depends on but isn't automatically installed.
-
-```fish
-brew install fzf ripgrep gnu-sed
-fzf install
 ```
 
 ### Emacs setup
@@ -64,6 +48,15 @@ using `M-x`.
 ```lisp
 (all-the-icons-install-fonts)
 (nerd-icons-install-fonts)
+```
+
+### Neovim setup
+
+We need a few binaries that some functionality I use depends on but isn't automatically installed.
+
+```fish
+brew install fzf ripgrep gnu-sed
+fzf install
 ```
 
 ### Git setup
