@@ -14,8 +14,7 @@ of the dotfiles. Everything mentioned here is installable via
 - [asdf](https://asdf-vm.com/) for versions of various runtimes (languages like ruby, node, sbcl etc.)
 - [tmux](https://github.com/tmux/tmux/wiki) mainly for tabbing multiple shell sessions, but detach/attach does come in handy sometimes
   - Current config depends on [tmux plugin manager](https://github.com/tmux-plugins/tpm)
-- [emacs](https://www.gnu.org/software/emacs/) and [neovim](https://neovim.io/) are the two editors I use the most. I switch between them
-    sometimes but generally stick to emacs.
+- [emacs](https://www.gnu.org/software/emacs/) and [neovim](https://neovim.io/) are the two editors I use the most.
   - I use [emacs-plus](https://github.com/d12frosted/homebrew-emacs-plus) flavor because I find it works best for my on a mac.
 - [homebrew fonts](https://github.com/Homebrew/homebrew-cask-fonts) is a repository for all the nerd fonts
   - I use Jetbrains Mono Nerd Font in my terminal, editor etc. The homebrew package is called `font-jetbrains-mono-nerd-font`
