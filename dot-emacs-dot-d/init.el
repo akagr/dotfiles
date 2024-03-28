@@ -219,9 +219,11 @@
 
 (use-package orderless
   :custom
-  (completion-styles '(orderless))
+  (completion-styles '(orderless partial-completion basic))
   (completion-category-defaults nil)
-  (completion-category-overrides '(file (styles partial-completion))))
+  (completion-category-overrides '((file (styles partial-completion))
+                                   (eglot (styles orderless))
+                                   (eglot-capf (styles orderless)))))
 
 (use-package consult
   :init
@@ -590,20 +592,11 @@
 (use-package eldoc-box
   :hook (prog-mode . eldoc-box-hover-mode))
 
-(use-package eglot
-  :commands (eglot eglot-ensure)
-  ;; :hook ((elixir-mode ruby-mode) . eglot-ensure)
-  :config
+(with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
                '(terraform-mode . ("terraform-ls" "serve")))
-  (fset #'jsonrpc--log-event #'ignore)
-  (setq eglot-events-buffer-size 0)
-  (setq eglot-sync-connect nil)
-  (setq eglot-connect-timeout nil))
-
-;; Helps with monorepo project where projects might not be the top level
-;; (add-hook 'project-find-functions 'aa/find-mix-project nil nil)
-;; (add-hook 'project-find-functions 'aa/find-rails-project nil nil)
+  (setq completion-category-defaults nil))
+(advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
 
 (use-package flycheck
   :hook (prog-mode . flycheck-mode)

@@ -650,9 +650,11 @@ Add =orderless= for saner ordering and filtering of completion candidates.
 #+BEGIN_SRC emacs-lisp
   (use-package orderless
     :custom
-    (completion-styles '(orderless))
+    (completion-styles '(orderless partial-completion basic))
     (completion-category-defaults nil)
-    (completion-category-overrides '(file (styles partial-completion))))
+    (completion-category-overrides '((file (styles partial-completion))
+                                     (eglot (styles orderless))
+                                     (eglot-capf (styles orderless)))))
 #+END_SRC
 
 
@@ -1153,21 +1155,15 @@ This package shows the information as a hover childframe up top. Much easier to 
 Eglot is an awesome LSP (language server protocol) package. It gives IDE intellisense like completions for supporting language stacks.
 Also helps with errors and accessing documentation, as well as visiting definitions and references.
 #+BEGIN_SRC emacs-lisp
-  (use-package eglot
-    :commands (eglot eglot-ensure)
-    ;; :hook ((elixir-mode ruby-mode) . eglot-ensure)
-    :config
+  (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs
                  '(terraform-mode . ("terraform-ls" "serve")))
-    (fset #'jsonrpc--log-event #'ignore)
-    (setq eglot-events-buffer-size 0)
-    (setq eglot-sync-connect nil)
-    (setq eglot-connect-timeout nil))
+    (setq completion-category-defaults nil))
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+#+END_SRC
 
-  ;; Helps with monorepo project where projects might not be the top level
-  ;; (add-hook 'project-find-functions 'aa/find-mix-project nil nil)
-  ;; (add-hook 'project-find-functions 'aa/find-rails-project nil nil)
-
+Flycheck is the most popular linter/checker for code and helps interface with cli tools.
+#+BEGIN_SRC emacs-lisp
   (use-package flycheck
     :hook (prog-mode . flycheck-mode)
     :custom
