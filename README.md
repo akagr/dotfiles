@@ -54,7 +54,7 @@ using `M-x`.
 We need a few binaries that some functionality I use depends on but isn't automatically installed.
 
 ```fish
-brew install fzf ripgrep gnu-sed
+brew install fd fzf ripgrep gnu-sed
 fzf install
 ```
 

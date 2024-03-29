@@ -77,7 +77,7 @@ return {
           format = {
             enable = true,
           },
-          hover = true,
+          hover = false,
           completion = true,
 
           customTags = {
