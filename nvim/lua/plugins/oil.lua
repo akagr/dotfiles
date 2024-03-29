@@ -27,6 +27,10 @@ return {
     win_options = {
       winbar = "%{v:lua.require('oil').get_current_dir()}",
     },
+    keymaps = {
+      ['<'] = 'actions.parent',
+      ['>'] = 'actions.select',
+    },
   },
   dependencies = { "nvim-tree/nvim-web-devicons" },
   keys = {
