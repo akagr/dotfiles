@@ -70,7 +70,9 @@ return {
       },
     })
 
-    require'lspconfig'.yamlls.setup({
+    local lspconfig = require('lspconfig')
+
+    lspconfig.yamlls.setup({
       -- on_attach = require'lsp'.common_on_attach,
       settings = {
         yaml = {
@@ -89,6 +91,16 @@ return {
         },
       },
     })
+
+    lspconfig.helm_ls.setup {
+      settings = {
+        ['helm-ls'] = {
+          yamlls = {
+            path = "yaml-language-server",
+          }
+        }
+      }
+    }
 
     -- none-ls --
     local null_ls = require("null-ls")
