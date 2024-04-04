@@ -11,6 +11,8 @@ bind v split-window -h -c "#{pane_current_path}"
 
 unbind '"'
 bind h split-window -v -c "#{pane_current_path}"
+bind-key -n C-S-Left previous-window
+bind-key -n C-S-Right next-window
 
 # Window numbering
 set -g base-index 1
