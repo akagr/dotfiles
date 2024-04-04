@@ -34,6 +34,8 @@ set -g @plugin 'christoomey/vim-tmux-navigator'
 
 # Theme
 set -g @plugin 'niksingh710/minimal-tmux-status'
+set -g @minimal-tmux-justify "left"
+set -g @minimal-tmux-indicator-str " λ "
 
 #----------------------------------
 # Initialise packages
