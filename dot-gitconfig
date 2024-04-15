@@ -47,3 +47,5 @@
 	useHttpPath = true
 [commit]
 	gpgSign = true
+[fetch]
+	prune = true

@@ -44,6 +44,7 @@ return {
             name = "+code",
             d = { vim.lsp.buf.declaration, '[d]eclaration'},
             D = { vim.lsp.buf.definition, '[D]efinition'},
+            f = { function() vim.lsp.buf.format({async = true}) end, '[f]format'},
             h = { vim.lsp.buf.hover, '[h]elp'},
             i = { vim.lsp.buf.implementation, '[i]mplementation'},
             s = { vim.lsp.buf.signature_help, '[s]ignature'},
@@ -51,7 +52,6 @@ return {
             t = { require('trouble').toggle, '[t]rouble'},
             n = { vim.lsp.buf.rename, 're[n]ame'},
             r = { vim.lsp.buf.references, '[r]eferences'},
-            f = { function() vim.lsp.buf.format({async = true}) end, '[r]eferences'},
           },
         }, { prefix = '<leader>', silent = false, buffer = ev.buf })
 
