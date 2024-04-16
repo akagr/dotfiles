@@ -42,8 +42,8 @@ return {
         wk.register({
           c = {
             name = "+code",
-            d = { vim.lsp.buf.declaration, '[d]eclaration'},
-            D = { vim.lsp.buf.definition, '[D]efinition'},
+            d = { vim.lsp.buf.definition, '[d]efinition'},
+            D = { vim.lsp.buf.declaration, '[D]eclaration'},
             f = { function() vim.lsp.buf.format({async = true}) end, '[f]format'},
             h = { vim.lsp.buf.hover, '[h]elp'},
             i = { vim.lsp.buf.implementation, '[i]mplementation'},
