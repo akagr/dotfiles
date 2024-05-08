@@ -19,7 +19,7 @@ return {
         name = "+buffer",
         b = { "<cmd>Telescope buffers<cr>", "list [b]uffers" },
         p = { "<cmd>Telescope buffers only_cwd=true<cr>", "list [p]roject buffers" },
-        d = { ":bp<bar>sp<bar>bn<bar>bd<cr>", "[d]elete buffer" },
+        d = { ":bp<bar>sp<bar>bn<bar>confirm bd<cr>", "[d]elete buffer" },
       },
       t = {
         name = "+telescope",
