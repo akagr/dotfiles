@@ -33,9 +33,6 @@ require('lazy').setup({
     -- Add documentation for vim's lua api
     'folke/neodev.nvim',
 
-    -- "gc" to comment visual regions/lines
-    { 'numToStr/Comment.nvim', opts = {} },
-
     { import = 'plugins' },
 }, {})
 
