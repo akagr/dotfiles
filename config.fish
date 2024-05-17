@@ -15,6 +15,10 @@ if test -e /usr/local/bin/brew
     eval (/usr/local/bin/brew shellenv)
 end
 
+if test -e /opt/homebrew/bin/fzf
+    fzf --fish | source
+end
+
 # Adds completions for asdf version manager to fish
 if test -e /opt/homebrew/opt/asdf/libexec/asdf.fish
     source /opt/homebrew/opt/asdf/libexec/asdf.fish
