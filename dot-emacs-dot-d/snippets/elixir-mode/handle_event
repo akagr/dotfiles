@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: handle_event
-# key: hevent
-# --
-def handle_event($1, ${2:_}, ${3:socket}) do
-  $0
-end

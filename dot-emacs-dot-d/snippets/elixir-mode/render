@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: render() for views
-# key: render
-# --
-def render(assigns) do
-  ~L"""
-  $0
-  """
-end

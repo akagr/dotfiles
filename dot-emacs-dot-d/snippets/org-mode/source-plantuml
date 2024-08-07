@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: PlantUML Source Block
-# key: srcuml
-# --
-
-#+BEGIN_SRC plantuml :file $1.png
-title: $1
-$0
-#+END_SRC
