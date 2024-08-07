@@ -46,6 +46,11 @@
             :wk "Reload Emacs config"))
 
   (start/leader-keys
+    "p" '(:ignore t :wk "Project")
+    "p p" '(project-switch-project :wk "Switch to project")
+    "p f" '(project-find-file :wk "Project find file"))
+
+  (start/leader-keys
     "s" '(:ignore t :wk "Show")
     "s e" '(eat :wk "Eat terminal"))
 
