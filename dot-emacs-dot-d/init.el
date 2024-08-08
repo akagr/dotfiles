@@ -23,6 +23,7 @@
 (require 'feat-completion)
 (require 'feat-menu-completion)
 (require 'feat-which-key)
+(require 'feat-search)
 ;; major modes
 (require 'feat-lua)
 (require 'feat-terraform)
