@@ -2,7 +2,7 @@
   :init
   (evil-mode)
   :config ;; Execute code After a package is loaded
-  (evil-set-initial-state 'eat-mode 'insert) ;; Set initial state in eat terminal to insert mode
+  (evil-set-initial-state 'eat-mode 'emacs) ;; Set initial state in eat terminal to insert mode
   :custom ;; Customization of package custom variables
   (evil-want-keybinding nil)    ;; Disable evil bindings in other modes (It's not consistent and not good)
   (evil-want-C-u-scroll t)      ;; Set C-u to scroll up
