@@ -42,7 +42,7 @@
     "h" '(:ignore t :wk "Help") ;; To get more help use C-h commands (describe variable, function, etc.)
     "h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
     "h r" '((lambda () (interactive)
-              (load-file "~/.config/emacs/init.el"))
+              (load-file "~/.emacs.d/init.el"))
             :wk "Reload Emacs config"))
 
   (start/leader-keys
@@ -53,6 +53,9 @@
   (start/leader-keys
     "s" '(:ignore t :wk "Show")
     "s e" '(eat :wk "Eat terminal"))
+
+  (start/leader-keys
+    "S" '(rg-project :wk "Search project"))
 
   (start/leader-keys
     "t" '(:ignore t :wk "Toggle")

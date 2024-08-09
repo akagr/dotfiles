@@ -24,9 +24,12 @@
 (require 'feat-menu-completion)
 (require 'feat-which-key)
 (require 'feat-search)
+(require 'feat-treesitter)
 ;; major modes
 (require 'feat-lua)
 (require 'feat-terraform)
+(require 'feat-yaml)
+(require 'feat-dockerfile)
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
