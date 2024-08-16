@@ -25,6 +25,7 @@
 (require 'feat-which-key)
 (require 'feat-search)
 (require 'feat-treesitter)
+(require 'feat-smartparens)
 ;; major modes
 (require 'feat-lua)
 (require 'feat-terraform)
