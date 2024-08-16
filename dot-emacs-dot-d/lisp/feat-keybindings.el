@@ -51,8 +51,7 @@
     "p f" '(project-find-file :wk "Project find file"))
 
   (start/leader-keys
-    "s" '(:ignore t :wk "Show")
-    "s e" '(eat :wk "Eat terminal"))
+    "v" '(vterm :wk "Vterm"))
 
   (start/leader-keys
     "S" '(rg-project :wk "Search project"))

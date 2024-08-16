@@ -2,7 +2,8 @@
   :ensure nil ;; Don't install eglot because it's now built-in
   :hook ((c-mode c++-mode ;; Autostart lsp servers for a given mode
                  lua-mode
-                 terraform-mode) ;; Lua-mode needs to be installed
+                 terraform-mode
+                 typescript-mode)
          . eglot-ensure)
   :custom
   ;; Good default
@@ -13,6 +14,7 @@
   :config
   (add-to-list 'eglot-server-programs
                `(lua-mode . ("/opt/homebrew/bin/lua-language-server" "-lsp"))
-               `(terraform-mode . ("/opt/homebrew/bin/terraform-ls", "serve"))))
+               `(terraform-mode . ("/opt/homebrew/bin/terraform-ls", "serve"))
+               `(typescript-mode . ("/Users/a.agrawal/.asdf/shims/typescript-language-server", "--stdio"))))
 
 (provide 'feat-lsp)
