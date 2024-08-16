@@ -11,7 +11,7 @@
     "Switch to/from vterm buffer based on major mode"
     (interactive)
     (if (equal major-mode 'vterm-mode)
-        (switch-to-buffer nil)
+        (switch-to-buffer (other-buffer (current-buffer) t))
       (vterm))))
 
 (provide 'feat-term)
