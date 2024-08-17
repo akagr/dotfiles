@@ -48,7 +48,8 @@
   (start/leader-keys
     "p" '(:ignore t :wk "Project")
     "p p" '(project-switch-project :wk "Switch to project")
-    "p f" '(project-find-file :wk "Project find file"))
+    "p f" '(project-find-file :wk "Project find file")
+    "p k" '(project-kill-buffers :wk "Kill project buffers"))
 
   (start/leader-keys
     "v" '(vterm :wk "Vterm"))
