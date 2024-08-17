@@ -26,14 +26,17 @@
   (column-number-mode) ;; show column number in mode line
   (global-auto-revert-mode) ;; reflect changes on disk to file automatically
   (show-paren-mode) ;; show matching delimiters
-  (global-hl-line-mode) ;; highlight current line
-  (global-display-line-numbers-mode) ;; show line numbers in all buffers
 
   (when (eq system-type 'darwin)
     (setq mac-option-key-is-meta nil
           mac-command-key-is-meta t
           mac-command-modifier 'meta
           mac-option-modifier 'super))
+
+  (add-hook 'prog-mode-hook #'hl-line-mode)
+  (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+  (add-hook 'text-mode-hook #'hl-line-mode)
+  (add-hook 'text-mode-hook #'display-line-numbers-mode)
 
   (add-hook 'before-save-hook 'delete-trailing-whitespace))
 
