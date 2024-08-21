@@ -19,8 +19,8 @@
   (progn
     (scroll-bar-mode -1)
     (tool-bar-mode -1)
-    (menu-bar-mode -1)
-    (tooltip-mode -1))
+    (tooltip-mode -1)
+    (menu-bar-mode 1)) ;; keep menu bar enabled
 
   (global-so-long-mode) ;; handles really long lines well
   (column-number-mode) ;; show column number in mode line
