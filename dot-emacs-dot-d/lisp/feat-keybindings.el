@@ -12,7 +12,8 @@
     "f" '(:ignore t :wk "Files")
     "f e" '((lambda () (interactive) (find-file "~/.emacs.d/init.el")) :wk "Emacs config")
     "f r" '(consult-recent-file :wk "Recent files")
-    "f f" '(find-file :wk "Find file"))
+    "f f" '(find-file :wk "Find file")
+    "f t" '((lambda () (interactive) (find-file tempel-path)) :wk "Templates"))
 
   (start/leader-keys
     "b" '(:ignore t :wk "Buffer")
