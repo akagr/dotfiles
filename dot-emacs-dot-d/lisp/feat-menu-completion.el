@@ -5,7 +5,8 @@
 
 (use-package vertico
   :init
-  (vertico-mode))
+  (vertico-mode)
+  (vertico-reverse-mode))
 
 (savehist-mode) ;; Enables save history mode
 
