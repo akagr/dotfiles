@@ -1,5 +1,10 @@
 ;; theme
-(load-theme 'modus-vivendi)
+(use-package ef-themes
+  :custom
+  (ef-themes-mixed-fonts t)
+  (ef-themes-variable-pitch-ui t)
+  :config
+  (ef-themes-select 'ef-owl))
 
 ;; need to run (nerd-icons-install-fonts) mannually once after installing
 (use-package nerd-icons
