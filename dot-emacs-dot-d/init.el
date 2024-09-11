@@ -28,6 +28,7 @@
 (require 'feat-smartparens)
 (require 'feat-helpful)
 (require 'feat-templates)
+(require 'feat-ai)
 ;; major modes
 (require 'feat-lua)
 (require 'feat-terraform)
