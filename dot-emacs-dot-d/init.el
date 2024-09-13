@@ -29,6 +29,7 @@
 (require 'feat-helpful)
 (require 'feat-templates)
 (require 'feat-ai)
+(require 'feat-embark)
 ;; major modes
 (require 'feat-lua)
 (require 'feat-terraform)
