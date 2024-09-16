@@ -38,7 +38,8 @@
 
   (start/leader-keys
     "g" '(:ignore t :wk "Git")
-    "g g" '(magit-status :wk "Magit status"))
+    "g g" '(magit-status :wk "Status")
+    "g b" '(magit-blame :wk "Blame"))
 
   (start/leader-keys
     "h" '(:ignore t :wk "Help") ;; To get more help use C-h commands (describe variable, function, etc.)
