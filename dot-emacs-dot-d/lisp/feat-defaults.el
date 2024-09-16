@@ -33,10 +33,9 @@
           mac-command-modifier 'meta
           mac-option-modifier 'super))
 
-  (add-hook 'prog-mode-hook #'hl-line-mode)
-  (add-hook 'prog-mode-hook #'display-line-numbers-mode)
-  (add-hook 'text-mode-hook #'hl-line-mode)
-  (add-hook 'text-mode-hook #'display-line-numbers-mode)
+  (mapcar (lambda (mode-hook)
+            (add-hook mode-hook #'hl-line-mode))
+          '(prog-mode-hook text-mode-hook))
 
   (add-hook 'before-save-hook 'delete-trailing-whitespace))
 
