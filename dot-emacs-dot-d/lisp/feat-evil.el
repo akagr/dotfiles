@@ -9,10 +9,11 @@
   (evil-undo-system 'undo-redo) ;; C-r to redo
   (org-return-follows-link t)   ;; Sets RETURN key in org-mode to follow links
   ;; Unmap keys in 'evil-maps. If not done, org-return-follows-link will not work
-  :bind (:map evil-motion-state-map
-              ("SPC" . nil)
-              ("RET" . nil)
-              ("TAB" . nil)))
+  :bind
+  (:map evil-motion-state-map
+        ("SPC" . nil)
+        ("RET" . nil)
+        ("TAB" . nil)))
 
 (use-package evil-collection
   :after evil

@@ -1,8 +1,11 @@
 (use-package embark
+  :after evil
   :bind
   (("C-." . embark-act)
    ("C-;" . embark-dwim)
-   ("C-h B" . embark-bindings))
+   ("C-h B" . embark-bindings)
+   :map evil-normal-state-map
+   ("C-." . embark-act))
 
   :init
   (setq prefix-help-command #'embark-prefix-help-command))
