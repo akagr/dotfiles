@@ -19,6 +19,10 @@ if test -e /opt/homebrew/bin/fzf
     fzf --fish | source
 end
 
+if test -e /opt/homebrew/bin/zoxide
+    zoxide init fish | source
+end
+
 # Adds completions for asdf version manager to fish
 if test -e /opt/homebrew/opt/asdf/libexec/asdf.fish
     source /opt/homebrew/opt/asdf/libexec/asdf.fish
