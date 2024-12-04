@@ -6,8 +6,8 @@ return {
   config = function()
     require('grug-far').setup({})
     local wk = require('which-key')
-    wk.register({
-      s = { '<cmd>GrugFar<cr>', '[s]earch' }
-    }, { prefix = '<leader>', silent = false })
+    wk.add({
+      { "<leader>s", "<cmd>GrugFar<cr>", desc = "[s]earch", silent = false },
+    })
   end
 }

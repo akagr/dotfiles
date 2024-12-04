@@ -39,25 +39,21 @@ return {
         vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
         local wk = require('which-key')
-        wk.register({
-          c = {
-            name = "+code",
-            d = { vim.lsp.buf.definition, '[d]efinition'},
-            D = { vim.lsp.buf.declaration, '[D]eclaration'},
-            f = { function() vim.lsp.buf.format({async = true}) end, '[f]format'},
-            h = { vim.lsp.buf.hover, '[h]elp'},
-            i = { vim.lsp.buf.implementation, '[i]mplementation'},
-            s = { vim.lsp.buf.signature_help, '[s]ignature'},
-            T = { vim.lsp.buf.type_definition, '[T]ype definition'},
-            t = { require('trouble').toggle, '[t]rouble'},
-            n = { vim.lsp.buf.rename, 're[n]ame'},
-            r = { vim.lsp.buf.references, '[r]eferences'},
-          },
-        }, { prefix = '<leader>', silent = false, buffer = ev.buf })
+        wk.add({
 
-        wk.register({
-          ["ca"] = { vim.lsp.buf.code_action, '[a]ction'}
-        }, { prefix = '<leader>', silent = false, buffer = ev.buf, mode = {'n', 'v'} })
+          { "<leader>c", group = "code", silent = false },
+          { "<leader>ca", vim.lsp.buf.code_action, desc = "[a]ction", mode = { "n", "v" }, silent = false },
+          { "<leader>cd", vim.lsp.buf.definition, desc = "[d]efinition", silent = false },
+          { "<leader>cD", vim.lsp.buf.declaration, desc = "[D]eclaration", silent = false },
+          { "<leader>cf", function() vim.lsp.buf.format({async = true}) end, desc = "[f]format", silent = false },
+          { "<leader>ch", vim.lsp.buf.hover, desc = "[h]elp", silent = false },
+          { "<leader>ci", vim.lsp.buf.implementation, desc = "[i]mplementation", silent = false },
+          { "<leader>cn", vim.lsp.buf.rename, desc = "re[n]ame", silent = false },
+          { "<leader>cr", vim.lsp.buf.references, desc = "[r]eferences", silent = false },
+          { "<leader>cs", vim.lsp.buf.signature_help, desc = "[s]ignature", silent = false },
+          { "<leader>ct", require('trouble').toggle, desc = "[t]rouble", silent = false },
+          { "<leader>cT", vim.lsp.buf.type_definition, desc = "[T]ype definition", silent = false },
+        })
       end,
     })
 

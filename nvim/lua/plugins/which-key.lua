@@ -8,27 +8,21 @@ return {
   config = function()
     local wk = require('which-key')
 
-    wk.register({
-      f = {
-        name = "+file",
-        f = { "<cmd>Telescope find_files<cr>", "[f]ind file" },
-        r = { "<cmd>Telescope oldfiles<cr>", "open [r]ecent file" },
-        n = { "<cmd>enew<cr>", "[n]ew file" },
-      },
-      b = {
-        name = "+buffer",
-        b = { "<cmd>Telescope buffers<cr>", "list [b]uffers" },
-        p = { "<cmd>Telescope buffers only_cwd=true<cr>", "list [p]roject buffers" },
-        d = { ":bp<bar>sp<bar>bn<bar>confirm bd<cr>", "[d]elete buffer" },
-      },
-      t = {
-        name = "+telescope",
-        t = { "<cmd>Telescope resume<cr>", "resume [t]elescope" },
-      },
-    }, { prefix = '<leader>', silent = false })
+    wk.add({
+      { "<leader>b", group = "buffer", silent = false },
+      { "<leader>bb", "<cmd>Telescope buffers<cr>", desc = "list [b]uffers", silent = false },
+      { "<leader>bd", ":bp<bar>sp<bar>bn<bar>confirm bd<cr>", desc = "[d]elete buffer", silent = false },
+      { "<leader>bp", "<cmd>Telescope buffers only_cwd=true<cr>", desc = "list [p]roject buffers", silent = false },
 
-    wk.register({
-      w = { '<C-w>', '+window' },
-    }, { prefix = '<leader>', noremap = false, silent = false })
+      { "<leader>f", group = "file", silent = false },
+      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "[f]ind file", silent = false },
+      { "<leader>fn", "<cmd>enew<cr>", desc = "[n]ew file", silent = false },
+      { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "open [r]ecent file", silent = false },
+
+      { "<leader>t", group = "telescope", silent = false },
+      { "<leader>tt", "<cmd>Telescope resume<cr>", desc = "resume [t]elescope", silent = false },
+
+      { "<leader>w", "<C-w>", desc = "window", remap = false, silent = false },
+    })
   end
 }

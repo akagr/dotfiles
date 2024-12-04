@@ -32,7 +32,10 @@ return {
       ['>'] = 'actions.select',
     },
   },
-  dependencies = { "nvim-tree/nvim-web-devicons" },
+  dependencies = {
+    "nvim-tree/nvim-web-devicons",
+    "echasnovski/mini.icons",
+  },
   keys = {
     { '<leader>d', '<cmd>Oil<cr>', desc = '[d]irectory'}
   }

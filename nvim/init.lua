@@ -45,10 +45,6 @@ require("neodev").setup({
 -- Set highlight on search
 vim.o.hlsearch = false
 
--- Turn on line numbers
-vim.wo.number = true
-vim.wo.relativenumber = true
-
 -- Sync clipboard between OS and Neovim.
 --  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
