@@ -32,7 +32,6 @@ bind-key -T copy-mode-vi 'y' send -X copy-selection
 # Packages
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'christoomey/vim-tmux-navigator'
 
 # Theme
 set -g @plugin 'niksingh710/minimal-tmux-status'
