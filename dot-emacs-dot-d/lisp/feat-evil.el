@@ -19,7 +19,13 @@
   :after evil
   :config
   ;; Setting where to use evil-collection
-  (setq evil-collection-mode-list '(dired ibuffer magit corfu vertico consult))
+  (setq evil-collection-mode-list '(consult
+                                    corfu
+                                    dired
+                                    elpaca
+                                    ibuffer
+                                    magit
+                                    vertico))
   (evil-collection-init))
 
 (provide 'feat-evil)
