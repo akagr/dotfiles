@@ -32,6 +32,7 @@
 (require 'feat-embark)
 ;; major modes
 (require 'feat-lua)
+(require 'feat-go)
 (require 'feat-terraform)
 (require 'feat-yaml)
 (require 'feat-dockerfile)
