@@ -1,3 +1,10 @@
+;; Check for minimum emacs version
+(defvar aa/emacs-minimum-version 30)
+(unless (>= emacs-major-version aa/emacs-minimum-version)
+  (error (format "Emacs version found is: %d. Minimum supported version is: %d."
+                 emacs-major-version
+                 aa/emacs-minimum-version)))
+
 ;; The default is 800 kilobytes. Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
 
