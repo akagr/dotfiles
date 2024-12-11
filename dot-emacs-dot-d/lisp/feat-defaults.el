@@ -8,7 +8,10 @@
         load-prefer-newer t
         ring-bell-function 'ignore
         sentence-end-double-space nil
-        confirm-kill-processes nil)
+        confirm-kill-processes nil
+        custom-file (locate-user-emacs-file "custom.el"))
+
+  (load custom-file :no-error-if-file-is-missing)
 
   (setq-default indent-tabs-mode nil
                 truncate-lines t)
