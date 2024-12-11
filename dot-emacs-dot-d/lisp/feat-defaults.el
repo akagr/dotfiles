@@ -13,6 +13,12 @@
 
   (load custom-file :no-error-if-file-is-missing)
 
+  ;; Do not show warnings and compile buffers automatically
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*\\(Warnings\\|Compile-Log\\)\\*\\'"
+                 (display-buffer-no-window)
+                 (allow-no-window . t)))
+
   (setq-default indent-tabs-mode nil
                 truncate-lines t)
 
