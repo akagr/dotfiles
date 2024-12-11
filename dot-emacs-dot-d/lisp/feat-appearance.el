@@ -13,6 +13,13 @@
   :hook (dired-mode . (lambda () (nerd-icons-dired-mode t))))
 (use-package nerd-icons-ibuffer
   :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
+(use-package nerd-icons-completion
+  :after marginalia
+  :config
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+(use-package nerd-icons-corfu
+  :after corfu
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 ;; font
 (defvar aa/font "JetBrainsMono Nerd Font")
