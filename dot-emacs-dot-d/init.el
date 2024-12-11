@@ -37,6 +37,7 @@
 (require 'feat-templates)
 (require 'feat-ai)
 (require 'feat-embark)
+(require 'feat-dired)
 ;; major modes
 (require 'feat-lua)
 (require 'feat-go)

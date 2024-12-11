@@ -4,6 +4,7 @@
 .vim/plugged
 
 dot-emacs-dot-d/eshell
+dot-emacs-dot-d/tramp
 dot-emacs-dot-d/elpa
 dot-emacs-dot-d/.cache
 dot-emacs-dot-d/.lsp-*
