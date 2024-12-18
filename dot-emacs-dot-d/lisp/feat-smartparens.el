@@ -13,6 +13,8 @@
   :after smartparens
   :hook ((lisp-mode . evil-cleverparens-mode)
          (emacs-lisp-mode . evil-cleverparens-mode)
-         (lisp-interaction-mode . evil-cleverparens-mode)))
+         (lisp-interaction-mode . evil-cleverparens-mode))
+  :custom
+  (evil-cleverparens-use-additional-bindings nil))
 
 (provide 'feat-smartparens)

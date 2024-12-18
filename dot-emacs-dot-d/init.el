@@ -38,6 +38,7 @@
 (require 'feat-ai)
 (require 'feat-embark)
 (require 'feat-dired)
+(require 'feat-windows)
 ;; major modes
 (require 'feat-lua)
 (require 'feat-go)
