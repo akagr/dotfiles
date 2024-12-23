@@ -2,6 +2,8 @@
   :ensure nil ;; Don't install eglot because it's now built-in
   :hook ((c-mode c++-mode ;; Autostart lsp servers for a given mode
                  lua-mode
+                 go-mode
+                 go-ts-mode
                  terraform-mode
                  typescript-mode)
          . eglot-ensure)
@@ -14,6 +16,8 @@
   ;; Manual lsp servers
   :config
   (add-to-list 'eglot-server-programs
-               '(lua-mode . ("/opt/homebrew/bin/lua-language-server" "-lsp"))))
+               '(lua-mode . ("/opt/homebrew/bin/lua-language-server" "-lsp")))
+
+  (add-hook 'before-save-hook #'eglot-format-buffer nil t))
 
 (provide 'feat-lsp)
