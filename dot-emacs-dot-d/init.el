@@ -41,13 +41,14 @@
 (require 'feat-dired)
 (require 'feat-windows)
 ;; major modes
-(require 'feat-lua)
-(require 'feat-go)
-(require 'feat-terraform)
-(require 'feat-yaml)
 (require 'feat-dockerfile)
-(require 'feat-typescript)
+(require 'feat-elixir)
+(require 'feat-go)
+(require 'feat-lua)
 (require 'feat-markdown)
+(require 'feat-terraform)
+(require 'feat-typescript)
+(require 'feat-yaml)
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
