@@ -15,8 +15,8 @@
   (eglot-report-progress nil) ;; Disable lsp server logs (Don't show lsp messages at the bottom, java)
   ;; Manual lsp servers
   :config
-  (add-to-list 'exec-path "~/opensource/elixir/lexical/_build/dev/package/lexical/bin")
-  (setq aa/custom-eglot-servers '((lua-mode . ("/opt/homebrew/bin/lua-language-server" "-lsp"))))
+  (setq aa/custom-eglot-servers '((lua-mode . ("/opt/homebrew/bin/lua-language-server" "-lsp"))
+                                  ((elixir-mode elixir-ts-mode heex-ts-mode) . ("elixir-ls"))))
   (dolist (server aa/custom-eglot-servers)
     (add-to-list 'eglot-server-programs server))
 
