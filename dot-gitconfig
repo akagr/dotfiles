@@ -30,22 +30,26 @@
     filemode = false
 [credential]
     helper = cache --timeout=36000
-	helper =
-	helper = /usr/local/bin/git-credential-manager
-	helper = /usr/local/share/gcm-core/git-credential-manager
+    helper =
+    helper = /usr/local/bin/git-credential-manager
+    helper = /usr/local/share/gcm-core/git-credential-manager
 [filter "hawser"]
     clean = git hawser clean %f
     smudge = git hawser smudge %f
     required = true
 [pull]
-	ff = only
+    ff = only
 [gitlab]
-	user = akash_agrawal
+    user = akash_agrawal
 [github]
-	user = akagr
+    user = akagr
 [credential "https://dev.azure.com"]
-	useHttpPath = true
+    useHttpPath = true
 [commit]
-	gpgSign = true
+    gpgSign = true
 [fetch]
-	prune = true
+    prune = true
+[diff "rspec"]
+    xfuncname = "^[ \t]*((RSpec|describe|context|it|before|after|around|feature|scenario|background)[ \t].*)$"
+[diff "swift"]
+    xfuncname = ^[ \t]*((class|func)[ \t].*)$
