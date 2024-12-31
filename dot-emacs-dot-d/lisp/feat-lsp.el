@@ -22,4 +22,7 @@
 
   (add-hook 'before-save-hook #'eglot-format-buffer nil t))
 
+(use-package eldoc-box
+  :hook (eglot-managed-mode . eldoc-box-hover-mode))
+
 (provide 'feat-lsp)
