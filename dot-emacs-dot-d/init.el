@@ -40,6 +40,7 @@
 (require 'feat-embark)
 (require 'feat-dired)
 (require 'feat-windows)
+(require 'feat-layout-restore)
 ;; major modes
 (require 'feat-dockerfile)
 (require 'feat-elixir)
