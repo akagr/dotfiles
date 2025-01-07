@@ -4,13 +4,7 @@
   (org-edit-src-content-indentation 4) ;; Set src block automatic indent to 4 instead of 2.
 
   :hook
-  (org-mode . org-indent-mode) ;; Indent text
-  ;; The following prevents <> from auto-pairing when electric-pair-mode is on.
-  ;; Otherwise, org-tempo is broken when you try to <s TAB...
-  (org-mode . (lambda ()
-                (setq-local electric-pair-inhibit-predicate
-                            `(lambda (c)
-                               (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c)))))))
+  (org-mode . org-indent-mode))
 
 (use-package toc-org
   :after org
@@ -24,5 +18,13 @@
 (use-package org-tempo
   :ensure nil
   :after org)
+
+(use-package org-roam
+  :custom
+  (org-roam-directory "~/roam")
+  (org-roam-complete-everywhere t)
+
+  :config
+  (org-roam-db-autosync-enable))
 
 (provide 'feat-org)

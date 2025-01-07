@@ -49,6 +49,12 @@
             :wk "Reload Emacs config"))
 
   (start/leader-keys
+    "o" '(:ignore t :wk "Org")
+    "o o" '(org-roam-node-find :wk "Find node")
+    "o i" '(org-roam-node-insert :wk "Insert node")
+    "o s" '(org-roam-db-sync :wk "Sync DB"))
+
+  (start/leader-keys
     "p" '(:ignore t :wk "Project")
     "p p" '(project-switch-project :wk "Switch to project")
     "p f" '(project-find-file :wk "Project find file")
