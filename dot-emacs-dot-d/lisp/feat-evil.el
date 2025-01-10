@@ -28,4 +28,9 @@
                                     vertico))
   (evil-collection-init))
 
+(use-package evil-surround
+  :after evil
+  :config
+  (global-evil-surround-mode))
+
 (provide 'feat-evil)
