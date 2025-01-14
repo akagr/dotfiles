@@ -1,10 +1,3 @@
-;; Color text longer than 80 characters to make overruns visible
-(let ((aa/max-text-width 80))
-  (require 'whitespace)
-  (setq whitespace-line-column aa/max-text-width) ;; limit line length
-  (setq whitespace-style '(face lines-tail))
-  (global-whitespace-mode))
-
 ;; theme
 (use-package ef-themes
   :custom
