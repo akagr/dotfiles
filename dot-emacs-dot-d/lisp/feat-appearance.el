@@ -1,10 +1,12 @@
-;; theme
-(use-package ef-themes
-  :custom
-  (ef-themes-mixed-fonts t)
-  (ef-themes-variable-pitch-ui t)
-  :config
-  (ef-themes-select 'ef-owl))
+;; Installing straight from github because ef-themes don't
+;; seem to be available on elpa.
+(elpaca (ef-themes
+         :host github
+         :repo "protesilaos/ef-themes")
+  (progn
+    (setq ef-themes-mixed-fonts t
+          ef-themes-variable-pitch-ui t)
+    (ef-themes-select 'ef-owl)))
 
 ;; need to run (nerd-icons-install-fonts) mannually once after installing
 (use-package nerd-icons
