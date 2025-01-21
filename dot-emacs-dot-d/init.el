@@ -1,5 +1,6 @@
-;; Check for minimum emacs version
-(defvar aa/emacs-minimum-version 30)
+;; Check for minimum emacs version.
+;; The idea is to support the latest stable version at all times.
+(defvar aa/emacs-minimum-version 29)
 (unless (>= emacs-major-version aa/emacs-minimum-version)
   (error (format "Emacs version found is: %d. Minimum supported version is: %d."
                  emacs-major-version
