@@ -19,7 +19,7 @@
     "b" '(:ignore t :wk "Buffer")
     "b b" '(consult-buffer :wk "Switch buffer")
     "b d" '(evil-delete-buffer :wk "Delete buffer")
-    "b k" '(kill-this-buffer :wk "Kill this buffer")
+    "b k" '(kill-current-buffer :wk "Kill this buffer")
     "b i" '(ibuffer :wk "Ibuffer")
     "b n" '(next-buffer :wk "Next buffer")
     "b p" '(previous-buffer :wk "Previous buffer")
