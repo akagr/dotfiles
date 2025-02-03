@@ -69,6 +69,12 @@
   (start/leader-keys
     "t" '(:ignore t :wk "Toggle")
     "t t" '(visual-line-mode :wk "Toggle truncated lines (wrap)")
-    "t l" '(display-line-numbers-mode :wk "Toggle line numbers")))
+    "t l" '(display-line-numbers-mode :wk "Toggle line numbers"))
+
+  (start/leader-keys
+    "w" '(:ignore t :wk "Window")
+    "w w" '(split-window-horizontally :wk "Split |")
+    "w s" '(split-window-vertically :wk "Split --")
+    "w d" '(delete-window :wk "Delete")))
 
 (provide 'feat-keybindings)
