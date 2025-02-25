@@ -48,6 +48,11 @@ using `M-x`.
 (all-the-icons-install-fonts)
 (nerd-icons-install-fonts)
 ```
+The lsp package `eglot` uses a helper package `eglot-lsp-booster` to offload the json processing from
+lsp server to rust plugin. It needs to be set up as such:
+
+1. Install [rust toolchain](https://www.rust-lang.org/tools/install).
+2. Run `cargo install emacs-lsp-booster`.
 
 ### Neovim setup
 

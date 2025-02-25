@@ -25,4 +25,9 @@
 (use-package eldoc-box
   :hook (eglot-managed-mode . eldoc-box-hover-mode))
 
+(use-package eglot-booster
+  :ensure (:host github :repo "jdtsmith/eglot-booster")
+  :after eglot
+  :config (eglot-booster-mode))
+
 (provide 'feat-lsp)
