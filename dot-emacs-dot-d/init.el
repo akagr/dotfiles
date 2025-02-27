@@ -21,6 +21,7 @@
 ;; ...and everything else after that
 (require 'feat-defaults)
 (require 'feat-exec-path)
+(require 'feat-buffer)
 (require 'feat-appearance)
 (require 'feat-modeline)
 (require 'feat-evil)
