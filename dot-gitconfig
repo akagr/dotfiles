@@ -1,55 +1,83 @@
+[init]
+	defaultBranch = main
 [user]
-    name = Akash Agrawal
-    email = akagr@outlook.com
-    signingkey = BACB4F00A12E5E57
-[push]
-    default = simple
-[alias]
-    co = checkout
-    ci = commit
-    cim = commit -m
-    st = status
-    br = branch
-    brd = branch -d
-    dif = diff
-    unwatch = update-index --assume-unchanged
-    rewatch = update-index --no-assume-unchanged
-    hist = log --pretty=format:"%C(yellow)%h\\ %Cgreen%d\\ %Creset%s\\ %Cred[%aN\\ -\\ %ad]%Creset" --date=short --graph --all
-    graph = log --pretty=format:"%C(blue)%d%Creset" --graph --simplify-by-decoration --all --dense
-    current = "!git rev-parse --abbrev-ref HEAD"
-    pub = "!git push -u origin $(git current)"
-    publish = "!git pub"
-    prune-local = "!git-prune-local"
-    shoot = push origin --delete
-[color]
-    ui = true
+	name = Akash Agrawal
+	email = akagr@outlook.com
+	signingkey = BACB4F00A12E5E57
 [core]
-    editor = nvim
-    autocrlf = false
-    safecrlf = true
-    filemode = false
-[credential]
-    helper = cache --timeout=36000
-    helper =
-    helper = /usr/local/bin/git-credential-manager
-    helper = /usr/local/share/gcm-core/git-credential-manager
-[filter "hawser"]
-    clean = git hawser clean %f
-    smudge = git hawser smudge %f
-    required = true
-[pull]
-    ff = only
-[gitlab]
-    user = akash_agrawal
-[github]
-    user = akagr
-[credential "https://dev.azure.com"]
-    useHttpPath = true
+	editor = nvim
+	autocrlf = false
+	safecrlf = true
+	filemode = false
+	attributesfile = /Users/a.agrawal/.gitattributes
 [commit]
-    gpgSign = true
-[fetch]
-    prune = true
+	gpgSign = true
+	verbose = false
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
 [diff "rspec"]
-    xfuncname = "^[ \t]*((RSpec|describe|context|it|before|after|around|feature|scenario|background)[ \t].*)$"
+	xfuncname = "^[ \t]*((RSpec|describe|context|it|before|after|around|feature|scenario|background)[ \t].*)$"
 [diff "swift"]
-    xfuncname = ^[ \t]*((class|func)[ \t].*)$
+	xfuncname = ^[ \t]*((class|func)[ \t].*)$
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+[push]
+	default = simple
+	autoSetupRemote = true
+	followTags = true
+[alias]
+	co = checkout
+	ci = commit
+	cim = commit -m
+	st = status
+	br = branch
+	brd = branch -d
+	dif = diff
+	unwatch = update-index --assume-unchanged
+	rewatch = update-index --no-assume-unchanged
+	hist = log --pretty=format:"%C(yellow)%h\\ %Cgreen%d\\ %Creset%s\\ %Cred[%aN\\ -\\ %ad]%Creset" --date=short --graph --all
+	graph = log --pretty=format:"%C(blue)%d%Creset" --graph --simplify-by-decoration --all --dense
+	current = "!git rev-parse --abbrev-ref HEAD"
+	pub = "!git push -u origin $(git current)"
+	publish = "!git pub"
+	prune-local = "!git-prune-local"
+	shoot = push origin --delete
+[color]
+	ui = true
+[credential]
+	helper = cache --timeout=36000
+	helper =
+	helper = /usr/local/bin/git-credential-manager
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[pull]
+	ff = only
+[gitlab]
+	user = akash_agrawal
+[github]
+	user = akagr
+[help]
+	autocorrect = prompt
+[rerere]
+	enabled = true
+	autoupdate = true
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
