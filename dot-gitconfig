@@ -10,6 +10,8 @@
 	safecrlf = true
 	filemode = false
 	attributesfile = /Users/a.agrawal/.gitattributes
+	fsmonitor = true
+	untrackedCache = true
 [commit]
 	gpgSign = true
 	verbose = false
