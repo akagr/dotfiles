@@ -33,4 +33,9 @@
   :config
   (global-evil-surround-mode))
 
+(use-package evil-commentary
+  :after evil
+  :config
+  (evil-commentary-mode))
+
 (provide 'feat-evil)
