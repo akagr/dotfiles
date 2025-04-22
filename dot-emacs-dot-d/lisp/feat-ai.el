@@ -1,6 +1,7 @@
 (use-package gptel
+  :ensure (:host github :repo "karthink/gptel")
   :custom
-  (gptel-model "gpt-4o")
+  (gptel-model 'gpt-4.1)
 
   :hook (gptel-mode . visual-line-mode)
 
