@@ -25,9 +25,10 @@ if [ ! -z "$BRANCH_NAME" ] && [ "$BRANCH_NAME" != "HEAD" ] && [ "$SKIP_PREPARE_C
   PREFIX_UPPER=`echo $PREFIX | awk '{print toupper($0)}'`
 
   PREFIX_IN_COMMIT=$(grep -c "\[$PREFIX_UPPER\]" $1)
+  IS_FIXUP_COMMIT=$(grep -c "fixup!" $1)
 
   # Ensure PREFIX exists in BRANCH_NAME and is not already present in the commit message
-  if [[ -n "$PREFIX" ]] && ! [[ $PREFIX_IN_COMMIT -ge 1 ]]; then
+  if [[ -n "$PREFIX" ]] && ! [[ $PREFIX_IN_COMMIT -ge 1 ]] && ! [[ $IS_FIXUP_COMMIT -ge 1 ]]; then
     sed -i.bak -e "1s~^~\n\n[$PREFIX_UPPER]~" $1
   fi
 
