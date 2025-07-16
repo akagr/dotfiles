@@ -25,6 +25,7 @@
                                     elpaca
                                     ibuffer
                                     magit
+                                    forge
                                     vertico))
   (evil-collection-init))
 

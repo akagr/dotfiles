@@ -48,4 +48,6 @@
 
   (add-hook 'before-save-hook 'delete-trailing-whitespace))
 
+(setq auth-sources '("~/.authinfo.gpg"))
+
 (provide 'feat-defaults)

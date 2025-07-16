@@ -27,6 +27,7 @@ dot-emacs-dot-d/org-persist
 dot-emacs-dot-d/elpaca
 dot-emacs-dot-d/org-roam.db
 dot-emacs-dot-d/custom.el
+dot-emacs-dot-d/forge-database.sqlite
 
 *#
 *~
