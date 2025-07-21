@@ -11,10 +11,14 @@
 (use-package claude-code
   :ensure (:type git :host github :repo "stevemolitor/claude-code.el" :branch "main" :depth 1
                  :files ("*.el" (:exclude "images/*")))
-  :bind-keymap
-  ("C-c c" . claude-code-command-map)
+  :custom
+  (claude-code-terminal-backend 'vterm)
   :config
-  (setq claude-code-terminal-backend 'vterm)
+  (add-to-list 'display-buffer-alist
+               '("^\\*claude"
+                 (display-buffer-in-side-window)
+                 (side . right)
+                 (window-width . 90)))
   (claude-code-mode))
 
 (provide 'feat-ai)

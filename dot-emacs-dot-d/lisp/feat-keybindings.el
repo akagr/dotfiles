@@ -9,6 +9,9 @@
     :global-prefix "C-SPC") ;; Set global leader key
 
   (start/leader-keys
+    "c" '((lambda () (interactive) (claude-code-transient)) :wk "Claude"))
+
+  (start/leader-keys
     "f" '(:ignore t :wk "Files")
     "f e" '((lambda () (interactive) (find-file "~/.emacs.d/init.el")) :wk "Emacs config")
     "f r" '(consult-recent-file :wk "Recent files")
