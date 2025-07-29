@@ -71,5 +71,8 @@
    ;; (setq consult-project-function (lambda (_) (projectile-project-root)))
    ;;;; 5. No project support
   ;; (setq consult-project-function nil)
-  )
+
+  ;; Hide these buffers from main buffer list
+  (dolist (buffer-name '("\\`\\*Messages\\*\\'" "\\`\\*Warnings\\*\\'" "\\`\\*Backtrace\\*\\'" "\\`\\*Help\\*\\'"))
+    (add-to-list 'consult-buffer-filter buffer-name)))
 (provide 'feat-menu-completion)
