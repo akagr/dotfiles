@@ -73,6 +73,11 @@
   ;; (setq consult-project-function nil)
 
   ;; Hide these buffers from main buffer list
-  (dolist (buffer-name '("\\`\\*Messages\\*\\'" "\\`\\*Warnings\\*\\'" "\\`\\*Backtrace\\*\\'" "\\`\\*Help\\*\\'"))
+  (dolist (buffer-name '("\\`\\*Messages\\*\\'"
+                         "\\`\\*Warnings\\*\\'"
+                         "\\`\\*Backtrace\\*\\'"
+                         "\\`\\*Help\\*\\'"
+                         "\\`\\*Native-compile-Log\\*\\'"
+                         "\\`\\*Async-native-compile-log\\*\\'"))
     (add-to-list 'consult-buffer-filter buffer-name)))
 (provide 'feat-menu-completion)
