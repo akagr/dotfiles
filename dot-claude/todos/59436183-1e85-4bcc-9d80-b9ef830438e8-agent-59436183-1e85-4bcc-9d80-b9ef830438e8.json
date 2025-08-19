@@ -1,0 +1,17 @@
+[
+  {
+    "content": "Remove cached/tracked Claude files from git index",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Remove files from git history using git filter-branch or BFG",
+    "status": "in_progress",
+    "id": "2"
+  },
+  {
+    "content": "Clean up any remaining references",
+    "status": "pending",
+    "id": "3"
+  }
+]
