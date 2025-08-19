@@ -1,0 +1,17 @@
+[
+  {
+    "content": "Check existing atlantis configuration in develop directory",
+    "status": "completed",
+    "id": "1"
+  },
+  {
+    "content": "Check terraform version used in develop directory",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Add atlantis.yaml configuration for plos-document-auroradb project",
+    "status": "completed",
+    "id": "3"
+  }
+]

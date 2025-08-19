@@ -33,6 +33,7 @@ ln -s ~/dotfiles/dot-gitconfig ~/.gitconfig
 ln -s ~/dotfiles/dot-tmux-dot-conf ~/.tmux.conf
 ln -s ~/dotfiles/dot-emacs-dot-d ~/.emacs.d
 ln -s ~/dotfiles/nvim ~/.config/nvim
+ln -s ~/dotfiles/dot-claude ~/.claude
 mkdir -p ~/.config/fish
 ln -s ~/dotfiles/config.fish ~/.config/fish/config.fish
 ```

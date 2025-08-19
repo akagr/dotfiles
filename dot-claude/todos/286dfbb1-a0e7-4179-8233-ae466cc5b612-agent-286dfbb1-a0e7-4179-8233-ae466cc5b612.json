@@ -1,0 +1,20 @@
+[
+  {
+    "content": "Find where qualified_arn and qualified_invoke_arn are referenced",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Add lifecycle ignore_changes for qualified ARNs in Lambda resource",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Test the solution to ensure it prevents plan changes",
+    "status": "completed",
+    "priority": "high",
+    "id": "3"
+  }
+]

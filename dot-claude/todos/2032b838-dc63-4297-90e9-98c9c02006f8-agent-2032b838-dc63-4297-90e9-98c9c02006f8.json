@@ -1,0 +1,32 @@
+[
+  {
+    "content": "Copy ~/.claude directory to dotfiles/dot-claude",
+    "status": "in_progress",
+    "id": "1"
+  },
+  {
+    "content": "Remove original ~/.claude directory",
+    "status": "pending",
+    "id": "2"
+  },
+  {
+    "content": "Create symlink from ~/.claude to dotfiles/dot-claude",
+    "status": "pending",
+    "id": "3"
+  },
+  {
+    "content": "Add dot-claude to git repository",
+    "status": "pending",
+    "id": "4"
+  },
+  {
+    "content": "Update README.md with claude setup instructions",
+    "status": "pending",
+    "id": "5"
+  },
+  {
+    "content": "Commit the changes",
+    "status": "pending",
+    "id": "6"
+  }
+]

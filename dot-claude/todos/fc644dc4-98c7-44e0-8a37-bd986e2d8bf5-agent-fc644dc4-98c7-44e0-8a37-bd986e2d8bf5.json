@@ -1,0 +1,17 @@
+[
+  {
+    "content": "Add helpful comments to config.fish",
+    "status": "pending",
+    "id": "1"
+  },
+  {
+    "content": "Add helpful comments to feat-ai.el",
+    "status": "completed",
+    "id": "2"
+  },
+  {
+    "content": "Review and add comments to other key config files",
+    "status": "pending",
+    "id": "3"
+  }
+]

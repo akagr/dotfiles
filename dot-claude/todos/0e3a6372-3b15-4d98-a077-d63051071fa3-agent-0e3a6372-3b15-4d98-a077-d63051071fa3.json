@@ -1,0 +1,32 @@
+[
+  {
+    "content": "Rename catalyst-file-upload directory to catalyst-document-file-upload",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Update all terraform file contents to use document-file-upload naming",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Rename src/file-upload directory to src/document-file-upload",
+    "status": "completed",
+    "priority": "high",
+    "id": "3"
+  },
+  {
+    "content": "Update atlantis.yaml directory reference",
+    "status": "completed",
+    "priority": "medium",
+    "id": "4"
+  },
+  {
+    "content": "Update main.tf src path reference",
+    "status": "completed",
+    "priority": "medium",
+    "id": "5"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "content": "Check MSK remote state output reference",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Fix lambda function name reference",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Fix MSK ARN reference inconsistency",
+    "status": "completed",
+    "priority": "high",
+    "id": "3"
+  }
+]

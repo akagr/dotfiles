@@ -1,0 +1,14 @@
+[
+  {
+    "content": "Update version retrieval step to set common 'deployed_version' variable in both branches",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Update summary step to use the common 'deployed_version' variable",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  }
+]
