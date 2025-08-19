@@ -36,3 +36,10 @@ dot-emacs-dot-d/forge-database.sqlite
 emacs-custom.el
 
 alacritty/themes
+
+# Claude Code temporary files
+dot-claude/ide/*.lock
+dot-claude/statsig/
+dot-claude/projects/
+dot-claude/todos/
+dot-claude/shell-snapshots/
