@@ -23,15 +23,6 @@ if test -e /opt/homebrew/bin/zoxide
     zoxide init fish | source
 end
 
-# Adds completions for asdf version manager to fish
-if test -e /opt/homebrew/opt/asdf/libexec/asdf.fish
-    source /opt/homebrew/opt/asdf/libexec/asdf.fish
-end
-
-if test -e /usr/local/opt/asdf/libexec/asdf.fish
-    source /usr/local/opt/asdf/libexec/asdf.fish
-end
-
 # Adds docker cli if it exists
 if test -e $HOME/.docker/bin
   fish_add_path $HOME/.docker/bin
