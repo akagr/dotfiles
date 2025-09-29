@@ -43,6 +43,7 @@
 (require 'feat-dired)
 (require 'feat-windows)
 (require 'feat-layout-restore)
+(require 'feat-http)
 ;; major modes
 (require 'feat-dockerfile)
 (require 'feat-elixir)

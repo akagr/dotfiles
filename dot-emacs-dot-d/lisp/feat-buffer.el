@@ -30,7 +30,8 @@
 
 (dolist (func '(kill-current-buffer
                 kill-this-buffer
-                evil-delete-buffer))
+                evil-delete-buffer
+                project-kill-buffers))
   (advice-add func :after #'aa/skip-unwanted-buffers-advice))
 
 (provide 'feat-buffer)
