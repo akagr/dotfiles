@@ -3,6 +3,7 @@
 - **IMPORTANT** If the branch name contains a ticket id, include that in git commit message
 
 # Pull Requests
+- **IMPORTANT** Always try to use `gh` cli tool to interact with github, including for pull requests
 - **IMPORTANT** Never attribute claude anywhere in pull requests
 - **IMPORTANT** After creating a pull request, always open it in browser for review
 

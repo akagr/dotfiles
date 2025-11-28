@@ -43,3 +43,7 @@ dot-claude/statsig/
 dot-claude/projects/
 dot-claude/todos/
 dot-claude/shell-snapshots/
+/dot-emacs-dot-d/url/
+/dot-claude/debug/
+/dot-claude/file-history/
+/dot-claude/history.jsonl
