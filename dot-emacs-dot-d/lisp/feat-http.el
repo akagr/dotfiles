@@ -11,4 +11,4 @@
     rs)
   (define-key org-mode-map (kbd "C-c C-r") verb-command-map))
 
-(provide 'feat-appearance)
+(provide 'feat-http)
