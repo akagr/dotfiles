@@ -1,10 +1,6 @@
 (use-package monet
   :ensure (:type git :host github :repo "stevemolitor/monet" :branch "main" :depth 1
-                 :files ("*.el"))
-
-  :custom
-  (monet-diff-tool #'monet-ediff-tool)
-  (monet-diff-cleanup-tool #'monet-ediff-cleanup-tool))
+                 :files ("*.el")))
 
 (use-package claude-code
   :after monet
