@@ -41,6 +41,7 @@
 
   (start/leader-keys
     "g" '(:ignore t :wk "Git")
+    "g c" '(magit-clone :wk "Clone")
     "g g" '(magit-status :wk "Status")
     "g b" '(magit-blame :wk "Blame"))
 
