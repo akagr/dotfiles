@@ -1,7 +1,6 @@
 (use-package which-key
   :init
   (which-key-mode 1)
-  :diminish
   :custom
   (which-key-side-window-location 'bottom)
   (which-key-sort-order #'which-key-key-order-alpha) ;; Same as default, except single characters are sorted alphabetically
