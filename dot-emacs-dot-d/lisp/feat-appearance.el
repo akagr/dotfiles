@@ -1,12 +1,12 @@
-;; Installing straight from github because ef-themes don't
-;; seem to be available on elpa.
-(elpaca (ef-themes
-         :host github
-         :repo "protesilaos/ef-themes")
-  (progn
-    (setq ef-themes-mixed-fonts t
-          ef-themes-variable-pitch-ui t)
-    (ef-themes-select 'ef-owl)))
+(use-package ef-themes
+  :ensure (:type git :host github :repo "protesilaos/ef-themes" :branch "main" :depth 1
+                 :files ("*.el"))
+  :config
+  ;; All customisations here.
+  (setq modus-themes-mixed-fonts t)
+  (setq modus-themes-italic-constructs t)
+
+  (modus-themes-load-theme 'ef-owl))
 
 ;; need to run (nerd-icons-install-fonts) mannually once after installing
 (use-package nerd-icons
