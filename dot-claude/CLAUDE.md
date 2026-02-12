@@ -17,3 +17,8 @@
 # Planning
 - **IMPORTANT** Ask upto 10 questions as needed to plan more accurately and eliminate as many unknowns as possible
 - **IMPORTANT** Automatically use upto 10 tasks for parallel execution of plan and execution steps
+
+# GitHub Actions: GITHUB_TOKEN Permissions
+- To call `gh api repos/{owner}/{repo}/environments`, the job needs `actions: read` permission
+- `environments` is NOT a valid permission key (will cause workflow parse error)
+- `deployments: read` alone is NOT sufficient for the environments API

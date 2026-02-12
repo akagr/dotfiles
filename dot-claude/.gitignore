@@ -1,0 +1,7 @@
+cache/
+paste-cache/
+plugins/cache/
+plugins/marketplaces/
+stats-cache.json
+tasks/
+telemetry/
