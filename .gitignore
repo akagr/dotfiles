@@ -48,3 +48,6 @@ dot-claude/shell-snapshots/
 /dot-claude/file-history/
 /dot-claude/history.jsonl
 /dot-claude/plans/
+/dot-claude/plugins/blocklist.json
+/dot-claude/mcp-needs-auth-cache.json
+/dot-claude/backups/
