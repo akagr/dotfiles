@@ -8,7 +8,13 @@
    ("C-." . embark-act))
 
   :init
-  (setq prefix-help-command #'embark-prefix-help-command))
+  (setq prefix-help-command #'embark-prefix-help-command)
+
+  :config
+  (setq embark-quit-after-action
+        '((kill-buffer . nil)
+          (t . t)))
+  (setf (alist-get 'kill-buffer embark-pre-action-hooks) nil))
 
 (use-package embark-consult
   :after (embark consult)
