@@ -20,7 +20,10 @@
         ("<backtab>" . dired-subtree-remove)
         ("S-TAB" . dired-subtree-remove))
   :config
-  (setq dired-subtree-use-backgrounds nil))
+  (setq dired-subtree-use-backgrounds nil)
+  (advice-add 'dired-subtree-toggle :after
+              (lambda (&rest _) (when (fboundp 'nerd-icons-dired--refresh)
+                                  (nerd-icons-dired--refresh)))))
 
 (use-package trashed
   :commands (trashed)
