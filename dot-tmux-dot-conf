@@ -43,3 +43,5 @@ set -g @minimal-tmux-indicator-str " λ "
 if "test ! -d ~/.tmux/plugins/tpm" \
    "run 'git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins'"
 run '~/.tmux/plugins/tpm/tpm'
+
+set-window-option -g aggressive-resize off
