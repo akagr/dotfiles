@@ -61,6 +61,13 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+;; pastel red cursor so the active buffer is obvious
+(defun aa/set-cursor-color (&rest _)
+  "Apply a pastel red color to the cursor."
+  (set-face-background 'cursor "#ff9999"))
+(add-hook 'enable-theme-functions #'aa/set-cursor-color)
+(aa/set-cursor-color)
+
 ;; Make titlebar same colour as the theme
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
