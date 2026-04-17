@@ -35,9 +35,6 @@
            (complete-with-action action choices str pred)))
        predicate require-match initial-input hist def))))
 
-(use-package forge
-  :after magit)
-
 (use-package transient)
 
 (provide 'feat-git)

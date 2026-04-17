@@ -24,10 +24,6 @@
   :init
   (global-corfu-mode))
 
-(use-package nerd-icons-corfu
-  :after corfu
-  :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-
 (use-package cape
   :after corfu
   :init
