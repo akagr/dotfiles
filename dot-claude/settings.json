@@ -8,10 +8,6 @@
     "lastShownTime": 1754314057142
   },
   "effortLevel": "high",
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
   "hooks": {
     "Notification": [
       {
