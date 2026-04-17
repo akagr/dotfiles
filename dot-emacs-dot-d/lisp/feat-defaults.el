@@ -33,6 +33,8 @@
 
   (global-so-long-mode)     ;; handles really long lines well
   (column-number-mode)      ;; show column number in mode line
+  (setq global-auto-revert-non-file-buffers t ;; also auto-revert dired and other non-file buffers
+        auto-revert-use-notify t)              ;; use file notifications instead of polling
   (global-auto-revert-mode) ;; reflect changes on disk to file automatically
   (show-paren-mode)         ;; show matching delimiters
 
