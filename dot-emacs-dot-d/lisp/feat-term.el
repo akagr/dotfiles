@@ -20,14 +20,26 @@
   (advice-add 'set-cursor-color :around #'aa/ignore-cursor-color-in-vterm)
   (with-eval-after-load 'feat-layout-restore
     (add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode -1)))
+    (defvar aa/vterm-dwim-origin nil)
     (defun aa/vterm-dwim ()
       "Switch to/from vterm buffer based on major mode, intelligently managing window layout"
       (interactive)
-      (if (equal major-mode 'vterm-mode)
+      (unless (and (equal major-mode 'vterm-mode)
+                   (not (string-match-p "^\\*claude" (buffer-name))))
+        (setq aa/vterm-dwim-origin (current-buffer)))
+      (when (window-parameter nil 'window-side)
+        (select-window (car (seq-filter
+                             (lambda (w) (not (window-parameter w 'window-side)))
+                             (window-list)))))
+      (if (and (equal major-mode 'vterm-mode)
+               (not (string-match-p "^\\*claude" (buffer-name))))
           (progn
             (switch-to-buffer (other-buffer (current-buffer) t))
             (layout-restore)
-            (layout-delete-current))
+            (layout-delete-current)
+            (when (buffer-live-p aa/vterm-dwim-origin)
+              (let ((win (get-buffer-window aa/vterm-dwim-origin)))
+                (when win (select-window win)))))
         (layout-save-current)
         (delete-other-windows)
         (vterm)))))
