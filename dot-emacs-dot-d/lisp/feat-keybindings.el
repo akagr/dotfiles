@@ -9,7 +9,11 @@
     :global-prefix "C-SPC") ;; Set global leader key
 
   (start/leader-keys
-    "c" '((lambda () (interactive) (claude-code-transient)) :wk "Claude"))
+    "c" '(:ignore t :wk "Agent")
+    "c c" '(agent-vterm :wk "Pick agent")
+    "c l" '(agent-vterm-claude :wk "Claude")
+    "c g" '(agent-vterm-copilot :wk "Copilot")
+    "c f" '(agent-vterm-send-dwim :wk "Send file/region"))
 
   (start/leader-keys
     "f" '(:ignore t :wk "Files")

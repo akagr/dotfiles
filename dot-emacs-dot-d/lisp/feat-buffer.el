@@ -12,11 +12,11 @@
     (or (eq major-mode 'dired-mode)
         (eq major-mode 'vterm-mode)
         (derived-mode-p 'magit-mode)
-        (string-match-p "^\\*claude\\|^\\*Claude\\|minibuffer" (buffer-name))
+        (string-match-p "minibuffer" (buffer-name))
         (string-prefix-p " " (buffer-name))))) ; skip hidden buffers
 
 (defun aa/skip-unwanted-buffers-advice (&rest _args)
-  "Advice to skip unwanted buffers (dired, claude, vterm, magit, minibuffer) when switching after killing current buffer."
+  "Advice to skip unwanted buffers (dired, vterm, magit, minibuffer) when switching after killing current buffer."
   (when (and (aa/unwanted-buffer-p)
              (> (length (buffer-list)) 1))
     (let ((buffers (buffer-list)))
