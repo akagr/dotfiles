@@ -9,13 +9,6 @@
     :global-prefix "C-SPC") ;; Set global leader key
 
   (start/leader-keys
-    "c" '(:ignore t :wk "Agent")
-    "c c" '(agent-vterm :wk "Pick agent")
-    "c l" '(agent-vterm-claude :wk "Claude")
-    "c g" '(agent-vterm-copilot :wk "Copilot")
-    "c f" '(agent-vterm-send-dwim :wk "Send file/region"))
-
-  (start/leader-keys
     "f" '(:ignore t :wk "Files")
     "f e" '((lambda () (interactive) (find-file "~/.emacs.d/init.el")) :wk "Emacs config")
     "f r" '(consult-recent-file :wk "Recent files")
@@ -33,23 +26,6 @@
     "b r" '(revert-buffer :wk "Reload buffer"))
 
   (start/leader-keys
-    "d" '(dired-jump :wk "Dired"))
-
-  (start/leader-keys
-    "e" '(:ignore t :wk "Eglot")
-    "e e" '(eglot-reconnect :wk "Eglot Reconnect")
-    "e f" '(eglot-format :wk "Eglot Format")
-    "e l" '(consult-flymake :wk "Consult Flymake")
-    "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-    "e r" '(eval-region :wk "Evaluate elisp in region"))
-
-  (start/leader-keys
-    "g" '(:ignore t :wk "Git")
-    "g c" '(magit-clone :wk "Clone")
-    "g g" '(magit-status :wk "Status")
-    "g b" '(magit-blame :wk "Blame"))
-
-  (start/leader-keys
     "h" '(:ignore t :wk "Help") ;; To get more help use C-h commands (describe variable, function, etc.)
     "h q" '(save-buffers-kill-emacs :wk "Quit Emacs and Daemon")
     "h r" '((lambda () (interactive)
@@ -57,22 +33,10 @@
             :wk "Reload Emacs config"))
 
   (start/leader-keys
-    "o" '(:ignore t :wk "Org")
-    "o o" '(org-roam-node-find :wk "Find node")
-    "o i" '(org-roam-node-insert :wk "Insert node")
-    "o s" '(org-roam-db-sync :wk "Sync DB"))
-
-  (start/leader-keys
     "p" '(:ignore t :wk "Project")
     "p p" '(project-switch-project :wk "Switch to project")
     "p f" '(project-find-file :wk "Project find file")
     "p k" '(project-kill-buffers :wk "Kill project buffers"))
-
-  (start/leader-keys
-    "v" '(vterm :wk "Vterm"))
-
-  (start/leader-keys
-    "S" '(rg-project :wk "Search project"))
 
   (start/leader-keys
     "t" '(:ignore t :wk "Toggle")
@@ -84,5 +48,12 @@
     "w w" '(split-window-horizontally :wk "Split |")
     "w s" '(split-window-vertically :wk "Split --")
     "w d" '(delete-window :wk "Delete")))
+
+;; Ensure `general' and the `start/leader-keys' definer above are fully
+;; installed and evaluated before any later feature file attaches its own
+;; package-specific leader bindings. Elpaca installs packages asynchronously,
+;; so without this wait the definer would not yet exist when files such as
+;; feat-git, feat-org or feat-lsp are loaded.
+(elpaca-wait)
 
 (provide 'feat-keybindings)

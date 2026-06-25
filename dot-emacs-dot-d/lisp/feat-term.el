@@ -60,4 +60,7 @@ both Enter and Shift+Enter, so the program cannot tell them apart."
   (define-key vterm-mode-map (kbd "<S-return>") #'aa/vterm-send-shift-return)
   (advice-add 'set-cursor-color :around #'aa/ignore-cursor-color-in-vterm))
 
+(start/leader-keys
+  "v" '(vterm :wk "Vterm"))
+
 (provide 'feat-term)

@@ -25,6 +25,9 @@
 (require 'feat-appearance)
 (require 'feat-modeline)
 (require 'feat-evil)
+;; feat-keybindings sets up `general' and the `start/leader-keys' definer, then
+;; calls `elpaca-wait' so they are available synchronously. Any feature file
+;; that attaches leader bindings must be required AFTER this line.
 (require 'feat-keybindings)
 (require 'feat-lsp)
 (require 'feat-org)

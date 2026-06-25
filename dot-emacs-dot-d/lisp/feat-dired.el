@@ -33,4 +33,7 @@
   (setq trashed-sort-key '("Date deleted" . t))
   (setq trashed-date-format "%Y-%m-%d %H:%M:%S"))
 
+(start/leader-keys
+  "d" '(dired-jump :wk "Dired"))
+
 (provide 'feat-dired)

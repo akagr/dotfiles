@@ -30,4 +30,12 @@
   :after eglot
   :config (eglot-booster-mode))
 
+(start/leader-keys
+  "e" '(:ignore t :wk "Eglot")
+  "e e" '(eglot-reconnect :wk "Eglot Reconnect")
+  "e f" '(eglot-format :wk "Eglot Format")
+  "e l" '(consult-flymake :wk "Consult Flymake")
+  "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+  "e r" '(eval-region :wk "Evaluate elisp in region"))
+
 (provide 'feat-lsp)

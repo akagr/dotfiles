@@ -27,4 +27,10 @@
   :config
   (org-roam-db-autosync-enable))
 
+(start/leader-keys
+  "o" '(:ignore t :wk "Org")
+  "o o" '(org-roam-node-find :wk "Find node")
+  "o i" '(org-roam-node-insert :wk "Insert node")
+  "o s" '(org-roam-db-sync :wk "Sync DB"))
+
 (provide 'feat-org)
