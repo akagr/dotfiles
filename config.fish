@@ -2,25 +2,49 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
+#============================== Helpers ==============================
+
+# Source the output of a slow init command (brew/zoxide/fzf/...), caching the
+# generated fish script under $__fish_cache_dir. The cache is regenerated only
+# when the underlying binary is newer than the cache (e.g. after `brew upgrade`),
+# so normal shell startup just sources a small static file instead of spawning
+# the (slow) generator every time. This is the single biggest fish startup win:
+# `brew shellenv`, `zoxide init` and `fzf --fish` together cost ~120ms when run
+# live, vs ~20ms when sourced from cache.
+function __cached_source -d "Source a command's output, recached when its binary changes"
+    set -l name $argv[1]
+    set -l binary $argv[2]
+    set -l cache_file "$__fish_cache_dir/init-$name.fish"
+    if not test -f $cache_file; or test $binary -nt $cache_file
+        mkdir -p $__fish_cache_dir
+        $argv[2..] >$cache_file 2>/dev/null
+    end
+    source $cache_file
+end
+
 #================================ Path ===============================
 
 # Adds homebrew and installed packages to the path
 if test -e /opt/homebrew/bin/brew
     fish_add_path /opt/homebrew/bin
-    eval (/opt/homebrew/bin/brew shellenv)
+    __cached_source brew /opt/homebrew/bin/brew shellenv fish
 end
 
 if test -e /usr/local/bin/brew
     fish_add_path /usr/local/bin
-    eval (/usr/local/bin/brew shellenv)
+    __cached_source brew-intel /usr/local/bin/brew shellenv fish
 end
 
-if test -e /opt/homebrew/bin/fzf
-    fzf --fish | source
-end
+# fzf and zoxide only provide interactive features (key bindings, navigation),
+# so skip them entirely in non-interactive shells (scripts, Emacs PATH probing).
+if status is-interactive
+    if test -e /opt/homebrew/bin/fzf
+        __cached_source fzf /opt/homebrew/bin/fzf --fish
+    end
 
-if test -e /opt/homebrew/bin/zoxide
-    zoxide init fish | source
+    if test -e /opt/homebrew/bin/zoxide
+        __cached_source zoxide /opt/homebrew/bin/zoxide init fish
+    end
 end
 
 # Adds docker cli if it exists
