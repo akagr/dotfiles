@@ -1,3 +1,3 @@
-(use-package lua-mode)
+(use-package lua-mode :defer t)
 
 (provide 'feat-lua)

@@ -1,3 +1,3 @@
-(use-package typescript-mode)
+(use-package typescript-mode :defer t)
 
 (provide 'feat-typescript)

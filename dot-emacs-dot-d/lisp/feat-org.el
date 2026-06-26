@@ -20,6 +20,13 @@
   :after org)
 
 (use-package org-roam
+  ;; Defer loading org-roam (and its emacsql/sqlite deps) until a roam command
+  ;; is first used. Autosync is enabled on load, so node tracking starts as
+  ;; soon as you run any org-roam command in a session.
+  :commands (org-roam-node-find
+             org-roam-node-insert
+             org-roam-db-sync
+             org-roam-db-autosync-enable)
   :custom
   (org-roam-directory "~/roam")
   (org-roam-complete-everywhere t)
