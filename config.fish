@@ -58,6 +58,40 @@ if test -e /usr/local/opt/gnu-sed/libexec/gnubin
   fish_add_path /usr/local/opt/gnu-sed/libexec/gnubin
 end
 
+#=============================== Prompt =============================
+
+# Show how long the previous command took, on the right side of the prompt.
+# Fish populates $CMD_DURATION (milliseconds) automatically after every command,
+# so this needs no timing hooks. fish_right_prompt is rendered on the same line
+# as the (left) prompt and is cleared while editing multi-line commands.
+function __format_duration -d "Format milliseconds into a human-friendly duration"
+    set -l ms $argv[1]
+    if test $ms -lt 1000
+        echo -n {$ms}ms
+        return
+    end
+    set -l total (math -s0 "$ms / 1000")
+    if test $total -lt 60
+        echo -n (math -s1 "$ms / 1000")s
+        return
+    end
+    set -l h (math -s0 "$total / 3600")
+    set -l m (math -s0 "($total % 3600) / 60")
+    set -l s (math -s0 "$total % 60")
+    if test $h -gt 0
+        echo -n {$h}h{$m}m{$s}s
+    else
+        echo -n {$m}m{$s}s
+    end
+end
+
+function fish_right_prompt -d "Show the duration of the last command"
+    test -z "$CMD_DURATION"; and return
+    set_color brblack
+    echo -n (__format_duration $CMD_DURATION)
+    set_color normal
+end
+
 #========================== General Aliases ==========================
 alias du="dust -d 1"
 alias t="tmux attach || tmux"
