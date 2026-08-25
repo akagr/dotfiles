@@ -20,6 +20,10 @@
   (dolist (server aa/custom-eglot-servers)
     (add-to-list 'eglot-server-programs server))
 
+  (setq-default eglot-workspace-configuration
+                '((:yaml . (:schemas (:kubernetes "/*")
+                                     :schemaStore (:enable t)))))
+
   (add-hook 'before-save-hook #'eglot-format-buffer nil t))
 
 (use-package eldoc-box
