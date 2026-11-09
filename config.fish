@@ -94,7 +94,7 @@ end
 
 #========================== General Aliases ==========================
 alias du="dust -d 1"
-alias t="tmux attach || tmux"
+alias t="tmux ls && tmux -CC attach || tmux -CC"
 alias vim="nvim"
 alias vi="nvim"
 
