@@ -66,6 +66,7 @@ return {
       },
     })
 
+    -- lsp server settings --
     vim.lsp.config('yamlls', {
       settings = {
         yaml = {
@@ -95,7 +96,17 @@ return {
       }
     })
 
-    vim.lsp.enable({ 'yamlls', 'helm_ls' })
+    vim.lsp.config('lua_ls', {
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = { 'vim' }
+          }
+        }
+      }
+    })
+
+    vim.lsp.enable({ 'yamlls', 'helm_ls', 'lua_ls' })
 
     -- none-ls --
     local null_ls = require("null-ls")
