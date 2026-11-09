@@ -66,10 +66,7 @@ return {
       },
     })
 
-    local lspconfig = require('lspconfig')
-
-    lspconfig.yamlls.setup({
-      -- on_attach = require'lsp'.common_on_attach,
+    vim.lsp.config('yamlls', {
       settings = {
         yaml = {
           format = {
@@ -88,7 +85,7 @@ return {
       },
     })
 
-    lspconfig.helm_ls.setup {
+    vim.lsp.config('helm_ls', {
       settings = {
         ['helm-ls'] = {
           yamlls = {
@@ -96,7 +93,9 @@ return {
           }
         }
       }
-    }
+    })
+
+    vim.lsp.enable({ 'yamlls', 'helm_ls' })
 
     -- none-ls --
     local null_ls = require("null-ls")
