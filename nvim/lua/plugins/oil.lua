@@ -10,7 +10,7 @@ return {
   opts = {
     columns = {
       {
-        "permissions",
+        'permissions',
         highlight = function(permission_str)
           local hls = {}
           for i = 1, #permission_str do
@@ -22,7 +22,7 @@ return {
       },
       { 'size', highlight = 'Special' },
       { 'mtime', highlight = 'Number' },
-      { "icon", add_padding = false },
+      { 'icon', add_padding = false },
     },
     win_options = {
       winbar = "%{v:lua.require('oil').get_current_dir()}",
@@ -32,11 +32,8 @@ return {
       ['>'] = 'actions.select',
     },
   },
-  dependencies = {
-    "nvim-tree/nvim-web-devicons",
-    "echasnovski/mini.icons",
-  },
+  dependencies = { 'nvim-mini/mini.icons' },
   keys = {
-    { '<leader>d', '<cmd>Oil<cr>', desc = '[d]irectory'}
-  }
+    { '<leader>d', '<cmd>Oil<cr>', desc = '[d]irectory' },
+  },
 }

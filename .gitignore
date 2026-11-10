@@ -51,3 +51,7 @@ dot-claude/shell-snapshots/
 /dot-claude/plugins/blocklist.json
 /dot-claude/mcp-needs-auth-cache.json
 /dot-claude/backups/
+/dot-claude/.last-cleanup
+/dot-claude/.last-update-result.json
+/dot-claude/plugins/.last_inuse_sweep
+/dot-claude/plugins/install-counts-cache.json
